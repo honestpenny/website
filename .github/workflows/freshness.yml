@@ -1,0 +1,23 @@
+# Weekly: open (or update) an issue listing facts and guides due for review. No AI, no secrets, free on public repos.
+# The fix is: run `/newsroom` in Claude Code (or let the scheduled routine do it), then merge its PR.
+name: Freshness check
+on:
+  schedule: [{ cron: "0 14 * * 1" }]   # Mondays 07:00 Mountain (14:00 UTC)
+  workflow_dispatch:
+permissions: { issues: write, contents: read }
+jobs:
+  due:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: List due items
+        id: due
+        run: |
+          node scripts/due.mjs 21 > due.md
+          echo "count=$(grep -c '^- ' due.md || true)" >> "$GITHUB_OUTPUT"
+      - name: Open or update issue
+        if: steps.due.outputs.count != '0'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          n=$(gh issue list --label freshness --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue edit "$n" --body-file due.md; else gh label create freshness --force >/dev/null; gh issue create --title "Facts and guides due for review" --label freshness --body-file due.md; fi

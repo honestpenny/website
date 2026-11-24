@@ -1,0 +1,16 @@
+---
+// One registry value + a visible link to the official page it comes from (trust you can click).
+// Unknown ids fail the build, so a typo can't ship a blank.
+import { getEntry } from "astro:content";
+import { longDate } from "../lib/format";
+interface Props { id: string; nosource?: boolean }
+const { id, nosource = false } = Astro.props;
+const fact = await getEntry("facts", id);
+if (!fact) throw new Error(`<Fact id="${id}"> not found in src/data/facts.yaml`);
+const { value, source, checked } = fact.data;
+---
+<span class="fact" data-fact={id}>{value}{!nosource && <> <a class="src" href={source.url} rel="noopener" aria-label={`Source: ${source.publisher}, checked ${longDate(checked)}`} title={`${source.title}, ${source.publisher}. Checked ${longDate(checked)}.`}>{source.short}</a></>}</span>
+<style>
+  .fact { white-space: nowrap; }
+  .src { font-size: 0.72em; font-weight: 700; vertical-align: 0.35em; text-decoration-thickness: 1px; padding: 0 0.1em; }
+</style>

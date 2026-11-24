@@ -1,6 +1,6 @@
 import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
-import { glob } from "astro/loaders";
+import { glob, file } from "astro/loaders";
 
 // Every guide must say where it applies, who wrote it, when it was last checked and
 // what it's based on. No source list, no publish. (Google: money pages must be
@@ -32,4 +32,18 @@ const guides = defineCollection({
   }),
 });
 
-export const collections = { guides };
+// Fact registry (src/data/facts.yaml): every number a guide shows via <Fact id>. See CLAUDE.md "Keeping facts current".
+const facts = defineCollection({
+  loader: file("src/data/facts.yaml"),
+  schema: z.object({
+    label: z.string(),
+    value: z.string(),
+    applies: z.array(z.enum(["alberta", "calgary", "edmonton", "canada"])).min(1),
+    effective: z.string(),
+    source: z.object({ title: z.string(), publisher: z.string(), short: z.string().max(14), url: z.url() }),
+    checked: z.coerce.date(),
+    reviewBy: z.coerce.date(),
+  }),
+});
+
+export const collections = { guides, facts };

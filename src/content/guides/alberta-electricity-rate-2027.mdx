@@ -39,6 +39,8 @@ sources:
     checked: 2026-11-24
 ---
 
+import Fact from "../../components/Fact.astro";
+import Official from "../../components/Official.astro";
 import QuickAnswer from "../../components/QuickAnswer.astro";
 import HonestTake from "../../components/HonestTake.astro";
 import Warning from "../../components/Warning.astro";
@@ -48,7 +50,7 @@ import ElectricityCalculator from "../../components/calculators/ElectricityCalcu
 - If you never chose a power plan, you're probably on Alberta's default rate, the **Rate of Last Resort (RoLR)**. Your bill will say "Rate of Last Resort" or "RoLR".
 - It's been fixed at **about 12 cents per kWh** since January 2025, and that ends on **December 31, 2026**. A new rate starts on January 1, 2027 and normally **can't rise more than 10%**.
 - **You can leave the RoLR at any time with no penalty.**
-- Compare offers using the government's free **Utilities Consumer Advocate (UCA) Cost Comparison Tool**, and compare the **total** cost, not just the cents-per-kWh headline.
+- Compare offers using the government's free <Official href="https://ucahelps.alberta.ca/cost-comparison-tool/" by="Government of Alberta">Utilities Consumer Advocate (UCA) Cost Comparison Tool</Official>, and compare the **total** cost, not just the cents-per-kWh headline.
 </QuickAnswer>
 
 ## What the default rate is
@@ -59,9 +61,9 @@ The rates for 2025 and 2026, energy charge only:
 
 | Area | Provider | Rate until 31 Dec 2026 |
 |---|---|---|
-| Calgary and other ENMAX areas | ENMAX | 12.06¢ per kWh |
-| Edmonton | EPCOR | 12.01¢ per kWh |
-| Direct Energy Regulated Services areas | Direct Energy | 12.02¢ per kWh |
+| Calgary and other ENMAX areas | ENMAX | <Fact id="rolr-enmax-2025-2026" /> |
+| Edmonton | EPCOR | <Fact id="rolr-epcor-2025-2026" /> |
+| Direct Energy Regulated Services areas | Direct Energy | <Fact id="rolr-direct-energy-2025-2026" /> |
 
 These are energy charges only. Your bill also has delivery charges (transmission and distribution), which are regulated and are **the same whichever retailer you choose**.
 
@@ -86,7 +88,7 @@ Ask three questions.
 ## How to compare properly
 
 1. Find your monthly use in kWh on a recent bill. Winter and summer can differ a lot.
-2. Use the UCA **Cost Comparison Tool** on ucahelps.alberta.ca. It includes the delivery charges for where you live.
+2. Use the <Official href="https://ucahelps.alberta.ca/cost-comparison-tool/" by="Government of Alberta">Utilities Consumer Advocate (UCA) Cost Comparison Tool</Official>. It includes the delivery charges for where you live.
 3. Check whether a fixed rate is really fixed for the whole term, and whether you can move between fixed and variable.
 4. Before switching, ask your current retailer whether you need to give notice or pay an exit fee.
 5. After switching, expect a final bill from your old retailer. If nothing arrives from the new one within about a month, call them.

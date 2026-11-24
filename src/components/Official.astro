@@ -1,0 +1,7 @@
+---
+// Link to an official government tool/page, marked so readers can see it's the official source.
+interface Props { href: string; by: string }
+const { href, by } = Astro.props;
+---
+<a href={href} rel="noopener" data-official={by}><slot /></a> <span class="off">({by})</span>
+<style>.off { color: var(--muted); font-size: 0.9em; }</style>

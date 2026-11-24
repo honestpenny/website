@@ -44,10 +44,49 @@ new pages are covered automatically. After any form change, do one real labelled
 ## Adding a guide
 1. Copy an existing `.mdx`; keep `draft: true` until a person has checked every claim.
 2. Front matter: `applies`, `sources` (≥2, official), `lastChecked`, `nextReview`, `deadlines` (mark `approximate`).
-3. Use `QuickAnswer` first, `HonestTake` once, `Warning` for scams/costly mistakes. Short sentences, answer first.
-4. Fact-check, flip `draft: false`, run tests, merge, run `check:live`.
+3. Every official number goes in `src/data/facts.yaml` and is shown with `<Fact id="..." />`, which renders the
+   value plus a visible link to the official page ("$7,000 CRA"). Never type an official figure straight into a guide.
+4. Name official tools/programs with `<Official href by>` so readers can click through to the government page.
+5. Use `QuickAnswer` first, `HonestTake` once, `Warning` for scams/costly mistakes. Short sentences, answer first.
+6. Run `/fact-check` on it, fix everything, flip `draft: false`, run tests, merge, run `npm run check:live`.
+
+## Keeping facts current (automated as far as is safe)
+- **Fact registry** `src/data/facts.yaml`: value, official source (`short` label shown on the page), `checked`,
+  `reviewBy`. Tests fail if a fact's source isn't an official domain, if `reviewBy` has passed, or if a page shows a
+  fact without its source link. New year's values get a new id (`tfsa-limit-2027`), never a silent overwrite.
+- **Watchlist** `src/data/watchlist.yaml`: official news pages to scan and which facts/guides each affects. Add a
+  source whenever a new guide depends on one.
+- **`/newsroom`** (`.claude/skills/newsroom/SKILL.md`): scans the watchlist (or a pasted news link, treated as a
+  lead only), updates facts and guides, runs the `fact-checker` agent, runs tests and opens a PR. **Never merges.**
+- **`/fact-check`** (`.claude/skills/fact-check/SKILL.md`) + **`fact-checker` agent** (`.claude/agents/`): independent
+  verification against official sources; reports to `docs/fact-checks/`.
+- **Weekly GitHub Action** `.github/workflows/freshness.yml` (`scripts/due.mjs`): opens/updates a "freshness" issue
+  listing facts and guides due within 21 days. A scheduled Claude routine can run `/newsroom` weekly once the repo is
+  on GitHub (set up with the `schedule` skill).
+- Known yearly moments: CRA indexation and TFSA/RRSP limits (Nov), Alberta assessment notices (Jan), tax season
+  (Feb–Apr), RoLR resets (Jan 1 every second year: next 2027), CCB/benefit year (July), federal budget (fall).
+
+## Legal (draft protections; an Alberta lawyer must review before launch)
+- `/terms/` (general information not advice, accuracy, calculators are estimates, third-party links, limitation of
+  liability, Alberta law), short disclaimer on every guide, `/privacy/` (Alberta PIPA/PIPEDA basics), `/editorial-code/`.
+- Publisher exemption only holds while content is general: never tailor investment picks to a reader, never take
+  mortgage/insurance referral fees without checking RECA / Alberta Insurance Council licensing rules first.
+- Affiliate links (if ever): disclose on the page (Competition Bureau / Ad Standards). Email: CASL consent records,
+  sender ID + mailing address, unsubscribe within 10 business days.
+- Kevin to-dos: put Honest Penny in its own corporation (keeps liability off him and Code To Cloud), lawyer review of
+  terms/privacy, media/errors-and-omissions liability insurance quote, CIPO trademark search/filing for "Honest Penny".
+
+## Guides roadmap (each: research → write → /fact-check → publish)
+Live: property assessment, electricity RoLR 2027, Honest Penny Steps. Next: natural gas, phones & internet, car & home
+insurance (Alberta Care-First auto reform 2027), 2026/2027 tax brackets explained, retirement & savings accounts
+compared (TFSA, RRSP, FHSA, RESP, RDSP, pensions, non-registered), benefits checklist, airline refunds.
+
+## Repo identity
+Commits use the repo-local identity "Honest Penny" + GitHub no-reply email. Never commit with the founder's
+Code To Cloud email. (The no-reply address still contains the GitHub username.)
 
 ## Open decisions (Kevin)
 - One-line promise (draft in `src/lib/site.ts`).
 - Kit account → set `PUBLIC_KIT_FORM_ID` in Workers Builds env; CASL mailing address (PO box) before the first email.
 - A qualified named reviewer (CFP/QAFP) later → `site.reviewer`.
+- Legal to-dos above.

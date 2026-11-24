@@ -1,0 +1,56 @@
+# Official sources the newsroom checks for announcements that change our facts or guides.
+# Add a source when a new guide depends on it. Official domains only; news articles are leads, never sources.
+# `affects`: fact ids or guide slugs to re-check when this source changes.
+
+- name: CRA newsroom
+  url: https://www.canada.ca/en/revenue-agency/news.html
+  watch: [tax brackets, indexation, TFSA limit, RRSP limit, benefit amounts, payment dates, filing deadlines]
+  affects: [tfsa-limit-2026, rrsp-limit-2026, honest-penny-steps]
+- name: CRA - TFSA/RRSP/MP limits table
+  url: https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html
+  watch: [new year's limits]
+  affects: [tfsa-limit-2026, rrsp-limit-2026]
+- name: CRA - Tax rates and income brackets for individuals
+  url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html
+  watch: [federal and provincial brackets]
+  affects: []
+- name: Department of Finance Canada news
+  url: https://www.canada.ca/en/department-finance/news.html
+  watch: [budget measures, new or changed benefits, mortgage rules]
+  affects: [honest-penny-steps]
+- name: Government of Alberta news
+  url: https://www.alberta.ca/news
+  watch: [utilities, affordability payments, Alberta Child and Family Benefit, seniors programs, auto insurance reform, tax]
+  affects: [seniors-tax-deferral-rate, payday-max-cost-alberta]
+- name: Utilities Consumer Advocate - regulated rates
+  url: https://www.ucahelps.alberta.ca/regulated-rates.aspx
+  watch: [Rate of Last Resort 2027-2028 rates, monthly gas Default Rate Tariff]
+  affects: [rolr-enmax-2025-2026, rolr-epcor-2025-2026, rolr-direct-energy-2025-2026, alberta-electricity-rate-2027]
+- name: Alberta Utilities Commission news
+  url: https://www.auc.ab.ca/news-releases/
+  watch: [RoLR decisions, distribution rate decisions]
+  affects: [alberta-electricity-rate-2027]
+- name: CRTC news
+  url: https://www.canada.ca/en/radio-television-telecommunications/news.html
+  watch: [fees, codes of conduct, wholesale internet, consumer rights]
+  affects: []
+- name: Canadian Transportation Agency news
+  url: https://otc-cta.gc.ca/eng/news-releases
+  watch: [air passenger protection changes, complaint backlog]
+  affects: []
+- name: City of Calgary - property assessment
+  url: https://www.calgary.ca/property-owners/assessment/review-period.html
+  watch: [notice mailing date, review period end, ARB fees]
+  affects: [challenge-property-assessment-alberta]
+- name: City of Edmonton - property assessment
+  url: https://www.edmonton.ca/residential_neighbourhoods/property_tax_assessment
+  watch: [notice mailing date, complaint deadline, ARB fees]
+  affects: [challenge-property-assessment-alberta]
+- name: Financial Consumer Agency of Canada news
+  url: https://www.canada.ca/en/financial-consumer-agency/news.html
+  watch: [consumer protections, scams, banking rules]
+  affects: []
+- name: Bank of Canada interest rate announcements
+  url: https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/
+  watch: [policy rate changes (affects variable mortgages, HISA rates)]
+  affects: []

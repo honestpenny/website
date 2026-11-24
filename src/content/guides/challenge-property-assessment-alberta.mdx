@@ -38,6 +38,8 @@ sources:
     checked: 2026-11-24
 ---
 
+import Fact from "../../components/Fact.astro";
+import Official from "../../components/Official.astro";
 import QuickAnswer from "../../components/QuickAnswer.astro";
 import HonestTake from "../../components/HonestTake.astro";
 import PropertyTaxCalculator from "../../components/calculators/PropertyTaxCalculator.astro";
@@ -64,7 +66,7 @@ Most fixable errors are simple facts, not opinions about value. Look up your pro
 - Lot size, garage, and any extras listed
 - Condition problems the city may not know about, such as foundation cracks or water damage
 
-In Calgary, use **myTax** on calgary.ca. In Edmonton, use **MyProperty.edmonton.ca**. Other Alberta towns have their own lookups; your notice says where.
+In Calgary, use <Official href="https://mytax.calgary.ca/" by="City of Calgary">myTax</Official>. In Edmonton, use <Official href="https://myproperty.edmonton.ca/" by="City of Edmonton">MyProperty</Official>. Other Alberta towns have their own lookups; your notice says where.
 
 ## Step 2: Compare with similar homes nearby
 
@@ -112,7 +114,7 @@ Most people never check their assessment, and cities only fix what they're told 
 
 ## If you're 65 or older and struggling to pay
 
-Alberta's **Seniors Property Tax Deferral Program** lets homeowners aged 65+ with at least 25% equity defer their property tax as a low-interest loan from the province. **There's no income test.** Interest was 4.45% simple when we checked (November 2026), and the loan is repaid when the home is sold. Apply at least 30 days before your city's tax deadline (usually by May 31). Details are on alberta.ca.
+Alberta's **Seniors Property Tax Deferral Program** lets homeowners aged 65+ with at least 25% equity defer their property tax as a low-interest loan from the province. **There's no income test.** Interest was <Fact id="seniors-tax-deferral-rate" /> simple when we checked (November 2026), and the loan is repaid when the home is sold. Apply at least 30 days before your city's tax deadline (usually by May 31). Details: <Official href="https://www.alberta.ca/seniors-property-tax-deferral-program" by="Government of Alberta">Seniors Property Tax Deferral Program</Official>.
 
 ## Living outside Calgary or Edmonton?
 

@@ -30,7 +30,7 @@ test.describe("Messaging and trust", () => {
       if (!/<meta name="description" content="[^"]{50,}"/.test(html)) problems.push(`${p}: description missing or < 50 chars`);
       if (!html.includes(`<link rel="canonical" href="${site.url}${p}"`)) problems.push(`${p}: canonical wrong`);
       if (!/<html lang="en-CA"/.test(html)) problems.push(`${p}: lang must be en-CA`);
-      for (const href of ["/editorial-code/", "/how-we-make-money/", "/corrections/"])
+      for (const href of ["/editorial-code/", "/how-we-make-money/", "/corrections/", "/terms/", "/privacy/"])
         if (!html.includes(`href="${href}"`)) problems.push(`${p}: footer missing ${href}`);
     }
     expect(problems, problems.join("\n")).toEqual([]);

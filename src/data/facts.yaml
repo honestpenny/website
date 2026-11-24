@@ -1,0 +1,104 @@
+# Honest Penny fact registry — ONE place for every number a guide relies on.
+# Guides show these with <Fact id="..." />. Change a value here and every page updates.
+# Rules: official source only; `checked` = date a person/agent last confirmed it at `source.url`;
+# `reviewBy` = when it must be re-checked (tests fail after this date). `effective` = when the value applies.
+# The newsroom skill (.claude/skills/newsroom) proposes edits to this file via pull request.
+
+tfsa-limit-2026:
+  label: TFSA annual contribution limit, 2026
+  value: "$7,000"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-15
+
+rrsp-limit-2026:
+  label: RRSP dollar limit, 2026 (18% of prior-year earned income, up to)
+  value: "$33,810"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-15
+
+fhsa-annual-limit:
+  label: FHSA annual contribution limit
+  value: "$8,000"
+  applies: [canada]
+  effective: "since 2023"
+  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+fhsa-lifetime-limit:
+  label: FHSA lifetime contribution limit
+  value: "$40,000"
+  applies: [canada]
+  effective: "since 2023"
+  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+cesg-lifetime:
+  label: Canada Education Savings Grant lifetime maximum per child
+  value: "$7,200"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Canada Education Savings Grant", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/education/education-savings/savings-grant.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+payday-max-cost-alberta:
+  label: Maximum cost of a payday loan in Alberta, per $100 borrowed
+  value: "$14"
+  applies: [alberta]
+  effective: "since January 1, 2025"
+  source: { title: "Payday loans", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/payday-loans" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+rolr-enmax-2025-2026:
+  label: Rate of Last Resort energy charge, ENMAX area (Jan 1, 2025 – Dec 31, 2026)
+  value: "12.06¢ per kWh"
+  applies: [alberta, calgary]
+  effective: "until December 31, 2026"
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  checked: 2026-11-24
+  reviewBy: 2026-12-15
+
+rolr-epcor-2025-2026:
+  label: Rate of Last Resort energy charge, EPCOR area (Jan 1, 2025 – Dec 31, 2026)
+  value: "12.01¢ per kWh"
+  applies: [alberta, edmonton]
+  effective: "until December 31, 2026"
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  checked: 2026-11-24
+  reviewBy: 2026-12-15
+
+rolr-direct-energy-2025-2026:
+  label: Rate of Last Resort energy charge, Direct Energy Regulated Services areas (Jan 1, 2025 – Dec 31, 2026)
+  value: "12.02¢ per kWh"
+  applies: [alberta]
+  effective: "until December 31, 2026"
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  checked: 2026-11-24
+  reviewBy: 2026-12-15
+
+seniors-tax-deferral-rate:
+  label: Seniors Property Tax Deferral Program interest rate (simple)
+  value: "4.45%"
+  applies: [alberta]
+  effective: "reviewed each April and October"
+  source: { title: "Seniors Property Tax Deferral Program", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/seniors-property-tax-deferral-program" }
+  checked: 2026-11-24
+  reviewBy: 2027-04-15
+
+fpcanada-cdn-equity-return:
+  label: FP Canada 2026 projection assumption, Canadian equities (before fees)
+  value: "6.3%"
+  applies: [canada]
+  effective: "2026 guidelines"
+  source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://www.institutpf.org/en/projection-assumption-guidelines" }
+  checked: 2026-11-24
+  reviewBy: 2027-05-01
