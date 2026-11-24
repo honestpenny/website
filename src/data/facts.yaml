@@ -102,3 +102,57 @@ fpcanada-cdn-equity-return:
   source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://www.institutpf.org/en/projection-assumption-guidelines" }
   checked: 2026-11-24
   reviewBy: 2027-05-01
+
+care-first-start:
+  label: Alberta Care-First auto insurance takes effect (applies to collisions on or after this date)
+  value: "January 1, 2027"
+  applies: [alberta]
+  effective: "2027"
+  source: { title: "Care-First auto insurance", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/care-first-auto-insurance" }
+  checked: 2026-11-24
+  reviewBy: 2027-02-01
+
+care-first-avg-saving:
+  label: Average Care-First premium change, private passenger vehicles (AIRB, approved filings, Sept 2026)
+  value: "13.7% lower (about $297 a year)"
+  applies: [alberta]
+  effective: "policies from 2027"
+  source: { title: "Care-First premium impacts", publisher: "Automobile Insurance Rate Board", short: "AIRB", url: "https://www.airbfordrivers.ca/newsroom/care-first-premium-impacts/" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+auto-renewal-cap-2027:
+  label: Most your premium can rise at renewal in 2027 because of an insurer rate change
+  value: "10%"
+  applies: [alberta]
+  effective: "from January 1, 2027"
+  source: { title: "Automobile insurance reform", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/automobile-insurance-reform" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+good-driver-cap-2026:
+  label: Alberta good-driver auto insurance rate cap, 2026
+  value: "7.5%"
+  applies: [alberta]
+  effective: "2026"
+  source: { title: "Automobile insurance reform", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/automobile-insurance-reform" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-15
+
+auto-liability-minimum:
+  label: Alberta minimum third-party liability coverage
+  value: "$200,000"
+  applies: [alberta]
+  effective: "current"
+  source: { title: "Care-First auto insurance (fact sheet, August 2025)", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://open.alberta.ca/dataset/05d7b6b1-ed14-40f6-8044-87f050b521b1/resource/a89fb33a-e4d2-4118-a982-2ee2cf465ac6/download/tbf-care-first-auto-insurance-2025-08.pdf" }
+  checked: 2026-11-24
+  reviewBy: 2027-02-01
+
+condo-deductible-chargeback-max:
+  label: Most an Alberta condo corporation can charge an owner back (lesser of actual cost or deductible)
+  value: "$50,000"
+  applies: [alberta]
+  effective: "since February 15, 2026"
+  source: { title: "Supporting Alberta's condominium communities", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/supporting-albertas-condominium-communities" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01

@@ -10,7 +10,7 @@ const facts = [...yaml.matchAll(/^([a-z0-9-]+):\n([\s\S]*?)(?=^\S|$(?![\s\S]))/g
   url: m[2].match(/url: "([^"]+)"/)?.[1] ?? "",
   reviewBy: m[2].match(/reviewBy: (\S+)/)?.[1] ?? "",
 }));
-const OFFICIAL = /^https:\/\/(www\.)?([a-z0-9-]+\.)*(canada\.ca|gc\.ca|alberta\.ca|calgary\.ca|edmonton\.ca|institutpf\.org|fpcanada\.ca)\//;
+const OFFICIAL = /^https:\/\/(www\.)?([a-z0-9-]+\.)*(canada\.ca|gc\.ca|alberta\.ca|calgary\.ca|edmonton\.ca|institutpf\.org|fpcanada\.ca|airbfordrivers\.ca)\//;
 
 test("every fact is from an official source and not past its review date", () => {
   test.skip(test.info().project.name !== "desktop");
@@ -29,11 +29,15 @@ test("every fact shown on a page links to its official source", async ({ request
   const problems: string[] = [];
   for (const p of await sitemapPaths(request)) {
     const html = await (await request.get(p)).text();
+    // Each fact shown on a page must link to its source at least once on that page
+    // (repeat mentions may use nosource to avoid clutter).
+    const shown = new Map<string, boolean>();
     for (const m of html.matchAll(/<span class="fact[^"]*" data-fact="([^"]+)"[^>]*>([\s\S]*?)<\/span>/g)) {
       const f = facts.find((x) => x.id === m[1]);
-      if (!f) problems.push(`${p}: unknown fact ${m[1]}`);
-      else if (!m[2].includes(`href="${f.url}"`)) problems.push(`${p}: fact ${m[1]} shown without its source link`);
+      if (!f) { problems.push(`${p}: unknown fact ${m[1]}`); continue; }
+      shown.set(m[1], (shown.get(m[1]) ?? false) || m[2].includes(`href="${f.url}"`));
     }
+    for (const [id, linked] of shown) if (!linked) problems.push(`${p}: fact ${id} never links to its source on this page`);
     for (const m of html.matchAll(/<a href="([^"]+)"[^>]*data-official/g))
       if (!m[1].startsWith("https://")) problems.push(`${p}: official link not https: ${m[1]}`);
   }
