@@ -45,7 +45,7 @@ cesg-lifetime:
   value: "$7,200"
   applies: [canada]
   effective: "current"
-  source: { title: "Canada Education Savings Grant", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/education/education-savings/savings-grant.html" }
+  source: { title: "Canada Education Savings Grant", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/education/education-savings/estimating-amounts.html" }
   checked: 2026-11-24
   reviewBy: 2027-03-01
 
@@ -63,27 +63,27 @@ rolr-enmax-2025-2026:
   value: "12.06¢ per kWh"
   applies: [alberta, calgary]
   effective: "until December 31, 2026"
-  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://ucahelps.alberta.ca/utility-choices/current-rates-and-pricing/default-rates/" }
   checked: 2026-11-24
-  reviewBy: 2026-12-15
+  reviewBy: 2026-12-03
 
 rolr-epcor-2025-2026:
-  label: Rate of Last Resort energy charge, EPCOR area (Jan 1, 2025 – Dec 31, 2026)
+  label: Rate of Last Resort energy charge, EPCOR and FortisAlberta areas (Jan 1, 2025 – Dec 31, 2026)
   value: "12.01¢ per kWh"
   applies: [alberta, edmonton]
   effective: "until December 31, 2026"
-  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://ucahelps.alberta.ca/utility-choices/current-rates-and-pricing/default-rates/" }
   checked: 2026-11-24
-  reviewBy: 2026-12-15
+  reviewBy: 2026-12-03
 
 rolr-direct-energy-2025-2026:
   label: Rate of Last Resort energy charge, Direct Energy Regulated Services areas (Jan 1, 2025 – Dec 31, 2026)
   value: "12.02¢ per kWh"
   applies: [alberta]
   effective: "until December 31, 2026"
-  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://www.ucahelps.alberta.ca/regulated-rates.aspx" }
+  source: { title: "Regulated rates", publisher: "Utilities Consumer Advocate", short: "UCA", url: "https://ucahelps.alberta.ca/utility-choices/current-rates-and-pricing/default-rates/" }
   checked: 2026-11-24
-  reviewBy: 2026-12-15
+  reviewBy: 2026-12-03
 
 seniors-tax-deferral-rate:
   label: Seniors Property Tax Deferral Program interest rate (simple)
@@ -99,7 +99,7 @@ fpcanada-cdn-equity-return:
   value: "6.3%"
   applies: [canada]
   effective: "2026 guidelines"
-  source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://www.institutpf.org/en/projection-assumption-guidelines" }
+  source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://institutpf.org/en/projection-assumption-guidelines" }
   checked: 2026-11-24
   reviewBy: 2027-05-01
 
@@ -154,5 +154,14 @@ condo-deductible-chargeback-max:
   applies: [alberta]
   effective: "since February 15, 2026"
   source: { title: "Supporting Alberta's condominium communities", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/supporting-albertas-condominium-communities" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+rrsp-limit-2027:
+  label: RRSP dollar limit, 2027
+  value: "$35,390"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
   checked: 2026-11-24
   reviewBy: 2027-03-01
