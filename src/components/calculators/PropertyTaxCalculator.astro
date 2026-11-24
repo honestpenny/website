@@ -1,0 +1,39 @@
+---
+// No sign-up, no data leaves the page. Result updates as you type (NN/g calculator rules).
+---
+<section class="calc" aria-labelledby="ptc-h" data-calc="property-tax">
+  <h3 id="ptc-h">Property tax saving estimate</h3>
+  <p class="muted">Use the numbers on your assessment notice and last year's tax bill. Nothing you type is sent anywhere.</p>
+  <div class="field"><label for="ptc-assessed">Your assessment <span class="hint">From your notice, e.g. 550000</span></label>
+    <input id="ptc-assessed" type="number" inputmode="numeric" min="0" step="1000" value="550000" /></div>
+  <div class="field"><label for="ptc-fair">What you think it should be <span class="hint">Based on similar homes nearby</span></label>
+    <input id="ptc-fair" type="number" inputmode="numeric" min="0" step="1000" value="520000" /></div>
+  <div class="field"><label for="ptc-bill">Your yearly property tax <span class="hint">From last year's tax bill</span></label>
+    <input id="ptc-bill" type="number" inputmode="numeric" min="0" step="10" value="3600" /></div>
+  <p class="result" aria-live="polite" data-out></p>
+  <details><summary>How we calculate this</summary>
+    <p>Saving ≈ your yearly tax × (the reduction ÷ your assessment). Example: a $30,000 cut on a $550,000 assessment is 5.5%, so about 5.5% of a $3,600 bill, which is about $196 a year.</p>
+    <p>It's an estimate. Your actual bill depends on the tax rate council sets each spring, and a successful complaint only changes your own assessment.</p>
+  </details>
+</section>
+<script>
+  const fmt = (n: number) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+  for (const root of document.querySelectorAll<HTMLElement>('[data-calc="property-tax"]')) {
+    const v = (id: string) => Number((root.querySelector<HTMLInputElement>(`#${id}`)!).value);
+    const out = root.querySelector<HTMLElement>("[data-out]")!;
+    const run = () => {
+      const a = v("ptc-assessed"), f = v("ptc-fair"), b = v("ptc-bill");
+      if (!(a > 0) || !(b > 0) || !(f >= 0)) { out.textContent = "Enter your assessment and yearly tax to see an estimate."; return; }
+      if (f >= a) { out.textContent = "Your estimate is not lower than your assessment, so a complaint wouldn't lower your bill."; return; }
+      const saving = b * ((a - f) / a);
+      out.innerHTML = `If the assessment came down to ${fmt(f)}, you'd pay roughly <strong>${fmt(saving)} less a year</strong> (about ${fmt(saving / 12)} a month).`;
+    };
+    root.addEventListener("input", run); run();
+  }
+</script>
+<style>
+  .calc { border: 2px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .calc h3 { margin-top: 0.25rem; }
+  .result { font-size: 1.2rem; background: var(--tint-answer); padding: 0.75rem 1rem; }
+  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+</style>

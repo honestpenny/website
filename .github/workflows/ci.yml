@@ -1,0 +1,28 @@
+# Tests only. Deploys are done by Cloudflare Workers Builds, never by this workflow.
+# Public repo → standard runners are free. Required check on main: "test".
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc, cache: npm }
+      - run: npm ci
+      - run: npx astro check
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+  audit:
+    # Advisory and separate, so a failing audit can never skip the real tests (C2C LESSONS §28).
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc, cache: npm }
+      - run: npm audit --omit=dev

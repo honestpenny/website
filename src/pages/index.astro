@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Signup from "../components/Signup.astro";
+import { site } from "../lib/site";
+import { longDate, isoDate } from "../lib/format";
+const guides = (await getCollection("guides", ({ data }) => !data.draft)).sort((a, b) => +b.data.lastChecked - +a.data.lastChecked);
+const today = new Date();
+const upcoming = guides
+  .flatMap((g) => g.data.deadlines.map((d) => ({ ...d, guide: g })))
+  .filter((d) => d.date >= today)
+  .sort((a, b) => +a.date - +b.date)
+  .slice(0, 3);
+---
+<Base title="Home" description={site.description}>
+  <div class="prose">
+    <h1>Money help for Albertans that isn't selling you anything</h1>
+    <p class="lede">Plain guides to cutting bills, claiming what you're owed and saving more, written for Alberta first. Every number links to the official source, with the date we checked it.</p>
+
+    <section aria-labelledby="soon-h">
+      <h2 id="soon-h">Coming up</h2>
+      {upcoming.length ? (
+        <ol class="soon">
+          {upcoming.map((d) => (
+            <li><time datetime={isoDate(d.date)}><strong>{d.approximate ? "About " : ""}{longDate(d.date)}</strong></time><br />{d.label}{/[.)]$/.test(d.label) ? "" : "."} <a href={`/guides/${d.guide.id}/`}>Read the guide</a></li>
+          ))}
+        </ol>
+      ) : <p>No deadlines in the next few weeks.</p>}
+    </section>
+
+    <section aria-labelledby="guides-h">
+      <h2 id="guides-h">Start here</h2>
+      <ul class="guide-list">
+        {guides.map((g) => (
+          <li><a href={`/guides/${g.id}/`}>{g.data.title}</a><br /><span class="muted">{g.data.summary}</span></li>
+        ))}
+      </ul>
+      <p><a href="/guides/">All guides</a></p>
+    </section>
+
+    <Signup />
+
+    <section aria-labelledby="why-h">
+      <h2 id="why-h">Why trust us</h2>
+      <ul>
+        <li>No company can pay to be listed, ranked or reviewed. <a href="/editorial-code/">Our editorial code</a></li>
+        <li>We tell you exactly how we make money. Right now: <a href="/how-we-make-money/">we don't</a>.</li>
+        <li>Every guide is written and checked by our team, and every fact has a source and a date. <a href="/how-we-check-facts/">How we check</a></li>
+      </ul>
+    </section>
+  </div>
+</Base>
+<style>
+  .lede { font-size: 1.25rem; }
+  .soon { padding-left: 1.25rem; } .soon li { margin-bottom: 1rem; }
+  .guide-list { list-style: none; padding: 0; } .guide-list li { margin-bottom: 1.1rem; } .guide-list a { font-weight: 700; font-size: 1.15rem; }
+</style>

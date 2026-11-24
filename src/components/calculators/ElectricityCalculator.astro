@@ -1,0 +1,42 @@
+---
+// Compares only the ENERGY part of an Alberta power bill. Delivery charges are regulated and
+// the same whichever retailer you pick (UCA), so they cancel out of the comparison.
+---
+<section class="calc" aria-labelledby="ec-h" data-calc="electricity">
+  <h3 id="ec-h">Stay on the default rate, or take a fixed offer?</h3>
+  <p class="muted">Compares the energy charge only. Delivery charges are the same whichever retailer you choose. Nothing you type is sent anywhere.</p>
+  <div class="field"><label for="ec-kwh">Electricity you use a month (kWh) <span class="hint">Find it on your bill. 600 is just an example.</span></label>
+    <input id="ec-kwh" type="number" inputmode="numeric" min="0" step="10" value="600" /></div>
+  <div class="field"><label for="ec-default">Default rate (cents per kWh) <span class="hint">Calgary ENMAX area: 12.06 until December 31, 2026</span></label>
+    <input id="ec-default" type="number" inputmode="decimal" min="0" step="0.01" value="12.06" /></div>
+  <div class="field"><label for="ec-offer">Fixed offer you're considering (cents per kWh)</label>
+    <input id="ec-offer" type="number" inputmode="decimal" min="0" step="0.01" value="11.50" /></div>
+  <div class="field"><label for="ec-admin">Extra monthly fees on the offer ($) <span class="hint">Admin or service fees beyond what you pay now. 0 if none.</span></label>
+    <input id="ec-admin" type="number" inputmode="decimal" min="0" step="0.5" value="0" /></div>
+  <p class="result" aria-live="polite" data-out></p>
+  <details><summary>How we calculate this</summary>
+    <p>Yearly energy cost = kWh a month × 12 × rate ÷ 100, plus any extra monthly fees × 12. We compare the two totals. It ignores exit fees, so check those before you sign.</p>
+  </details>
+</section>
+<script>
+  const fmt = (n: number) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+  for (const root of document.querySelectorAll<HTMLElement>('[data-calc="electricity"]')) {
+    const v = (id: string) => Number((root.querySelector<HTMLInputElement>(`#${id}`)!).value);
+    const out = root.querySelector<HTMLElement>("[data-out]")!;
+    const run = () => {
+      const kwh = v("ec-kwh"), d = v("ec-default"), o = v("ec-offer"), fee = v("ec-admin");
+      if (!(kwh > 0) || !(d > 0) || !(o > 0)) { out.textContent = "Enter your monthly kWh and both rates."; return; }
+      const stay = (kwh * 12 * d) / 100, take = (kwh * 12 * o) / 100 + fee * 12, diff = stay - take;
+      out.innerHTML = Math.abs(diff) < 1 ? "About the same either way." :
+        diff > 0 ? `The offer would save about <strong>${fmt(diff)} a year</strong> on energy (${fmt(diff / 12)} a month).`
+                 : `The offer would cost about <strong>${fmt(-diff)} more a year</strong>. Staying put is cheaper.`;
+    };
+    root.addEventListener("input", run); run();
+  }
+</script>
+<style>
+  .calc { border: 2px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .calc h3 { margin-top: 0.25rem; }
+  .result { font-size: 1.2rem; background: var(--tint-answer); padding: 0.75rem 1rem; }
+  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+</style>

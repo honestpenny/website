@@ -1,0 +1,12 @@
+// Assets-only Worker: no Worker script, so every request is a free static-asset request.
+// Deployed by Cloudflare Workers Builds from the GitHub repo (NOT by GitHub Actions; see CLAUDE.md).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "honestpenny-website",
+  "compatibility_date": "2026-11-24",
+  "assets": {
+    "directory": "./dist/",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

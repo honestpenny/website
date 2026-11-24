@@ -1,0 +1,17 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+<Base title="Privacy" description="What Honest Penny collects (very little), why, and your rights under Canadian privacy law. No cookies, no tracking, no data sales.">
+  <div class="prose">
+    <h1>Privacy</h1>
+    <ul>
+      <li><strong>No cookies, no ad tracking.</strong> This site doesn't set cookies or use advertising trackers.</li>
+      <li><strong>Calculators stay on your device.</strong> Numbers you type into a calculator are never sent to us.</li>
+      <li><strong>Email sign-up.</strong> If you sign up for the weekly email, we keep your email address and the date you agreed, only to send you that email. You can unsubscribe from any email in one click.</li>
+      <li><strong>We never sell or share your data</strong> for anyone else's marketing.</li>
+    </ul>
+    <p>To see, correct or delete what we hold about you, email <a href={`mailto:${site.contactEmail}?subject=Privacy`}>{site.contactEmail}</a>.</p>
+    <p class="muted">Last updated November 24, 2026. If we add a service that changes any of this, we'll update this page first.</p>
+  </div>
+</Base>

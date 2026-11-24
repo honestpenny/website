@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+const guides = await getCollection("guides", ({ data }) => !data.draft);
+const groups = [
+  { id: "bills", label: "Bills" }, { id: "housing", label: "Housing and property tax" },
+  { id: "benefits", label: "Benefits and credits" }, { id: "tax", label: "Tax" }, { id: "savings", label: "Savings" },
+  { id: "debt", label: "Debt" }, { id: "investing", label: "Investing" }, { id: "travel", label: "Travel" },
+];
+---
+<Base title="All guides" description="Every Honest Penny guide to cutting bills, claiming benefits and saving money in Alberta and Canada, grouped by topic.">
+  <div class="prose">
+    <h1>All guides</h1>
+    <p>We're starting with the things Albertans can act on this winter. More guides are added every week.</p>
+    {groups.map((grp) => {
+      const items = guides.filter((g) => g.data.topic === grp.id);
+      return items.length ? (
+        <section aria-labelledby={grp.id}><h2 id={grp.id}>{grp.label}</h2>
+          <ul>{items.map((g) => <li><a href={`/guides/${g.id}/`}>{g.data.title}</a></li>)}</ul></section>
+      ) : null;
+    })}
+  </div>
+</Base>

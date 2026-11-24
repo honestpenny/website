@@ -1,0 +1,38 @@
+# Honest Penny robots.txt
+# Policy (decided 2026-11-24): search engines and AI search/answer tools may read and cite us;
+# AI model *training* crawlers may not. Cloudflare's Bot Preference Sync may prepend its own
+# block above this file — always check the LIVE file after changing Cloudflare settings.
+# Crawler names drift; re-check vendor docs before editing (C2C LESSONS §7).
+#
+# Content-Signal: search=yes, ai-input=yes, ai-train=no
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+Disallow: /cdn-cgi/
+
+# Search + live answer fetchers: allowed
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /cdn-cgi/
+
+# Model training crawlers: not allowed
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://honestpenny.ca/sitemap-index.xml

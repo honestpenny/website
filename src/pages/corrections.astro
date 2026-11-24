@@ -1,0 +1,13 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+<Base title="Corrections" description="Spotted a mistake or something out of date on Honest Penny? How to tell us, and how we fix and record corrections.">
+  <div class="prose">
+    <h1>Corrections</h1>
+    <p>Money rules change, and we sometimes get things wrong. If you spot a mistake or something out of date, email <a href={`mailto:${site.contactEmail}?subject=Correction`}>{site.contactEmail}</a> with the page and what's wrong. A link to an official source helps.</p>
+    <p>We aim to check every report within two working days. When we change a fact, we update the "last checked" date on the guide and list the correction below.</p>
+    <h2>Corrections made</h2>
+    <p>None yet.</p>
+  </div>
+</Base>

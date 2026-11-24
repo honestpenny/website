@@ -1,0 +1,31 @@
+{
+  "name": "honestpenny-website",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test:e2e": "playwright test",
+    "check:live": "node scripts/check-live.mjs",
+    "test": "npm run build && playwright test"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6",
+    "@astrojs/sitemap": "^3.7.6",
+    "@fontsource/atkinson-hyperlegible-next": "^5.3.0",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.168.0"
+  },
+  "private": true
+}

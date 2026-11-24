@@ -1,0 +1,16 @@
+---
+import { longDate, isoDate } from "../lib/format";
+interface Props { items: { date: Date; label: string; approximate: boolean }[]; heading?: string }
+const { items, heading = "Dates to know" } = Astro.props;
+---
+{items.length > 0 && (
+  <aside class="box deadline" aria-label={heading}>
+    <span class="box-label">{heading}</span>
+    <ul class="dl">
+      {items.map((d) => (
+        <li><time datetime={isoDate(d.date)}><strong>{d.approximate ? "About " : ""}{longDate(d.date)}</strong></time>: {d.label}</li>
+      ))}
+    </ul>
+  </aside>
+)}
+<style>.dl { list-style: none; padding: 0; margin: 0; } .dl li { margin-bottom: 0.5rem; }</style>

@@ -1,0 +1,63 @@
+/* Honest Penny — design tokens. Palette checked for WCAG AA on --paper (see docs/DESIGN.md).
+   Rules: no gradients, no shadows, no decorative motion. Colour never carries meaning alone:
+   every box has a text label. */
+@font-face { font-family: "Atkinson Next"; src: url("/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Atkinson Next"; src: url("/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+:root {
+  --paper: #fbf8f3; --ink: #211e1a; --muted: #5c554d;
+  --copper: #b5652b; --copper-dark: #8c4718; --spruce: #1f4d4a;
+  --link: #1b5e7a; --visited: #5b3a7a; --danger: #a3271b; --border: #8a8178;
+  --tint-answer: #eaf2f1; --tint-honest: #f6eadf; --tint-deadline: #fff1d1; --deadline-edge: #9a5b00;
+  --sans: "Atkinson Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --measure: 40rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #181614; --ink: #efe9e1; --muted: #c2b9ae; --copper: #e0995f; --copper-dark: #e0995f;
+    --spruce: #0f2e2c; --link: #8cc7dc; --visited: #c7a8e6; --danger: #ff9b8f; --border: #8a8178;
+    --tint-answer: #1d2b2a; --tint-honest: #2b221a; --tint-deadline: #2e2611; --deadline-edge: #e0b354;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.125rem/1.6 var(--sans); }
+h1, h2, h3 { font-family: var(--serif); line-height: 1.2; font-weight: 700; text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 1.4rem + 2vw, 2.6rem); margin: 0.5rem 0 0.75rem; }
+h2 { font-size: 1.55rem; margin: 2.5rem 0 0.75rem; }
+h3 { font-size: 1.2rem; margin: 1.75rem 0 0.5rem; }
+p, ul, ol, table { margin: 0 0 1rem; }
+li { margin-bottom: 0.35rem; }
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:visited { color: var(--visited); }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--copper); outline-offset: 2px; }
+strong { font-weight: 700; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 1rem; }
+th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th, tbody th { font-weight: 700; }
+.wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
+.prose { max-width: var(--measure); }
+.muted { color: var(--muted); }
+.skip { position: absolute; left: -999px; } .skip:focus { left: 1rem; top: 1rem; background: var(--paper); padding: 0.5rem 1rem; z-index: 10; }
+
+/* Boxes: label first, colour second. */
+.box { border-left: 5px solid var(--spruce); background: var(--tint-answer); padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.box > :last-child { margin-bottom: 0; }
+.box-label { display: block; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.box.honest { border-color: var(--copper); background: var(--tint-honest); }
+.box.deadline { border-color: var(--deadline-edge); background: var(--tint-deadline); }
+.box.warning { border-color: var(--danger); background: var(--tint-honest); }
+
+.button, button { font: 700 1rem/1 var(--sans); background: var(--spruce); color: #fff; border: 2px solid var(--spruce);
+  padding: 0.8rem 1.2rem; min-height: 44px; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+.button:visited { color: #fff; }
+label { display: block; font-weight: 700; margin-bottom: 0.25rem; }
+.hint { display: block; font-weight: 400; color: var(--muted); font-size: 0.95rem; }
+input[type="text"], input[type="email"], input[type="number"] { font: inherit; color: var(--ink); background: var(--paper);
+  border: 2px solid var(--border); border-radius: 4px; padding: 0.55rem 0.7rem; min-height: 44px; width: 100%; max-width: 20rem; }
+.field { margin-bottom: 1rem; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
