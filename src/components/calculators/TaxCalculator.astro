@@ -10,7 +10,7 @@ import { TAX_YEAR } from "../../lib/tax";
     <input id="tx-extra" type="number" inputmode="numeric" min="0" step="500" value="5000" /></div>
   <div class="result" aria-live="polite" data-out></div>
   <details><summary>How we calculate this</summary>
-    <p>We apply each {TAX_YEAR} federal and Alberta tax rate only to the part of your income inside that bracket, then subtract the federal and Alberta basic personal amount credits. We leave out CPP and EI credits, other credits and deductions, so your real tax is usually a little lower. It's a guide, not your tax bill.</p>
+    <p>We apply each {TAX_YEAR} federal and Alberta tax rate only to the part of your income inside that bracket, then subtract the federal and Alberta basic personal amount credits. We leave out CPP and EI credits and other credits and deductions, so for most people real tax is a little lower. Above $181,440 it can be slightly higher, because we don't model the federal basic personal amount shrinking. It's a guide, not your tax bill.</p>
   </details>
 </section>
 <script>

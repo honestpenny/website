@@ -17,7 +17,7 @@ function bracketTax(income: number, brackets: [number, number][]) {
   return tax;
 }
 export function marginalRate(income: number) {
-  const r = (b: [number, number][]) => b.find(([top]) => income < top)![1];
+  const r = (b: [number, number][]) => b.find(([top]) => income <= top)![1];
   return r(FEDERAL.brackets) + r(ALBERTA.brackets);
 }
 export function estimate(income: number) {

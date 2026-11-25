@@ -77,9 +77,12 @@ new pages are covered automatically. After any form change, do one real labelled
   terms/privacy, media/errors-and-omissions liability insurance quote, CIPO trademark search/filing for "Honest Penny".
 
 ## Guides roadmap (each: research → write → /fact-check → publish)
-Live: property assessment, electricity RoLR 2027, Honest Penny Steps. Next: natural gas, phones & internet, car & home
-insurance (Alberta Care-First auto reform 2027), 2026/2027 tax brackets explained, retirement & savings accounts
-compared (TFSA, RRSP, FHSA, RESP, RDSP, pensions, non-registered), benefits checklist, airline refunds.
+Written (2026-11-24): property assessment, electricity RoLR 2027, natural gas fixed vs default, phones & internet,
+car & home insurance (Care-First 2027), 2026 tax brackets (+ calculator, `src/lib/tax.ts`), TFSA/RRSP/FHSA/RESP/RDSP
+compared, Honest Penny Steps. Fact-check reports: `docs/fact-checks/`.
+Next: benefits checklist (CCB, CGEB, ACFB, CWB, CDB, dental), airline refunds (APPR / Bill C-31 status), 2027 tax
+tables once CRA's rates page updates, RoLR 2027 rates (~Dec 2), Calgary/Edmonton 2027 assessment dates (Jan).
+Yearly: update `src/lib/tax.ts` brackets each January (test pins $70,000 → total).
 
 ## Repo identity
 Commits use the repo-local identity "Honest Penny" + GitHub no-reply email. Never commit with the founder's
