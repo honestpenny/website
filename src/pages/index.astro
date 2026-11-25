@@ -88,7 +88,7 @@ const topics = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
       </li>
       <li class="card tool lift">
         <span class="icon"><Icon name="steps" /></span>
-        <h3><a class="card-link" href="/guides/honest-penny-steps/">The 8 Steps</a></h3>
+        <h3><a class="card-link" href="/steps/">The 8 Steps</a></h3>
         <p class="muted">A money plan built for Canada, one step at a time. Tick them off as you go.</p>
         <div class="mini"><div class="bar"><span style="width: 37.5%"></span></div><span class="f-sub">Example: 3 of 8 done</span></div>
       </li>
@@ -121,10 +121,10 @@ const topics = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
     <div>
       <h2 id="steps-h" class="section-h">A plan, not a pep talk.</h2>
       <p class="lede">The 8 Steps take you from struggling to building wealth, in order, using Canadian accounts and benefits. Built for here, not copied from the US.</p>
-      <a class="button big" href="/guides/honest-penny-steps/">Start the 8 Steps <Icon name="arrow" size={20} /></a>
+      <a class="button big" href="/steps/">Start the 8 Steps <Icon name="arrow" size={20} /></a>
     </div>
     <ol class="step-list">
-      {STEPS.map((s) => <li><span class="sn" aria-hidden="true">{s.n}</span><span><a href={`/guides/honest-penny-steps/#${s.slug}`}><span class="sr-only">Step {s.n}: </span>{s.title}</a><span class="muted">{s.short}</span></span></li>)}
+      {STEPS.map((s) => <li><span class="sn" aria-hidden="true">{s.n}</span><span><a href={`/steps/#step-${s.n}`}><span class="sr-only">Step {s.n}: </span>{s.title}</a><span class="muted">{s.short}</span></span></li>)}
     </ol>
   </section>
 

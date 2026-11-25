@@ -92,3 +92,18 @@ test("house style: every guide has the Checked stamp; no all-caps text anywhere;
   }
   expect(problems, problems.join("\n")).toEqual([]);
 });
+
+test("8 Steps page: find your step, tick earlier steps, progress shared with the guide tracker", async ({ page }) => {
+  await page.goto("/steps/");
+  await page.locator("[data-f-begin]").click();
+  await expect(page.locator("[data-f-q]")).toBeFocused();
+  const answer = async (v: string) => { await page.locator("[data-f-opts]").getByLabel(v, { exact: true }).check(); await page.locator("[data-f-step]").getByRole("button", { name: "Continue" }).click(); };
+  await answer("Yes"); await answer("Yes"); await answer("Yes"); await answer("No");
+  await expect(page.locator("[data-f-res]")).toHaveText(/You're on Step 4/);
+  await expect(page.locator("[data-f-res]")).toBeFocused();
+  await page.locator("[data-f-tick]").click();
+  await expect(page.locator("[data-done]")).toHaveText("3");
+  await expect(page.locator("[data-next]")).toContainText("Step 4");
+  await page.goto("/guides/honest-penny-steps/");
+  await expect(page.locator("[data-tracker] [role=status]")).toHaveText("3 of 8 done.");
+});
