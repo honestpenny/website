@@ -1,0 +1,194 @@
+---
+title: "Taking money out: RRSP vs TFSA vs a regular account"
+summary: "What it really costs to take money out of an RRSP, TFSA or non-registered account, now and in retirement, with inflation and tax changes in mind."
+topic: savings
+applies: ["alberta", "canada"]
+author: "Honest Penny team"
+published: 2026-11-25
+lastChecked: 2026-11-25
+nextReview: 2027-02-15
+draft: false
+sources:
+  - title: "Tax rates on withdrawals"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/making-withdrawals/tax-rates-on-withdrawals.html"
+    checked: 2026-11-25
+  - title: "Withdrawing from your RRSPs"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/making-withdrawals/withdrawing-your-rrsps.html"
+    checked: 2026-11-25
+  - title: "RRSP options when you turn 71"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/rrsp-options-when-you-turn-71.html"
+    checked: 2026-11-25
+  - title: "Chart: prescribed factors (RRIF minimum amounts)"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/completing-slips-summaries/t4rsp-t4rif-information-returns/payments/chart-prescribed-factors.html"
+    checked: 2026-11-25
+  - title: "Pension income splitting"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/pension-income-splitting.html"
+    checked: 2026-11-25
+  - title: "Line 31400: Pension income amount"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-31400-pension-income-amount.html"
+    checked: 2026-11-25
+  - title: "Withdrawing from your TFSA"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/withdraw.html"
+    checked: 2026-11-25
+  - title: "Excess TFSA amounts"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/contributing/overcontribute.html"
+    checked: 2026-11-25
+  - title: "What is the Tax-Free Savings Account (effect on benefits)"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/what.html"
+    checked: 2026-11-25
+  - title: "Line 12100: Interest and other investment income"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12100-interest-other-investment-income.html"
+    checked: 2026-11-25
+  - title: "Capital losses and deductions"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains/capital-losses-deductions.html"
+    checked: 2026-11-25
+  - title: "Income Tax Act, section 38 (taxable capital gain)"
+    publisher: "Justice Laws (Government of Canada)"
+    url: "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-38.html"
+    checked: 2026-11-25
+  - title: "OAS pension recovery tax"
+    publisher: "Government of Canada"
+    url: "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/recovery-tax.html"
+    checked: 2026-11-25
+  - title: "Guaranteed Income Supplement: eligibility"
+    publisher: "Government of Canada"
+    url: "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/guaranteed-income-supplement/eligibility.html"
+    checked: 2026-11-25
+  - title: "Home Buyers' Plan"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/what-home-buyers-plan.html"
+    checked: 2026-11-25
+  - title: "Lifelong Learning Plan: participate"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/lifelong-learning-plan/participate.html"
+    checked: 2026-11-25
+  - title: "Inflation-control target"
+    publisher: "Bank of Canada"
+    url: "https://www.bankofcanada.ca/rates/indicators/key-variables/inflation-control-target/"
+    checked: 2026-11-25
+  - title: "Projection Assumption Guidelines 2026"
+    publisher: "FP Canada and Institut de planification financière"
+    url: "https://institutpf.org/assets/Documents/Normes-projection/InstituteFP-PAG2026.pdf"
+    checked: 2026-11-25
+---
+
+import Fact from "../../components/Fact.astro";
+import Official from "../../components/Official.astro";
+import QuickAnswer from "../../components/QuickAnswer.astro";
+import HonestTake from "../../components/HonestTake.astro";
+import Warning from "../../components/Warning.astro";
+import Receipt from "../../components/Receipt.astro";
+import WithdrawalCalculator from "../../components/calculators/WithdrawalCalculator.astro";
+import { estimateFor } from "../../lib/tax";
+
+export const money = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+export const extra = estimateFor(2026, 80000).total - estimateFor(2026, 70000).total;
+
+<QuickAnswer>
+- **TFSA:** take money out any time, tax-free, and it doesn't affect government benefits. The room comes back on January 1 of the next year.
+- **RRSP:** every dollar you take out is **taxed as income** in that year, and you **don't get the contribution room back** (except under the Home Buyers' Plan or Lifelong Learning Plan). The bank only holds back part of the tax up front.
+- **Regular (non-registered) account:** taking cash out isn't taxed, but selling investments can be: <Fact id="capital-gains-inclusion" /> of a capital gain is taxable. Interest is taxed every year.
+- In retirement, RRSP money must start coming out after you turn 71 (as RRIF minimums), can raise your taxes and can reduce Old Age Security. TFSA money doesn't.
+</QuickAnswer>
+
+## The three accounts side by side
+
+| | RRSP | TFSA | Regular (non-registered) |
+|---|---|---|---|
+| Going in | Tax deduction now | No deduction | No deduction |
+| While it grows | No tax | No tax | Interest taxed every year; dividends and gains taxed when paid or sold |
+| Coming out | Taxed as income | Tax-free | Cash is free; selling can create a taxable gain |
+| Room after you withdraw | Doesn't come back (HBP/LLP repayments aside) | Comes back next January 1 | No limits |
+| Effect on income-tested benefits | Withdrawals count as income | None for federal benefits | Taxable investment income counts |
+| Must you withdraw? | Not before 71. By the end of the year you turn 71 you must convert it (usually to a RRIF, with yearly minimums from the next year) or cash it out | Never | Never |
+
+## Taking money out of an RRSP before retirement
+
+When you withdraw, the bank **withholds** tax and sends it to the CRA: <Fact id="rrsp-withholding-rates" /> (up to $5,000, over $5,000 to $15,000, and over $15,000, outside Quebec). That's a **prepayment, not your final tax**. At tax time the whole withdrawal is added to your income and taxed at your marginal rate, so many people owe more in April.
+
+<Receipt
+  title="Example: $10,000 out of an RRSP on a $70,000 income"
+  rows={[
+    { label: "Amount you take out", amount: "$10,000" },
+    { label: "Withheld by the bank (20%)", amount: "$2,000" },
+    { label: "Real extra tax at filing (2026, Alberta)", amount: money(extra) },
+    { label: "Still to pay when you file", amount: money(extra - 2000) },
+  ]}
+  total={{ label: "What you actually keep", amount: money(10000 - extra) }}
+  plain="And that $10,000 of RRSP room doesn't come back: you can't put it back later."
+  method="We add the $10,000 to a $70,000 income and work out the extra federal and Alberta tax with 2026 brackets and basic personal amounts only (the same code as our tax calculator). Real returns may include other credits."
+/>
+
+The withdrawal also counts in your net income, so it can lower next year's Canada Child Benefit, GST/HST credit and other income-tested benefits. Taking it out in smaller pieces lowers what the bank holds back, not the tax you owe.
+
+Two exceptions let you borrow from your own RRSP without the tax, as long as you pay it back on schedule:
+
+- **Home Buyers' Plan:** up to <Fact id="hbp-limit" /> for a first home, repaid over up to 15 years. A missed repayment is added to your income.
+- **Lifelong Learning Plan:** up to $10,000 a year and $20,000 in total for full-time education, repaid over 10 years.
+
+<WithdrawalCalculator />
+
+<Warning label="Before you cash in an RRSP to pay off debt">
+You'll lose part of it to tax and the room for good. If debt is the problem, call a free, non-profit credit counsellor first: they may find a cheaper way. See <a href="/get-help/">Get help</a>.
+</Warning>
+
+## RRSPs in retirement: the rules that bite
+
+- **By the end of the year you turn 71**, your RRSP must become a RRIF (or an annuity, or be cashed out). Most people choose a RRIF.
+- **A RRIF has a minimum withdrawal every year**, based on your age: <Fact id="rrif-minimum-age-71" /> of the January 1 value at 71, rising each year (about 6.8% at 80 and 11.9% at 90). No tax is withheld on the minimum, but it's still taxable. You can choose to base the minimum on a younger spouse's or partner's age when you set up the RRIF, which lowers it.
+- **Two tax breaks help.** From 65, up to $2,000 a year of RRIF income can qualify for the federal **pension income amount**, a tax credit (Alberta has a similar credit), and you can **split** up to half of it with a spouse or partner, which can lower your combined tax.
+- **Old Age Security clawback:** if your income is over <Fact id="oas-clawback-threshold-2026-income" /> (2026 income), you repay 15% of the amount above it from your OAS. Large RRSP or RRIF withdrawals can push you over; TFSA withdrawals can't.
+- **Guaranteed Income Supplement:** for lower-income seniors, RRSP and pension income reduces the GIS. TFSA withdrawals don't.
+- **At death**, an RRSP or RRIF counts as income on your final return unless it passes to a spouse or partner (or, in some cases, a financially dependent child or grandchild). A large balance can mean a large final tax bill.
+
+## Taking money out of a TFSA
+
+- Withdrawals are **tax-free** and don't count as income, so they don't affect OAS, GIS, EI, the Canada Child Benefit, the Canada Workers Benefit or the GST/HST credit (the CRA's list of federal benefits).
+- The amount you take out is added back to your room on **January 1 of the next year**. Put it back sooner without unused room and you pay **1% a month** on the excess.
+- Total room for someone who's been eligible since 2009 is <Fact id="tfsa-cumulative-room-2026" /> in 2026.
+
+## Taking money out of a regular account
+
+- **Interest** (savings, GICs) is taxed every year as you earn it, at your full marginal rate, even if you don't take it out.
+- **Eligible Canadian dividends** are taxed at a lower rate thanks to the dividend tax credit. But they're "grossed up" by 38% on your return, so they raise your income for the OAS clawback by more than the cash you received.
+- **Capital gains** are usually taxed when you sell (or give away, or move investments into a TFSA or RRSP), and funds can also pay out taxable capital-gains distributions each year. Only <Fact id="capital-gains-inclusion" nosource /> of the gain is taxable. A loss can offset gains from the past 3 years or any future year.
+- Moving cash out isn't taxed. Selling an investment to raise cash is what creates the gain.
+
+## Planning for inflation and the cost of living
+
+A dollar buys less every year. The Bank of Canada aims to keep inflation at <Fact id="boc-inflation-target" />, and FP Canada's 2026 planning guidelines assume <Fact id="fpcanada-inflation" /> a year. At that rate, $100,000 in 20 years buys about what $66,000 buys today.
+
+What helps:
+
+- **Count on indexing where it exists.** Federal tax brackets, CPP and Old Age Security rise with inflation; Alberta's brackets rise with inflation up to 2% a year; the TFSA limit rises in $500 steps. RRIF and savings balances don't: only growth protects them.
+- **Plan with realistic returns, after inflation.** FP Canada's guidelines for long-term planning suggest about <Fact id="fpcanada-cdn-equity-return" /> a year for Canadian stocks and <Fact id="fpcanada-fixed-income" /> for bonds, before fees. Take off inflation and fees to see what you really gain.
+- **Keep an emergency fund in cash**, so a bad year in the markets doesn't force you to sell or to cash in an RRSP at the worst time.
+
+## What if tax rates go up later?
+
+Nobody knows what tax rates will be in 20 years, and they can move either way: the lowest federal rate actually **fell** to 14% in 2026. What you can control is **flexibility**:
+
+- Money in a **TFSA** comes out tax-free under today's rules, whatever happens to income tax rates.
+- Money in an **RRSP or RRIF** is taxed at whatever rates apply when it comes out.
+- Holding some of each (and perhaps a regular account) gives you choices each year about **which pot to draw from**, so you can keep your taxable income steady instead of taking big, highly taxed lumps.
+
+This is a general principle, not a prediction. The right mix depends on your income now, your expected income in retirement, pensions and benefits.
+
+<HonestTake>
+The RRSP is a great deal when you put money in at a high tax rate and take it out at a lower one. It's a poor place for money you might need soon, because withdrawals are taxed and the room is lost. For flexible savings, the TFSA is usually better. Before you withdraw from either, run the numbers above, and if you're near retirement, think about how each dollar out affects your tax and your Old Age Security.
+</HonestTake>
+
+## This is general information
+
+It isn't personal tax or investment advice. If you're making big decisions about retirement withdrawals, a fee-only planner or a free tax clinic (for modest incomes) can look at your whole situation. See also <a href="/guides/tfsa-rrsp-fhsa-compared/">TFSA, RRSP, FHSA and more compared</a> and <a href="/steps/">the 8 Steps</a>.

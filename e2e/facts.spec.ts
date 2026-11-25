@@ -10,7 +10,7 @@ const facts = [...yaml.matchAll(/^([a-z0-9-]+):\n([\s\S]*?)(?=^\S|$(?![\s\S]))/g
   url: m[2].match(/url: "([^"]+)"/)?.[1] ?? "",
   reviewBy: m[2].match(/reviewBy: (\S+)/)?.[1] ?? "",
 }));
-const OFFICIAL = /^https:\/\/(www\.)?([a-z0-9-]+\.)*(canada\.ca|gc\.ca|alberta\.ca|calgary\.ca|calgaryarb\.ca|edmonton\.ca|institutpf\.org|fpcanada\.ca|airbfordrivers\.ca|ccts-cprst\.ca|albertamsa\.ca|auc\.ab\.ca|laws-lois\.justice\.gc\.ca|mint\.ca)\//;
+const OFFICIAL = /^https:\/\/(www\.)?([a-z0-9-]+\.)*(canada\.ca|gc\.ca|alberta\.ca|calgary\.ca|calgaryarb\.ca|edmonton\.ca|institutpf\.org|fpcanada\.ca|airbfordrivers\.ca|ccts-cprst\.ca|albertamsa\.ca|auc\.ab\.ca|laws-lois\.justice\.gc\.ca|mint\.ca|bankofcanada\.ca)\//;
 
 test("every fact is from an official source and not past its review date", () => {
   test.skip(test.info().project.name !== "desktop");

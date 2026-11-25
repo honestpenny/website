@@ -1,0 +1,128 @@
+---
+title: "New 2027 tax brackets for Albertans: what changes on January 1"
+summary: "The CRA has indexed the 2027 federal and Alberta tax brackets. Here are the new numbers, what they mean for your pay, and a 2027 calculator."
+topic: tax
+applies: ["alberta", "canada"]
+author: "Honest Penny team"
+published: 2026-11-25
+lastChecked: 2026-11-25
+nextReview: 2027-01-31
+draft: false
+deadlines:
+  - date: 2027-01-01
+    label: "2027 tax brackets and basic personal amounts take effect. Check your first January payslip."
+    short: "New 2027 tax brackets take effect"
+    approximate: false
+sources:
+  - title: "T4127 Payroll Deductions Formulas, January 2027 (124th edition)"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html"
+    checked: 2026-11-25
+  - title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html"
+    checked: 2026-11-25
+  - title: "Tax rates and income brackets for individuals: current year"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html"
+    checked: 2026-11-25
+  - title: "Personal income tax"
+    publisher: "Government of Alberta"
+    url: "https://www.alberta.ca/personal-income-tax"
+    checked: 2026-11-25
+---
+
+import Fact from "../../components/Fact.astro";
+import Official from "../../components/Official.astro";
+import QuickAnswer from "../../components/QuickAnswer.astro";
+import HonestTake from "../../components/HonestTake.astro";
+import Receipt from "../../components/Receipt.astro";
+import TaxCalculator from "../../components/calculators/TaxCalculator.astro";
+import { estimateFor } from "../../lib/tax";
+
+export const money = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+export const y26 = estimateFor(2026, 70000);
+export const y27 = estimateFor(2027, 70000);
+
+<QuickAnswer>
+- From January 1, 2027, every federal tax bracket rises by **2.6%** and every Alberta bracket by **2.0%**, to keep up with inflation. The tax **rates** themselves don't change.
+- The lowest federal bracket (14%) now runs to <Fact id="federal-lowest-bracket-2027" />, and Alberta's 8% bracket to <Fact id="alberta-lowest-bracket-2027" />.
+- On the same income, you pay a little less tax in 2027: about **{money(y26.total - y27.total)} less** at $70,000.
+- These come from the CRA's official January 2027 payroll formulas (T4127). Bracket indexing is automatic by law. The CRA's main tax-rates page switches to 2027 in January; we'll re-check then.
+</QuickAnswer>
+
+## The 2027 federal brackets
+
+| Taxable income, 2027 | Rate on that slice |
+|---|---|
+| Up to $60,044 | 14% |
+| $60,044 to $120,088 | 20.5% |
+| $120,088 to $186,157 | 26% |
+| $186,157 to $265,203 | 29% |
+| Over $265,203 | 33% |
+
+The federal **basic personal amount** rises to <Fact id="federal-bpa-2027" /> (it shrinks gradually for incomes between $186,157 and $265,203).
+
+## The 2027 Alberta brackets
+
+| Taxable income, 2027 | Rate on that slice |
+|---|---|
+| Up to $62,424 | 8% |
+| $62,424 to $157,344 | 10% |
+| $157,344 to $188,813 | 12% |
+| $188,813 to $251,750 | 13% |
+| $251,750 to $377,625 | 14% |
+| Over $377,625 | 15% |
+
+Alberta's **basic personal amount** rises to <Fact id="alberta-bpa-2027" />.
+
+## Your combined rate in 2027
+
+Add the two together for your **marginal rate**: the tax on your next dollar. These are our calculations from the official brackets above.
+
+| Taxable income, 2027 | Combined marginal rate* |
+|---|---|
+| Up to $60,044 | 22% |
+| $60,044 to $62,424 | 28.5% |
+| $62,424 to $120,088 | 30.5% |
+| $120,088 to $157,344 | 36% |
+| $157,344 to $186,157 | 38% |
+| $186,157 to $188,813 | 41% |
+| $188,813 to $251,750 | 42% |
+| $251,750 to $265,203 | 43% |
+| $265,203 to $377,625 | 47% |
+| Over $377,625 | 48% |
+
+*Between $186,157 and $265,203, add about 0.3 percentage points, because the federal basic personal amount shrinks over that range.
+
+## What it means for your pay
+
+<Receipt
+  title="Same $70,000 income, 2026 and 2027"
+  rows={[
+    { label: "Income tax on $70,000 in 2026", amount: money(y26.total) },
+    { label: "Income tax on $70,000 in 2027", amount: money(y27.total) },
+  ]}
+  total={{ label: "Less tax in 2027", amount: money(y26.total - y27.total) }}
+  plain={`About ${money((y26.total - y27.total) / 12)} a month. Your employer's payroll uses the new brackets from your first January pay.`}
+  method="We run the federal and Alberta brackets and basic personal amounts for each year on the same income, using the same code as the calculator below. CPP, EI and other credits are left out. Amounts are rounded to the nearest dollar."
+/>
+
+This isn't a tax cut: it's the brackets keeping pace with prices. If your pay rises by about the rate of inflation, your tax bill stays roughly the same share of your income. (Alberta caps its indexing at 2% a year, so its brackets rise a little slower than prices when inflation is higher than that.)
+
+## Other numbers that change for 2027
+
+- **RRSP limit:** 18% of your 2026 earned income, up to <Fact id="rrsp-limit-2027" />. Your own limit is on your latest notice of assessment.
+- **CPP:** the base CPP rate falls from 4.95% to 4.75% of pay on January 1, 2027, while the maximum pensionable earnings rise to <Fact id="ympe-2027" />. On the same pay, most employees pay a little less CPP in 2027. The most an employee outside Quebec pays is <Fact id="cpp-max-employee-2027" /> (base and first additional CPP), plus up to $428 of second additional CPP on earnings between $76,700 and $87,400.
+- **EI:** the employee premium rate is 1.64%, up to a maximum of <Fact id="ei-max-premium-2027" /> outside Quebec.
+- **TFSA:** the 2027 limit hadn't been announced when we checked. We'll add it as soon as the CRA publishes it.
+
+## Try the 2027 calculator
+
+<TaxCalculator year={2027} />
+
+<HonestTake>
+Indexing is quiet but valuable: without it, inflation would push everyone into higher brackets every year. If you're planning a raise, an RRSP contribution or a side income for 2027, use your 2027 marginal rate from the table above, not last year's.
+</HonestTake>
+
+Filing your 2026 return this spring? That uses the **2026** brackets: see our <a href="/guides/alberta-income-tax-brackets-2026/">2026 tax brackets guide</a>.

@@ -309,3 +309,120 @@ penny-distribution-ended:
   source: { title: "Frequently asked questions: the penny", publisher: "Royal Canadian Mint", short: "Mint", url: "https://www.mint.ca/en/faq" }
   checked: 2026-11-25
   reviewBy: 2027-11-25
+
+federal-lowest-bracket-2027:
+  label: Top of the federal 14% bracket, 2027 (indexed 2.6%)
+  value: "$60,044"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+alberta-lowest-bracket-2027:
+  label: Top of Alberta's 8% bracket, 2027 (indexed 2.0%)
+  value: "$62,424"
+  applies: [alberta]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+federal-bpa-2027:
+  label: Federal basic personal amount, 2027 (maximum)
+  value: "$16,879"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+alberta-bpa-2027:
+  label: Alberta basic personal amount, 2027
+  value: "$23,225"
+  applies: [alberta]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+ympe-2027:
+  label: CPP Year's Maximum Pensionable Earnings, 2027
+  value: "$76,700"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-03-01
+
+cpp-max-employee-2027:
+  label: Maximum CPP contribution for employees outside Quebec, 2027 (base + first additional; excludes CPP2)
+  value: "$4,209"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+ei-max-premium-2027:
+  label: Maximum EI premium for employees outside Quebec, 2027
+  value: "$1,161.12"
+  applies: [canada]
+  effective: "2027"
+  source: { title: "T4127 Payroll Deductions Formulas, January 2027", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31
+
+rrif-minimum-age-71:
+  label: RRIF minimum withdrawal at age 71 (share of the account at January 1)
+  value: "5.28%"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Chart: prescribed factors (RRIF minimum amounts)", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/completing-slips-summaries/t4rsp-t4rif-information-returns/payments/chart-prescribed-factors.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
+
+capital-gains-inclusion:
+  label: Share of a capital gain that's taxable for individuals
+  value: "50%"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Income Tax Act, section 38", publisher: "Justice Laws (Government of Canada)", short: "ITA s.38", url: "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-38.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-01
+
+oas-clawback-threshold-2026-income:
+  label: OAS recovery tax threshold on 2026 income (15% of income above it)
+  value: "$95,323"
+  applies: [canada]
+  effective: "2026 income"
+  source: { title: "OAS pension recovery tax", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/recovery-tax.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-06-01
+
+fpcanada-inflation:
+  label: FP Canada / IFP 2026 projection assumption for inflation
+  value: "2.1%"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://institutpf.org/assets/Documents/Normes-projection/InstituteFP-PAG2026.pdf" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-01
+
+fpcanada-fixed-income:
+  label: FP Canada / IFP 2026 projection assumption for fixed income (before fees)
+  value: "3.2%"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "Projection Assumption Guidelines 2026", publisher: "FP Canada and Institut de planification financière", short: "FP Canada", url: "https://institutpf.org/assets/Documents/Normes-projection/InstituteFP-PAG2026.pdf" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-01
+
+boc-inflation-target:
+  label: Bank of Canada inflation target (middle of a 1% to 3% range)
+  value: "2%"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Inflation-control target", publisher: "Bank of Canada", short: "Bank of Canada", url: "https://www.bankofcanada.ca/rates/indicators/key-variables/inflation-control-target/" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25

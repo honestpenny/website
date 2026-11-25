@@ -16,6 +16,26 @@ function bracketTax(income: number, brackets: [number, number][]) {
   }
   return tax;
 }
+// 2027 (indexed): CRA T4127 Payroll Deductions Formulas, January 2027 edition (updated 2026-11-19); checked 2026-11-25.
+//   https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan.html
+// Federal indexation 2.6%, Alberta 2.0%. 2027 federal BPA phases down from $16,879 to $15,214 between $186,157 and $265,203 (not modelled). CRA's main rates page will show 2027 in January 2027: re-check then.
+export const YEARS = {
+  2026: { federal: FEDERAL, alberta: ALBERTA },
+  2027: {
+    federal: { brackets: [[60044, 0.14], [120088, 0.205], [186157, 0.26], [265203, 0.29], [Infinity, 0.33]] as [number, number][], bpa: 16879, lowRate: 0.14 },
+    alberta: { brackets: [[62424, 0.08], [157344, 0.1], [188813, 0.12], [251750, 0.13], [377625, 0.14], [Infinity, 0.15]] as [number, number][], bpa: 23225, lowRate: 0.08 },
+  },
+} as const;
+export type TaxYear = keyof typeof YEARS;
+/** Same simplified estimate for any supported year (brackets + basic personal amounts only). */
+export function estimateFor(year: TaxYear, income: number) {
+  const { federal: F, alberta: A } = YEARS[year];
+  const fed = Math.max(0, bracketTax(income, F.brackets as [number, number][]) - F.bpa * F.lowRate);
+  const ab = Math.max(0, bracketTax(income, A.brackets as [number, number][]) - A.bpa * A.lowRate);
+  const r = (b: readonly (readonly [number, number])[]) => b.find(([top]) => income <= top)![1];
+  return { fed, ab, total: fed + ab, marginal: r(F.brackets) + r(A.brackets) };
+}
+
 export function marginalRate(income: number) {
   const r = (b: [number, number][]) => b.find(([top]) => income <= top)![1];
   return r(FEDERAL.brackets) + r(ALBERTA.brackets);
