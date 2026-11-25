@@ -13,7 +13,7 @@
   Cross-Origin-Opener-Policy: same-origin
   # Astro inlines small scripts/styles; 'unsafe-inline' is deliberate (C2C LESSONS §14:
   # a strict script-src blanked the live site). Add a host here only when a page uses it.
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://app.kit.com; form-action 'self' https://app.kit.com; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://app.kit.com; form-action 'self' https://app.kit.com; frame-ancestors 'none'; base-uri 'self'
 
 # Keep workers.dev and preview hostnames out of search results.
 https://:project.:subdomain.workers.dev/*

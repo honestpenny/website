@@ -1,17 +1,27 @@
 ---
 import Base from "../layouts/Base.astro";
 import { site } from "../lib/site";
+// DRAFT — lawyer review before launch. Alberta PIPA applies; PIPEDA may apply to data crossing borders.
+// If you add analytics, a new form or a new service provider, update this page FIRST (and the CSP in public/_headers).
 ---
-<Base title="Privacy" description="What Honest Penny collects (very little), why, and your rights under Canadian privacy law. No cookies, no tracking, no data sales.">
+<Base title="Privacy" description="What Honest Penny collects (very little), why, who helps us handle it, and your rights under Alberta and Canadian privacy law.">
   <div class="prose">
     <h1>Privacy</h1>
+    <h2>When you read the site</h2>
     <ul>
-      <li><strong>No cookies, no ad tracking.</strong> This site doesn't set cookies or use advertising trackers.</li>
+      <li><strong>No advertising trackers and no analytics.</strong> We don't run ads or track you across the web.</li>
+      <li><strong>Security cookies only.</strong> Our hosting provider, Cloudflare, may set a strictly necessary cookie to protect the site from bots and attacks. It isn't used to track you.</li>
       <li><strong>Calculators stay on your device.</strong> Numbers you type into a calculator are never sent to us.</li>
-      <li><strong>Email sign-up.</strong> If you sign up for the weekly email, we keep your email address and the date you agreed, only to send you that email. You can unsubscribe from any email in one click.</li>
-      <li><strong>We never sell or share your data</strong> for anyone else's marketing.</li>
     </ul>
-    <p>To see, correct or delete what we hold about you, email <a href={`mailto:${site.contactEmail}?subject=Privacy`}>{site.contactEmail}</a>.</p>
+    <h2>If you sign up for the weekly email</h2>
+    <ul>
+      <li>We collect your <strong>email address</strong> and a record of when and how you agreed to receive it, because Canada's anti-spam law requires us to keep proof of consent.</li>
+      <li>We send our email using <strong>Kit</strong>, a service provider based in the <strong>United States</strong>. Your information is stored there and may be accessed under US law. Kit also records technical details such as your IP address and whether emails are opened or links clicked, which helps us see what's useful.</li>
+      <li>We use your information <strong>only to send you our email</strong>. We never sell or share it for anyone else's marketing.</li>
+      <li>You can unsubscribe from any email in one click.</li>
+    </ul>
+    <h2>Your rights</h2>
+    <p>Under Alberta's <em>Personal Information Protection Act</em>, you can ask to see the personal information we hold about you, ask us to correct it, or ask us to delete it. Contact our privacy contact at <a href={`mailto:${site.privacyContact}?subject=Privacy`}>{site.privacyContact}</a>. If you're not satisfied with our answer, you can complain to the <a href="https://oipc.ab.ca/" rel="noopener">Office of the Information and Privacy Commissioner of Alberta</a>.</p>
     <p class="muted">Last updated November 24, 2026. If we add a service that changes any of this, we'll update this page first.</p>
   </div>
 </Base>

@@ -1,20 +1,24 @@
 ---
-// Kit form id comes from env at build time (PUBLIC_KIT_FORM_ID). Until Kevin creates the Kit
-// account, we say so plainly instead of showing a form that goes nowhere (C2C Formspree lesson).
+// Kit form id comes from env at build time (PUBLIC_KIT_FORM_ID). The form only renders when BOTH the Kit
+// form and a real mailing address exist: CASL requires sender name + mailing address in the consent request
+// (SOR/2012-36 s.4) and in every email. Until then we say so plainly instead of showing a form that goes nowhere.
+import { site } from "../lib/site";
 const formId = import.meta.env.PUBLIC_KIT_FORM_ID;
+const ready = Boolean(formId && site.mailingAddress);
 ---
 <section class="signup" aria-labelledby="su-h">
   <h2 id="su-h">The weekly Honest Penny email</h2>
   <p>One short email a week: deadlines coming up, one thing worth doing, and what changed. Free. Unsubscribe in one click.</p>
-  {formId ? (
+  {ready ? (
     <form action={`https://app.kit.com/forms/${formId}/subscriptions`} method="post">
       <div class="field"><label for="su-email">Your email</label><input id="su-email" name="email_address" type="email" autocomplete="email" required /></div>
       <div class="field consent"><input id="su-consent" name="fields[casl_consent]" type="checkbox" value="yes" required />
         <label for="su-consent">Yes, send me the weekly Honest Penny email. I can unsubscribe at any time.</label></div>
+      <p class="muted small">Sent by {site.name}, {site.mailingAddress}, {site.contactEmail}. We use Kit (a US company) to send our email; see <a href="/privacy/">privacy</a>.</p>
       <button type="submit">Sign up</button>
     </form>
   ) : (
-    <p class="box"><span class="box-label">Starting soon</span>The first email goes out in December 2026, before Alberta's January deadlines. Sign-up opens here shortly.</p>
+    <p class="box"><span class="box-label">Starting soon</span>The first email goes out before Alberta's January deadlines. Sign-up opens here shortly.</p>
   )}
 </section>
 <style>
@@ -22,4 +26,5 @@ const formId = import.meta.env.PUBLIC_KIT_FORM_ID;
   .consent { display: flex; gap: 0.6rem; align-items: flex-start; }
   .consent input { width: 24px; height: 24px; margin-top: 0.2rem; flex: none; }
   .consent label { font-weight: 400; }
+  .small { font-size: 0.95rem; }
 </style>

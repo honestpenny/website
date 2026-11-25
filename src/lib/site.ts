@@ -23,7 +23,10 @@ export const site = {
   contactEmail: "hello@honestpenny.ca",
   // CASL: every commercial email must include a valid mailing address. DECISION PENDING before the
   // first email: use a PO box or virtual mailbox, NOT the founder's other business address.
-  legalAddress: "Alberta, Canada",
+  // Full mailing address (PO box / virtual mailbox). Empty = sign-up form stays hidden (CASL needs it in the
+  // consent request and every email). Kevin to provide.
+  mailingAddress: "",
+  privacyContact: "hello@honestpenny.ca",
 } as const;
 
 /**
