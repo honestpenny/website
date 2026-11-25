@@ -9,8 +9,9 @@ and ~/reports/Honest Penny website build plan.md.
   alberta.ca, city sites, UCA, CRTC, CTA) with a `checked` date. If a fact can't be confirmed from an official
   source, leave it out or say it's unconfirmed. Run a fact-check pass before publishing any new or changed figure.
 - **Alberta first, Canada second.** Every guide declares `applies:`; say which rules are Alberta-only.
-- **Team byline only** (decided 2026-11-24): "Honest Penny team". Never the founder's name, never a link to his other
-  business, never the Airdrie address. Never invent a named persona, expert, quote or review.
+- **Team byline only** (decided 2026-11-24): "Honest Penny team". Never the founder's name or the Airdrie address.
+  The only link to a related business is the footer credit "Website by Altasmith" (Kevin's call, 2026-11-25); never
+  Code To Cloud, and never in guide content. Never invent a named persona, expert, quote or review.
 - **General information, not personal advice** (NI 31-103 s.8.25 publisher exemption): explain options, don't tell a
   specific reader which security to buy.
 - **Paid links**: none today. If added: asterisk + disclosure on the page + `paidLinks: true` + update /how-we-make-money/.
