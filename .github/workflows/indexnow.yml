@@ -1,0 +1,23 @@
+# After Cloudflare Workers Builds deploys main, tell IndexNow which pages changed (Bing → Copilot, DuckDuckGo,
+# ChatGPT search; plus Yandex, Seznam, Naver, Yep). Exits cleanly until honestpenny.ca is live.
+# Run by hand with "all" to resubmit every URL.
+name: IndexNow
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      all: { description: "Submit every sitemap URL", type: boolean, default: false }
+permissions:
+  contents: read
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 24 }
+      - run: node scripts/indexnow.mjs ${{ inputs.all && '--all' || '' }}
+        env:
+          EXPECT_SHA: ${{ github.event_name == 'push' && github.sha || '' }}

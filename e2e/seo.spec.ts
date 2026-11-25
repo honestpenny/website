@@ -40,6 +40,41 @@ test.describe("Search and AI visibility", () => {
     }
   });
 
+  test("share cards: every page has og:image that serves a PNG; guides get their own card", async ({ request }) => {
+    for (const p of await sitemapPaths(request)) {
+      const html = await (await request.get(p)).text();
+      const img = html.match(/<meta property="og:image" content="https:\/\/honestpenny\.ca([^"]+)"/)?.[1];
+      expect(img, `${p}: og:image`).toBeTruthy();
+      if (/^\/guides\/.+\//.test(p)) expect(img, p).toBe(`/og/${p.split("/")[2]}.png`);
+      const res = await request.get(img!);
+      expect(res.status(), img).toBe(200);
+      expect(res.headers()["content-type"], img).toContain("image/png");
+    }
+  });
+
+  test("sitemap lastmod for each guide equals the 'facts checked' date on the page", async ({ request }) => {
+    const xml = await (await request.get("/sitemap-0.xml")).text();
+    for (const [, loc, lastmod] of xml.matchAll(/<loc>https:\/\/honestpenny\.ca(\/guides\/[^<]+\/)<\/loc>\s*<lastmod>([^<]+)</g)) {
+      const html = await (await request.get(loc)).text();
+      const shown = html.match(/<time data-testid="last-checked" datetime="([^"]+)"/)?.[1];
+      expect(lastmod.slice(0, 10), loc).toBe(shown);
+    }
+  });
+
+  test("entity graph: guides point author and publisher at the one #org id; IndexNow key served", async ({ request }) => {
+    const home = await (await request.get("/")).text();
+    expect(home).toContain('"@id":"https://honestpenny.ca/#org"');
+    for (const p of (await sitemapPaths(request)).filter((p) => /^\/guides\/.+\//.test(p))) {
+      const html = await (await request.get(p)).text();
+      expect(html, p).toContain('"publisher":{"@id":"https://honestpenny.ca/#org"}');
+      expect(html, p).toMatch(/"author":\{[^}]*"@id":"https:\/\/honestpenny\.ca\/#org"/);
+    }
+    const key = (await import("node:fs")).readFileSync("scripts/indexnow.mjs", "utf8").match(/const KEY = "([0-9a-f]+)"/)![1];
+    const res = await request.get(`/${key}.txt`);
+    expect(res.status()).toBe(200);
+    expect((await res.text()).trim()).toBe(key);
+  });
+
   test("404 page returns 404 status", async ({ request }) => {
     const res = await request.get("/this-page-does-not-exist/");
     expect(res.status()).toBe(404);

@@ -2,13 +2,15 @@
 // Wordmark: a plain copper penny and the name in the heading serif. No gradient, no glyph tricks.
 ---
 <a href="/" class="logo" aria-label="Honest Penny home">
-  <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true" focusable="false">
-    <circle cx="15" cy="15" r="13.5" fill="#b5652b" stroke="#8c4718" stroke-width="2" />
-    <circle cx="15" cy="15" r="9" fill="none" stroke="#f6eadf" stroke-width="1.2" opacity="0.7" />
+  <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+    <circle cx="17" cy="17" r="15.5" fill="#b5652b" stroke="#8c4718" stroke-width="2" />
+    <circle cx="17" cy="17" r="10.5" fill="none" stroke="#f6eadf" stroke-width="1.3" opacity="0.75" />
+    <path d="M12.5 17.5l3 3 6-7" fill="none" stroke="#fff7ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
   <span>Honest Penny</span>
 </a>
 <style>
-  .logo { display: inline-flex; align-items: center; gap: 0.55rem; color: #fff; text-decoration: none; font: 700 1.35rem/1 var(--serif); min-height: 44px; }
-  .logo:visited { color: #fff; }
+  .logo { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--ink); text-decoration: none; font: 700 1.45rem/1 var(--serif); letter-spacing: -0.01em; min-height: 44px; }
+  .logo:visited { color: var(--ink); }
+  .logo:hover span { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
 </style>

@@ -9,8 +9,11 @@ const fact = await getEntry("facts", id);
 if (!fact) throw new Error(`<Fact id="${id}"> not found in src/data/facts.yaml`);
 const { value, source, checked } = fact.data;
 ---
-<span class="fact" data-fact={id}>{value}{!nosource && <> <a class="src" href={source.url} rel="noopener" aria-label={`Source: ${source.publisher}, checked ${longDate(checked)}`} title={`${source.title}, ${source.publisher}. Checked ${longDate(checked)}.`}>{source.short}</a></>}</span>
+<span class="fact" data-fact={id}>{value}{!nosource && <>{"\u00a0"}<a class="src" href={source.url} rel="noopener" aria-label={`Source: ${source.publisher}, checked ${longDate(checked)}`} title={`${source.title}, ${source.publisher}. Checked ${longDate(checked)}.`}>{source.short}</a></>}</span>
 <style>
-  .fact { white-space: nowrap; }
-  .src { font-size: 0.72em; font-weight: 700; vertical-align: 0.35em; text-decoration-thickness: 1px; padding: 0 0.1em; }
+  /* Long values may wrap (reflow at 320px); the source chip stays glued to the value by a no-break space. */
+  .src { white-space: nowrap; font-size: 0.7em; font-weight: 700; vertical-align: 0.3em; padding: 0.1em 0.45em; border-radius: 999px;
+    background: var(--chip); color: var(--chip-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+  .src:visited { color: var(--chip-ink); }
+  .src:hover { text-decoration-thickness: 2px; }
 </style>

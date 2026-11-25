@@ -1,33 +1,59 @@
 ---
 import Logo from "./Logo.astro";
+// Only topics that have guides. Add a link when its first guide ships.
 const topics = [
-  // Only topics that have guides. Add a link when its first guide ships.
   { href: "/guides/#bills", label: "Bills" },
   { href: "/guides/#housing", label: "Property tax" },
   { href: "/guides/#tax", label: "Tax" },
   { href: "/guides/tfsa-rrsp-fhsa-compared/", label: "Savings accounts" },
-  { href: "/guides/honest-penny-steps/", label: "The Steps" },
+  { href: "/guides/honest-penny-steps/", label: "The 8 Steps" },
   { href: "/guides/", label: "All guides" },
   { href: "/about/", label: "About" },
 ];
+const here = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="wrap bar">
     <Logo />
-    <p class="promise">Independent money help for Albertans</p>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      Menu
+    </button>
+    <nav id="site-nav" aria-label="Main" class="nav">
+      <ul>{topics.map((t) => <li><a href={t.href} aria-current={here === t.href ? "page" : undefined}>{t.label}</a></li>)}</ul>
+    </nav>
   </div>
-  <nav aria-label="Topics" class="topics">
-    <div class="wrap"><ul>{topics.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul></div>
-  </nav>
 </header>
+<script is:inline>
+  // Disclosure menu (button + panel; not an ARIA menu). Without JS the nav is simply shown.
+  (() => {
+    const btn = document.querySelector(".menu-btn"), nav = document.getElementById("site-nav");
+    if (!btn || !nav) return;
+    const mq = matchMedia("(max-width: 59.99rem)");
+    const set = (open) => { btn.setAttribute("aria-expanded", String(open)); nav.dataset.open = String(open); };
+    const apply = () => { btn.hidden = !mq.matches; set(false); };
+    btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") { set(false); btn.focus(); }
+    });
+    mq.addEventListener("change", apply); apply();
+  })();
+</script>
 <style>
-  .site-header { background: var(--spruce); color: #fff; }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
-  .promise { margin: 0; font-size: 0.95rem; color: #e4ecea; }
-  .topics { background: #183d3b; border-top: 1px solid #2e6662; }
-  .topics ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
-  .topics li { margin: 0; }
-  .topics a { color: #fff; display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 1rem; text-decoration: none; }
-  .topics a:hover { text-decoration: underline; }
-  .topics a:visited { color: #fff; }
+  .site-header { background: var(--paper); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1.5rem; min-height: 4.5rem; padding-block: 0.5rem; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.15rem; }
+  .nav li { margin: 0; }
+  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.8rem; border-radius: 999px; color: var(--ink); font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .nav a:visited { color: var(--ink); }
+  .nav a:hover { background: var(--sunk); text-decoration: underline; }
+  .nav a[aria-current="page"] { background: var(--tint-answer); text-decoration: underline; text-decoration-thickness: 2px; }
+  .menu-btn { background: var(--surface); color: var(--ink); border: 2px solid var(--border); font-size: 1rem; padding: 0.5rem 1rem; min-height: 44px; }
+  .menu-btn:hover { background: var(--sunk); color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 59.99rem) {
+    .nav { flex-basis: 100%; }
+    .nav[data-open="false"] { display: none; }
+    .nav ul { flex-direction: column; gap: 0; padding: 0.25rem 0 0.75rem; }
+    .nav a { display: flex; border-radius: var(--radius-sm); padding: 0 0.75rem; font-size: 1.1rem; min-height: 48px; }
+  }
 </style>

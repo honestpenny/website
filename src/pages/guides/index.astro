@@ -1,23 +1,31 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
-const guides = await getCollection("guides", ({ data }) => !data.draft);
-const groups = [
-  { id: "bills", label: "Bills" }, { id: "housing", label: "Housing and property tax" },
-  { id: "benefits", label: "Benefits and credits" }, { id: "tax", label: "Tax" }, { id: "savings", label: "Savings" },
-  { id: "debt", label: "Debt" }, { id: "investing", label: "Investing" }, { id: "travel", label: "Travel" },
-];
+import GuideRow from "../../components/GuideRow.astro";
+import { TOPICS, byChecked } from "../../lib/guides";
+const guides = (await getCollection("guides", ({ data }) => !data.draft)).sort(byChecked);
+const groups = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.topic === t.id) })).filter((t) => t.items.length);
 ---
 <Base title="All guides" description="Every Honest Penny guide to cutting bills, claiming benefits and saving money in Alberta and Canada, grouped by topic.">
-  <div class="prose">
+  <header class="head">
+    <p class="eyebrow">{guides.length} guides · checked against official sources</p>
     <h1>All guides</h1>
-    <p>We're starting with the things Albertans can act on this winter. More guides are added every week.</p>
-    {groups.map((grp) => {
-      const items = guides.filter((g) => g.data.topic === grp.id);
-      return items.length ? (
-        <section aria-labelledby={grp.id}><h2 id={grp.id}>{grp.label}</h2>
-          <ul>{items.map((g) => <li><a href={`/guides/${g.id}/`}>{g.data.title}</a></li>)}</ul></section>
-      ) : null;
-    })}
-  </div>
+    <p class="lede">We're starting with the things Albertans can act on this winter. New guides are added every week.</p>
+    <nav aria-label="Jump to a topic"><ul class="jump">{groups.map((g) => <li><a class="chip" href={`#${g.id}`}>{g.label}</a></li>)}</ul></nav>
+  </header>
+  {groups.map((grp) => (
+    <section aria-labelledby={grp.id} class="grp">
+      <h2 id={grp.id}>{grp.label}</h2>
+      <p class="muted">{grp.blurb}</p>
+      <ul class="cards">{grp.items.map((g) => <GuideRow g={g} showTopic={false} />)}</ul>
+    </section>
+  ))}
 </Base>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 0.5rem; }
+  .jump { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .jump li { margin: 0; }
+  .jump .chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 1rem; font-size: 0.95rem; }
+  .grp h2 { margin-bottom: 0.25rem; }
+  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); padding: 0; }
+</style>

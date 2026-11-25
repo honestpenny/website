@@ -21,3 +21,11 @@ https://:project.:subdomain.workers.dev/*
 
 /build.txt
   Cache-Control: no-store
+
+# IndexNow key file: must be served, never indexed.
+/62802af011c923f252f2b225032e5f2d.txt
+  X-Robots-Tag: noindex
+
+# Generated share cards: cache for a day.
+/og/*
+  Cache-Control: public, max-age=86400

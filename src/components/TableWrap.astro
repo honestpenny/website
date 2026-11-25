@@ -1,0 +1,5 @@
+---
+// Every guide table scrolls sideways inside its own box on narrow screens (WCAG 1.4.10 reflow), and the box is
+// keyboard-focusable so it can be scrolled without a mouse (axe: scrollable-region-focusable).
+---
+<div class="table-wrap" role="region" tabindex="0" aria-label="Table"><table><slot /></table></div>

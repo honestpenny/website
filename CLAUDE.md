@@ -15,8 +15,8 @@ and ~/reports/Honest Penny website build plan.md.
   specific reader which security to buy.
 - **Paid links**: none today. If added: asterisk + disclosure on the page + `paidLinks: true` + update /how-we-make-money/.
 - **Calm, ADHD-friendly design**: one next step, a finish line, no decorative motion, no carousels/countdowns.
-- **Not an AI-template site.** No gradients, shadows, three-card icon grids, emoji icons, Inter. Banned phrases live in
-  `src/lib/site.ts` (each with a reason) and are tested on every page.
+- **Not an AI-template site.** No gradients, shadows, emoji/icon-tile grids, stock photos, Inter. Banned phrases live in
+  `src/lib/site.ts` (each with a reason) and are tested on every page. Design system v2: `docs/DESIGN.md`.
 
 ## Stack
 Astro 7 static output + MDX content collection (`src/content/guides/*.mdx`, schema in `src/content.config.ts`).
@@ -33,12 +33,16 @@ Assets-only Worker (`wrangler.jsonc`, no `main`), deployed by **Cloudflare Worke
   blocks Googlebot and Bingbot).
 - Worker name is `website` (must match the dashboard). Preview host: https://website.honest-penny-dns.workers.dev
   (noindex). Build: `npm run build`, deploy `npx wrangler deploy`, build var `NODE_VERSION=24` (+ `PUBLIC_KIT_FORM_ID` later).
+- **SEO/AI visibility (copied from Code To Cloud):** one `#org` entity id that every Article's author/publisher points
+  at; per-guide share cards `/og/<slug>.png`; sitemap `lastmod` = guide `lastChecked` (tested); IndexNow after each
+  deploy (`scripts/indexnow.mjs`, `.github/workflows/indexnow.yml`, key file in `public/`; exits cleanly pre-launch).
 - `/build.txt` serves the built commit from `git rev-parse HEAD` (Workers Builds' `WORKERS_CI_COMMIT_SHA` came
   through as "main", so it's only trusted when it's a real 40-character SHA).
 
 ## Test before done (desktop + phone, production build)
 ```
 npx astro check && npx playwright test     # builds, runs wrangler dev (real Cloudflare runtime), Chromium only
+                                            # a11y (axe light+dark), ux (menu, 320px reflow, skip link, tables), seo, facts
 node scripts/check-live.mjs                 # AFTER every merge: live build.txt == origin/main, headers, robots, bots 200
 ```
 Note: `astro preview` auto-backgrounds in agent shells, so tests use `wrangler dev`. Tests walk every sitemap URL, so
