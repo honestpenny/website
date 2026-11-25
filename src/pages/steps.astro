@@ -1,0 +1,281 @@
+---
+// The Honest Penny 8 Steps: our Canadian money plan as a landing page (the long-form guide stays at
+// /guides/honest-penny-steps/). "Find your step" checker, a finish line and tools for every step, ticks you keep
+// (same storage key as the guide's tracker, so they stay in sync), an honest comparison with US plans, and an FAQ.
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import Fact from "../components/Fact.astro";
+import Signup from "../components/Signup.astro";
+import { STEPS } from "../lib/steps";
+const faq = [
+  { q: "Do I have to do the steps in order?", a: "Mostly, yes: each step makes the next one easier. Step 1 (filing your taxes) can happen any time, and if something goes wrong, like a lost job, it's fine to drop back a step and rebuild." },
+  { q: "My partner isn't on board. What now?", a: "Start with Step 1 together, because it's about money coming in, not cutting back. Agree on the finish line for the next step only. Money plans work better as a shared goal than as a lecture." },
+  { q: "My work is seasonal, or in oil and gas, or on commission.", a: "Make your Step 5 emergency fund bigger: six months or more. Alberta's economy rises and falls with oil prices, and Employment Insurance replaces only part of your pay." },
+  { q: "I'm on a low income or on benefits.", a: "Step 1 matters most for you: many benefits only arrive if you file. When you save, a TFSA is usually better than an RRSP on a low income, because TFSA withdrawals don't reduce federal income-tested benefits." },
+  { q: "Is my car loan \"expensive debt\"?", a: "Step 4 is about high-interest debt: payday loans, credit cards and high-interest lines of credit. A low-interest car loan can be paid on schedule while you work through the steps. Avoid taking on a new one if you can." },
+  { q: "Should I stop saving for retirement while I pay off debt?", a: "Keep taking any employer match (Step 3): it's free money. Beyond that, put your extra money on debt until Step 4 is done, then build your emergency fund, then invest." },
+  { q: "I've already missed payments. Is it too late?", a: "No. Call a free, non-profit credit counsellor now, before things get worse. They can talk to lenders for you and explain options like a consumer proposal. Our Get help page lists who to call." },
+];
+---
+<Base title="The 8 Steps: a money plan built for Canada" description="The Honest Penny 8 Steps: a Canadian money plan from struggling to building wealth, one step at a time. Find your step, see the finish line, and tick off your progress.">
+  <section class="band forest hero" aria-labelledby="steps-h1">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker on-forest-kicker">Our money plan for Canada</p>
+        <h1 id="steps-h1">The 8 Steps</h1>
+        <p class="lede">From struggling to building wealth, one step at a time. Built for Canadian accounts, benefits and prices, not copied from the US.</p>
+        <div class="cta">
+          <a class="button penny big" href="#finder">Find your step <Icon name="arrow" size={20} /></a>
+          <a class="button ghost big" href="#step-1">See all 8 steps</a>
+        </div>
+      </div>
+      <div class="progress-card card" aria-live="polite">
+        <p class="pc-h">Your progress</p>
+        <p class="pc-n"><span data-done>0</span> of 8</p>
+        <div class="bar" aria-hidden="true"><span data-bar style="width: 0%"></span></div>
+        <p class="pc-next" data-next>Start with Step 1: claim the money you're owed.</p>
+        <p class="muted small">Saved on this device only. Nothing is sent to us.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="overview" aria-label="The 8 steps">
+    <ol>
+      {STEPS.map((s) => <li><a href={`#step-${s.n}`}><span class="ov-n" aria-hidden="true">{s.n}</span><span><span class="sr-only">Step {s.n}: </span>{s.title}</span></a></li>)}
+    </ol>
+  </nav>
+
+  <section id="finder" class="section" aria-labelledby="finder-h">
+    <div class="finder card" data-finder>
+      <h2 id="finder-h">Find your step</h2>
+      <p class="muted">Answer a few yes-or-no questions. It takes about a minute.</p>
+      <div data-f-start>
+        <button type="button" class="penny" data-f-begin>Start <Icon name="arrow" size={18} /></button>
+      </div>
+      <form data-f-step hidden novalidate>
+        <p class="f-progress" data-f-progress aria-live="polite"></p>
+        <fieldset>
+          <legend><h3 class="f-q" tabindex="-1" data-f-q></h3></legend>
+          <div class="f-opts" data-f-opts></div>
+        </fieldset>
+        <p class="f-err" data-f-err role="alert" hidden>Choose an answer to continue.</p>
+        <div class="f-nav"><button type="button" class="secondary" data-f-back>Back</button><button type="submit">Continue</button></div>
+      </form>
+      <div data-f-result hidden>
+        <h3 class="f-res" tabindex="-1" data-f-res></h3>
+        <p data-f-res-text></p>
+        <p class="f-actions"><a class="button" data-f-go href="#step-1">Go to this step</a> <button type="button" class="secondary" data-f-tick>Tick the steps before it as done</button> <button type="button" class="secondary" data-f-again>Start again</button></p>
+      </div>
+      <noscript><p>Start at Step 1 and work down: the first step you haven't finished is your step.</p></noscript>
+    </div>
+  </section>
+
+  <div class="steps">
+    {STEPS.map((s, i) => (
+      <section id={`step-${s.n}`} class:list={["step", { alt: i % 2 === 1 }]} aria-labelledby={`step-${s.n}-h`}>
+        <div class="step-num" aria-hidden="true">{s.n}</div>
+        <div class="step-body">
+          <p class="step-k">Step {s.n} of 8</p>
+          <h2 id={`step-${s.n}-h`}>{s.title}</h2>
+          <p class="finish"><Icon name="check" size={18} /> <span><strong>Finish line:</strong> {s.finish}</span></p>
+          {s.n === 1 && <>
+            <p>File a tax return every year, even if you earned little or nothing. The Canada Child Benefit, the Canada Groceries and Essentials Benefit, the Alberta Child and Family Benefit and the Canada Workers Benefit are all worked out from your return.</p>
+            <p>Many people find money here they didn't know they were owed, which is why it comes first.</p>
+          </>}
+          {s.n === 2 && <>
+            <p>Save $2,000, or one month of essential bills if that's less, in a separate account you don't see every day. It's for the car repair, the broken fridge, the short gap in pay: the surprises that usually end up on a credit card or a payday loan.</p>
+            <p>Why more than the $1,000 popular US plans use? Theirs is in US dollars and hasn't gone up with prices. A Canadian cushion needs to be a little bigger.</p>
+          </>}
+          {s.n === 3 && <>
+            <p>If your employer matches what you put into a pension or group RRSP, put in enough to get the full match. A 50% or 100% match is an instant return you can't get anywhere else.</p>
+            <p>Some US plans tell you to pause this while you pay off debt. We don't: turning down free money makes the debt harder to clear, not easier.</p>
+          </>}
+          {s.n === 4 && <>
+            <p>Stop new high-cost borrowing first. In Alberta, a payday loan can cost up to <Fact id="payday-max-cost-alberta" /> for every $100 you borrow. Clear those first.</p>
+            <p>Then pay the minimum on everything and put every extra dollar on one debt. Pick the smallest balance if you need a quick win, or the highest interest rate if one is much more expensive. When it's gone, roll that payment onto the next.</p>
+          </>}
+          {s.n === 5 && <>
+            <p>Save three months of essential costs, or six months or more if your work is seasonal, commission-based or in energy, or your household relies on one income.</p>
+            <p>A TFSA savings account is a good home for it: the interest is tax-free and you can take money out any time.</p>
+          </>}
+          {s.n === 6 && <>
+            <p>Aim to put 15% of your gross income towards the long term, counting any employer match. On a modest income, start with the TFSA (up to <Fact id="tfsa-limit-2026" /> in 2026); in a higher tax bracket, the RRSP often makes more sense.</p>
+            <p>Use low-fee, all-in-one index funds, and plan with realistic returns: FP Canada tells planners to assume about <Fact id="fpcanada-cdn-equity-return" /> a year for Canadian stocks before fees, not the 12% you'll hear from some US personalities.</p>
+          </>}
+          {s.n === 7 && <>
+            <p>RESP: the government adds a Canada Education Savings Grant of 20% on the first $2,500 you save each year per child, up to <Fact id="cesg-lifetime" /> per child.</p>
+            <p>FHSA, for first-time buyers: save up to <Fact id="fhsa-annual-limit" /> a year and <Fact id="fhsa-lifetime-limit" /> in total, with a tax deduction going in and tax-free money coming out for your first home.</p>
+          </>}
+          {s.n === 8 && <>
+            <p>Mortgage interest on your own home isn't tax-deductible in Canada, so every extra dollar you pay down saves you the full interest rate. Use your yearly prepayment allowance (check your mortgage agreement for the amount).</p>
+            <p>Then keep investing, and give in a way that matters to you.</p>
+          </>}
+          <div class="step-foot">
+            <ul class="tools">{s.tools.map((t) => <li><a href={t.href}>{t.label} <Icon name="arrow" size={16} /></a></li>)}</ul>
+            <div class="done"><input type="checkbox" id={`done-${s.n}`} data-step={s.n} /><label for={`done-${s.n}`}>I've done Step {s.n}</label></div>
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="section" aria-labelledby="diff-h">
+    <h2 id="diff-h" class="section-h">How this differs from popular US plans</h2>
+    <p class="lede">US plans like Dave Ramsey's Baby Steps have helped millions of people by keeping things simple. We keep the simple order, and change what doesn't fit Canada.</p>
+    <div class="table-wrap" role="region" tabindex="0" aria-label="Comparison with US plans">
+      <table>
+        <thead><tr><th scope="col">Topic</th><th scope="col">Popular US plans</th><th scope="col">The Honest Penny 8 Steps</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">First step</th><td>Save a starter emergency fund</td><td>File your taxes and claim benefits first (Step 1): it can find money before you save any</td></tr>
+          <tr><th scope="row">Starter cushion</th><td>$1,000 (US dollars)</td><td>$2,000, or one month of essentials if that's less</td></tr>
+          <tr><th scope="row">Employer match</th><td>Often paused while you pay debt</td><td>Always take it (Step 3)</td></tr>
+          <tr><th scope="row">Which debt first</th><td>Smallest balance, always</td><td>Payday loans first; then smallest for a quick win, or highest interest if one is much more expensive</td></tr>
+          <tr><th scope="row">Accounts</th><td>401(k), Roth IRA, 529</td><td>TFSA, RRSP, FHSA, RESP and workplace pensions</td></tr>
+          <tr><th scope="row">Expected returns</th><td>Often 10% to 12%</td><td>Around <Fact id="fpcanada-cdn-equity-return" nosource /> for Canadian stocks before fees (FP Canada guidance)</td></tr>
+          <tr><th scope="row">When it goes wrong</th><td>Often a tough-love tone</td><td>No shame: call a free, non-profit counsellor early</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-h">
+    <h2 id="faq-h" class="section-h">Questions people ask</h2>
+    <div class="faq">
+      {faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </div>
+    <p>Want the full detail, with every source? <a href="/guides/honest-penny-steps/">Read the 8 Steps guide</a>. Struggling right now? <a href="/get-help/">Get free help</a>.</p>
+  </section>
+
+  <Signup />
+</Base>
+<script is:inline>
+  (() => {
+    const KEY = "hp-steps-v1";
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } };
+    const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+    const titles = [...document.querySelectorAll(".step h2")].map((h) => h.textContent);
+    const boxes = [...document.querySelectorAll("input[data-step]")];
+    const render = () => {
+      const done = boxes.filter((b) => b.checked).map((b) => Number(b.dataset.step));
+      document.querySelector("[data-done]").textContent = String(done.length);
+      document.querySelector("[data-bar]").style.width = `${(done.length / 8) * 100}%`;
+      const next = [1, 2, 3, 4, 5, 6, 7, 8].find((n) => !done.includes(n));
+      document.querySelector("[data-next]").textContent = next ? `Next: Step ${next}, ${titles[next - 1].toLowerCase()}.` : "All 8 done. That's the finish line.";
+    };
+    const ticked = load(); boxes.forEach((b) => { b.checked = ticked.includes(Number(b.dataset.step)); });
+    boxes.forEach((b) => b.addEventListener("change", () => { save(boxes.filter((x) => x.checked).map((x) => Number(x.dataset.step))); render(); }));
+    render();
+
+    // Find your step: first "no" answer is your step.
+    const Q = [
+      { q: "Did you file your tax return last year?", step: 1 },
+      { q: "Do you have $2,000 (or a month of essential bills) set aside for surprises?", step: 2 },
+      { q: "Are you getting your employer's full pension or RRSP match? Choose yes if there's no match.", step: 3 },
+      { q: "Are you free of payday loans, credit card balances and other high-interest debt?", step: 4 },
+      { q: "Do you have at least three months of essential costs saved?", step: 5 },
+      { q: "Are you putting about 15% of your income towards the long term?", step: 6 },
+      { q: "Are you saving for your kids' education or a first home, or is neither needed?", step: 7 },
+    ];
+    const root = document.querySelector("[data-finder]");
+    const $ = (s) => root.querySelector(s);
+    const start = $("[data-f-start]"), form = $("[data-f-step]"), result = $("[data-f-result]");
+    let i = 0, found = 8;
+    const show = (el) => { for (const s of [start, form, result]) s.hidden = s !== el; };
+    const ask = (n) => {
+      i = n; $("[data-f-progress]").textContent = `Question ${i + 1} of ${Q.length}`;
+      $("[data-f-q]").textContent = Q[i].q;
+      $("[data-f-opts]").innerHTML = ["Yes", "No"].map((l, k) => `<div class="f-opt"><input type="radio" name="fa" id="fa${k}" value="${l}"><label for="fa${k}">${l}</label></div>`).join("");
+      $("[data-f-err]").hidden = true; show(form); $("[data-f-q]").focus();
+    };
+    const finish = (step) => {
+      found = step;
+      $("[data-f-res]").textContent = `You're on Step ${step}: ${titles[step - 1]}`;
+      $("[data-f-res-text]").textContent = step === 8 ? "You've done the hard parts. Keep investing, pay down the mortgage, and give." : "Everything before this step is done. Focus here until you reach the finish line.";
+      $("[data-f-go]").setAttribute("href", `#step-${step}`);
+      $("[data-f-tick]").hidden = step === 1;
+      show(result); $("[data-f-res]").focus();
+    };
+    $("[data-f-begin]").addEventListener("click", () => ask(0));
+    $("[data-f-back]").addEventListener("click", () => (i > 0 ? ask(i - 1) : (show(start), $("[data-f-begin]").focus())));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = form.querySelector("input[name=fa]:checked");
+      if (!v) { $("[data-f-err]").hidden = false; form.querySelector("input[name=fa]").focus(); return; }
+      if (v.value === "No") return finish(Q[i].step);
+      i + 1 < Q.length ? ask(i + 1) : finish(8);
+    });
+    $("[data-f-again]").addEventListener("click", () => ask(0));
+    $("[data-f-tick]").addEventListener("click", () => {
+      boxes.forEach((b) => { if (Number(b.dataset.step) < found) b.checked = true; });
+      save(boxes.filter((x) => x.checked).map((x) => Number(x.dataset.step))); render();
+      $("[data-f-tick]").textContent = `Steps 1 to ${found - 1} ticked`;
+    });
+  })();
+</script>
+<style>
+  .hero { padding: clamp(3rem, 7vw, 6rem) 0; }
+  .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 60rem) { .hero-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 4rem; } }
+  .hero h1 { color: #fff; font-size: clamp(3rem, 2rem + 5vw, 6rem); margin-bottom: 1rem; }
+  .hero .lede { color: var(--on-forest-muted); max-width: 34rem; }
+  .on-forest-kicker { background: rgb(255 255 255 / 0.12); color: #fff; }
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .big { font-size: 1.15rem; padding: 1rem 1.75rem; min-height: 56px; }
+  .ghost { background: transparent; border-color: #fff; color: #fff; }
+  .ghost:visited { color: #fff; }
+  .ghost:hover { background: rgb(255 255 255 / 0.12); border-color: #fff; color: #fff; }
+  .band.forest .progress-card :is(p) { color: var(--ink); }
+  .band.forest .progress-card .muted { color: var(--muted); }
+  .pc-h { font-weight: 700; margin: 0; }
+  .pc-n { font: 800 3.5rem/1 var(--display); letter-spacing: -0.03em; margin: 0.5rem 0 1rem; }
+  .bar { height: 0.75rem; border-radius: 999px; background: var(--soft); overflow: hidden; margin-bottom: 1rem; }
+  .bar span { display: block; height: 100%; background: var(--green); border-radius: 999px; transition: width 200ms ease; }
+  .pc-next { font-weight: 700; margin: 0 0 0.5rem; }
+
+  .overview { margin: 2.5rem 0 0; }
+  .overview ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+  .overview li { margin: 0; }
+  .overview a { display: flex; align-items: center; gap: 0.75rem; min-height: 64px; padding: 0.6rem 1rem; border-radius: var(--r-sm); background: var(--soft); color: var(--ink); text-decoration: none; font-weight: 700; line-height: 1.25; }
+  .overview a:visited { color: var(--ink); }
+  .overview a:hover { background: var(--mint); }
+  .ov-n { width: 2.4rem; height: 2.4rem; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--forest); color: #fff; font: 800 1.05rem/1 var(--display); }
+  @media (prefers-color-scheme: dark) { .ov-n { background: var(--green); color: #0f1715; } }
+
+  .finder { max-width: 46rem; margin: 0 auto; padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .finder h2 { margin-top: 0; }
+  .f-progress { font-weight: 700; color: var(--penny-text); margin: 0 0 0.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1rem; }
+  legend { padding: 0; }
+  .f-q, .f-res { font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem); margin: 0 0 1rem; }
+  .f-q:focus, .f-res:focus { outline: none; }
+  .f-opts :global(.f-opt) { display: flex; align-items: center; gap: 0.75rem; border: 2px solid var(--border); border-radius: var(--r-sm); padding: 0 1rem; margin-bottom: 0.6rem; max-width: 24rem; background: var(--card); }
+  .f-opts :global(.f-opt:has(input:checked)) { border-color: var(--forest); background: var(--mint); }
+  .f-opts :global(input) { width: 24px; height: 24px; margin: 0; accent-color: var(--forest); }
+  .f-opts :global(label) { flex: 1; margin: 0; min-height: 52px; display: flex; align-items: center; cursor: pointer; }
+  .f-err { color: var(--danger); font-weight: 700; }
+  .f-nav, .f-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+  .steps { display: grid; gap: 1.5rem; }
+  .step { display: grid; gap: 1rem 2.5rem; padding: clamp(1.5rem, 4vw, 3rem); border-radius: calc(var(--r) + 8px); background: var(--soft); scroll-margin-top: 1rem; }
+  .step.alt { background: var(--mint); }
+  @media (min-width: 52rem) { .step { grid-template-columns: 7rem minmax(0, 1fr); } }
+  .step-num { font: 800 clamp(4rem, 3rem + 4vw, 7rem)/0.9 var(--display); color: var(--penny-text); letter-spacing: -0.05em; }
+  .step-k { font-weight: 700; color: var(--muted); margin: 0 0 0.25rem; }
+  .step h2 { margin: 0 0 1rem; font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.6rem); }
+  .step-body > p { max-width: 44rem; }
+  .finish { display: flex; gap: 0.6rem; align-items: flex-start; background: var(--card); border-radius: var(--r-sm); padding: 0.75rem 1rem; max-width: 44rem; }
+  .finish :global(svg) { color: var(--green); flex: none; margin-top: 0.25rem; }
+  .step-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+  .tools { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tools li { margin: 0; }
+  .tools a { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 44px; padding: 0 1rem; border-radius: 999px; background: var(--card); color: var(--ink); font-weight: 700; text-decoration: none; font-size: 0.95rem; }
+  .tools a:visited { color: var(--ink); }
+  .tools a:hover { text-decoration: underline; }
+  .done { display: flex; align-items: center; gap: 0.6rem; background: var(--card); border-radius: 999px; padding: 0 1.1rem 0 0.9rem; min-height: 48px; }
+  .done input { width: 24px; height: 24px; margin: 0; accent-color: var(--green); }
+  .done label { margin: 0; cursor: pointer; }
+
+  .faq details { border-bottom: 1px solid var(--line); padding: 0.4rem 0; max-width: 46rem; }
+  .faq summary { font: 700 1.15rem/1.3 var(--display); padding: 0.5rem 0; }
+  .faq p { margin: 0.25rem 0 1rem; }
+</style>
