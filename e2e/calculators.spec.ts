@@ -1,9 +1,11 @@
 // Calculators: correct maths, live results, work with no network calls.
 import { test, expect } from "@playwright/test";
 
-test("property tax calculator: $30k cut on $550k, $3,600 bill ≈ $196/yr", async ({ page }) => {
+test("property tax calculator: $30k cut on $550k, $3,600 bill ≈ $196/yr", async ({ page, baseURL }) => {
+  // "Outbound" = any request to another origin (works locally and with TEST_URL against the live site).
+  const origin = new URL(baseURL!).origin;
   const outbound: string[] = [];
-  page.on("request", (r) => { if (!r.url().startsWith("http://127.0.0.1")) outbound.push(r.url()); });
+  page.on("request", (r) => { if (!r.url().startsWith(origin) && !r.url().startsWith("data:")) outbound.push(r.url()); });
   await page.goto("/guides/challenge-property-assessment-alberta/");
   const out = page.locator('[data-calc="property-tax"] [data-out]');
   await expect(out).toContainText("$196 less a year");
