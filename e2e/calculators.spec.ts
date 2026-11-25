@@ -29,3 +29,16 @@ test("tax calculator: $70,000 Alberta 2026 ≈ $12,197; $5,000 RRSP saves ≈ $1
   await expect(out).toContainText("30.5%");
   await expect(out).toContainText("cut your tax by about $1,525");
 });
+
+test("tax calculator 2027: $70,000 Alberta ≈ $11,978 (indexed brackets)", async ({ page }) => {
+  await page.goto("/guides/alberta-income-tax-brackets-2027/");
+  await expect(page.locator('[data-calc="tax"] [data-out]')).toContainText("$11,978");
+});
+
+test("RRSP withdrawal calculator: $10,000 on $70,000 → $2,000 withheld, ≈ $1,050 more at filing, keep ≈ $6,950", async ({ page }) => {
+  await page.goto("/guides/rrsp-tfsa-non-registered-withdrawals/");
+  const out = page.locator('[data-calc="withdrawal"] [data-out]');
+  await expect(out).toContainText("$2,000");
+  await expect(out).toContainText("$1,050 more");
+  await expect(out).toContainText("$6,950");
+});

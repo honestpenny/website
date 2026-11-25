@@ -1,0 +1,43 @@
+---
+// "What an RRSP withdrawal really costs": withholding taken at the bank vs the real extra tax at filing time.
+// Uses the same simplified 2026 federal + Alberta estimate as the tax calculator (brackets + basic personal amounts).
+// Withholding rates outside Quebec: 10% up to $5,000, 20% over $5,000 to $15,000, 30% over $15,000 (CRA).
+---
+<section class="calc" aria-labelledby="wd-h" data-calc="withdrawal">
+  <h3 id="wd-h">What would an RRSP withdrawal really cost you? (2026, Alberta)</h3>
+  <p class="muted">A simple estimate. Nothing you type is sent anywhere.</p>
+  <div class="field"><label for="wd-income">Your other taxable income this year <span class="hint">Pay, pension and other income, before the withdrawal</span></label>
+    <input id="wd-income" type="number" inputmode="numeric" min="0" step="1000" value="70000" /></div>
+  <div class="field"><label for="wd-amount">How much you'd take out of your RRSP</label>
+    <input id="wd-amount" type="number" inputmode="numeric" min="0" step="500" value="10000" /></div>
+  <div class="result" aria-live="polite" data-out></div>
+  <details><summary>How we calculate this</summary>
+    <p>The bank withholds 10% of a withdrawal up to $5,000, 20% over $5,000 up to $15,000, and 30% over $15,000. That's a prepayment, not your final tax. At tax time the whole withdrawal is added to your income, and we estimate the extra federal and Alberta tax using 2026 brackets and basic personal amounts only (no other credits). A withdrawal can also reduce income-tested benefits (the Canada Child Benefit, the GST/HST credit, and from 65 Old Age Security and the Guaranteed Income Supplement), which this doesn't include.</p>
+  </details>
+</section>
+<script>
+  import { estimateFor } from "../../lib/tax";
+  const fmt = (n: number) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+  const withholding = (amt: number) => amt * (amt <= 5000 ? 0.1 : amt <= 15000 ? 0.2 : 0.3);
+  for (const root of document.querySelectorAll<HTMLElement>('[data-calc="withdrawal"]')) {
+    const v = (id: string) => Number(root.querySelector<HTMLInputElement>(`#${id}`)!.value);
+    const out = root.querySelector<HTMLElement>("[data-out]")!;
+    const run = () => {
+      const inc = v("wd-income"), amt = v("wd-amount");
+      if (!(inc >= 0) || !(amt > 0)) { out.textContent = "Enter your income and a withdrawal amount."; return; }
+      const held = withholding(amt);
+      const extra = estimateFor(2026, inc + amt).total - estimateFor(2026, inc).total;
+      const gap = extra - held;
+      out.innerHTML = `<p>The bank would hold back <strong>${fmt(held)}</strong>, so you'd receive ${fmt(amt - held)}.</p>
+        <p>The real extra tax on ${fmt(amt)} is about <strong>${fmt(extra)}</strong> (${Math.round((extra / amt) * 100)}%). ${gap > 0.5 ? `You'd owe about <strong>${fmt(gap)} more</strong> when you file.` : gap < -0.5 ? `You'd get about ${fmt(-gap)} back when you file.` : "The withholding roughly covers it."}</p>
+        <p>You keep about <strong>${fmt(amt - extra)}</strong> of the ${fmt(amt)}, and that RRSP room doesn't come back.</p>`;
+    };
+    root.addEventListener("input", run); run();
+  }
+</script>
+<style>
+  .calc { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 1.5rem; margin: 2rem 0; }
+  .calc h3 { margin-top: 0.25rem; }
+  .result { font-size: 1.1rem; background: var(--mint); border-radius: var(--r-sm); padding: 0.9rem 1.1rem; margin-bottom: 1rem; }
+  .result p:last-child { margin-bottom: 0; }
+</style>

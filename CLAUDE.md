@@ -96,9 +96,11 @@ new pages are covered automatically. After any form change, do one real labelled
 ## Guides roadmap (each: research → write → /fact-check → publish)
 Written (2026-11-24): property assessment, electricity RoLR 2027, natural gas fixed vs default, phones & internet,
 car & home insurance (Care-First 2027), 2026 tax brackets (+ calculator, `src/lib/tax.ts`), TFSA/RRSP/FHSA/RESP/RDSP
-compared, Honest Penny Steps. Fact-check reports: `docs/fact-checks/`.
-Next: benefits checklist (CCB, CGEB, ACFB, CWB, CDB, dental), airline refunds (APPR / Bill C-31 status), 2027 tax
-tables once CRA's rates page updates, RoLR 2027 rates (~Dec 2), Calgary/Edmonton 2027 assessment dates (Jan).
+compared, Honest Penny Steps. Added 2026-11-25: 2027 tax brackets (`YEARS[2027]` in `src/lib/tax.ts`, from CRA
+T4127 Jan 2027; re-check against CRA's rates page in January), RRSP vs TFSA vs non-registered withdrawals (+ withdrawal
+calculator). `/steps/` landing page. Fact-check reports: `docs/fact-checks/`. MSE research + roadmap:
+~/reports/MSE value adds for Alberta.md (next: Care-First renewal checker, phone-fee complaint letter, template letters).
+Next: airline refunds (APPR / Bill C-31 status), TFSA 2027 limit when CRA announces it, RoLR 2027 rates (~Dec 2), Calgary/Edmonton 2027 assessment dates (Jan).
 Yearly: update `src/lib/tax.ts` brackets each January (test pins $70,000 → total).
 
 ## Repo identity

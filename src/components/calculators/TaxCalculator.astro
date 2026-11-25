@@ -1,30 +1,35 @@
 ---
-import { TAX_YEAR } from "../../lib/tax";
+import { TAX_YEAR, YEARS, type TaxYear } from "../../lib/tax";
+interface Props { year?: TaxYear }
+const { year = TAX_YEAR as TaxYear } = Astro.props;
+const phaseOut = YEARS[year].federal.brackets[2][0].toLocaleString("en-CA");
 ---
-<section class="calc" aria-labelledby="tx-h" data-calc="tax">
-  <h3 id="tx-h">Alberta income tax estimate, {TAX_YEAR}</h3>
+<section class="calc" aria-labelledby="tx-h" data-calc="tax" data-year={year}>
+  <h3 id="tx-h">Alberta income tax estimate, {year}</h3>
   <p class="muted">A simple estimate using federal and Alberta brackets and basic personal amounts. Nothing you type is sent anywhere.</p>
-  <div class="field"><label for="tx-income">Your taxable income for {TAX_YEAR} <span class="hint">Roughly: income minus RRSP contributions and other deductions</span></label>
+  <div class="field"><label for="tx-income">Your taxable income for {year} <span class="hint">Roughly: income minus RRSP contributions and other deductions</span></label>
     <input id="tx-income" type="number" inputmode="numeric" min="0" step="1000" value="70000" /></div>
   <div class="field"><label for="tx-extra">An extra amount to test <span class="hint">A raise, or an RRSP contribution you're thinking about</span></label>
     <input id="tx-extra" type="number" inputmode="numeric" min="0" step="500" value="5000" /></div>
   <div class="result" aria-live="polite" data-out></div>
   <details><summary>How we calculate this</summary>
-    <p>We apply each {TAX_YEAR} federal and Alberta tax rate only to the part of your income inside that bracket, then subtract the federal and Alberta basic personal amount credits. We leave out CPP and EI credits and other credits and deductions, so for most people real tax is a little lower. Above $181,440 it can be slightly higher, because we don't model the federal basic personal amount shrinking. It's a guide, not your tax bill.</p>
+    <p>We apply each {year} federal and Alberta tax rate only to the part of your income inside that bracket, then subtract the federal and Alberta basic personal amount credits. We leave out CPP and EI credits and other credits and deductions, so for most people real tax is a little lower. Above ${phaseOut} it can be slightly higher, because we don't model the federal basic personal amount shrinking. It's a guide, not your tax bill.</p>
   </details>
 </section>
 <script>
-  import { estimate } from "../../lib/tax";
+  import { estimateFor, type TaxYear } from "../../lib/tax";
   const fmt = (n: number) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
   const pct = (n: number) => `${(n * 100).toFixed(1).replace(/\.0$/, "")}%`;
   for (const root of document.querySelectorAll<HTMLElement>('[data-calc="tax"]')) {
+    const year = Number(root.dataset.year) as TaxYear;
+    const est = (n: number) => { const r = estimateFor(year, n); return { ...r, average: n > 0 ? r.total / n : 0 }; };
     const v = (id: string) => Number(root.querySelector<HTMLInputElement>(`#${id}`)!.value);
     const out = root.querySelector<HTMLElement>("[data-out]")!;
     const run = () => {
       const inc = v("tx-income"), extra = v("tx-extra");
       if (!(inc >= 0)) { out.textContent = "Enter your taxable income."; return; }
-      const e = estimate(inc);
-      const up = estimate(inc + extra).total - e.total, down = e.total - estimate(Math.max(0, inc - extra)).total;
+      const e = est(inc);
+      const up = est(inc + extra).total - e.total, down = e.total - est(Math.max(0, inc - extra)).total;
       out.innerHTML = `<p>Estimated income tax: <strong>${fmt(e.total)}</strong> (federal ${fmt(e.fed)}, Alberta ${fmt(e.ab)}).</p>
         <p>Your <strong>average</strong> rate is about ${pct(e.average)}. Your <strong>marginal</strong> rate, the tax on your next dollar, is ${pct(e.marginal)}.</p>
         ${extra > 0 ? `<p>Earning ${fmt(extra)} more would add about ${fmt(up)} in tax, so you'd keep ${fmt(extra - up)}. An RRSP contribution of ${fmt(extra)} would cut your tax by about ${fmt(down)}.</p>` : ""}`;
