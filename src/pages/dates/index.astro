@@ -1,0 +1,69 @@
+---
+import Base from "../../layouts/Base.astro";
+import { allDeadlines, isPast, googleLink, outlookLink, calTitle } from "../../lib/deadlines";
+import { longDate, isoDate } from "../../lib/format";
+import { topicLabel } from "../../lib/guides";
+import Spot from "../../components/Spot.astro";
+const all = await allDeadlines();
+const upcoming = all.filter((d) => !isPast(d.date));
+const past = all.filter((d) => isPast(d.date)).reverse();
+const months = [...new Set(upcoming.map((d) => d.date.toLocaleDateString("en-CA", { month: "long", year: "numeric", timeZone: "UTC" })))];
+const monthOf = (d: Date) => d.toLocaleDateString("en-CA", { month: "long", year: "numeric", timeZone: "UTC" });
+const day = (d: Date) => d.toLocaleDateString("en-CA", { day: "numeric", timeZone: "UTC" });
+const wd = (d: Date) => d.toLocaleDateString("en-CA", { weekday: "short", timeZone: "UTC" });
+---
+<Base title="Key money dates for Albertans" description="Alberta and Canadian money deadlines in one calendar: tax, power and gas rates, insurance and property assessments. Add any date to your own calendar.">
+  <header class="head">
+    <Spot name="calendar" />
+    <p class="kicker">Key dates</p>
+    <h1>Money deadlines for Albertans, in one calendar</h1>
+    <p class="lede">Every date comes from a guide we've checked against the official source. Add the ones that matter to your own calendar: you'll get a reminder three days before. Nothing is sent to us.</p>
+  </header>
+
+  {months.map((m) => (
+    <section class="month" aria-labelledby={`m-${m.replace(/\W+/g, "-")}`}>
+      <h2 id={`m-${m.replace(/\W+/g, "-")}`}>{m}</h2>
+      <ol class="rows">
+        {upcoming.filter((d) => monthOf(d.date) === m).map((d) => (
+          <li class="row" id={d.id}>
+            <time class="when" datetime={isoDate(d.date)}><span class="wd">{wd(d.date)}</span><span class="d num">{day(d.date)}</span></time>
+            <div class="what">
+              <p class="label">{d.approximate && <strong>About this date: </strong>}{d.label}</p>
+              <p class="meta"><span class="tag">{topicLabel(d.topic)}</span> <a href={`/guides/${d.guideId}/`}>{d.guideTitle}</a></p>
+              <p class="add">
+                <a class="button secondary small-btn" href={`/dates/${d.id}.ics`} download>Add to my calendar<span class="sr-only">: {calTitle(d)} (ICS file)</span></a>
+                <span class="alt">or <a href={googleLink(d)} rel="noopener">Google</a> · <a href={outlookLink(d)} rel="noopener">Outlook.com</a></span>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  {past.length > 0 && (
+    <details class="past">
+      <summary>Dates that have passed ({past.length})</summary>
+      <ul>{past.map((d) => <li><time datetime={isoDate(d.date)}>{longDate(d.date)}</time>: {d.label} <span class="muted">This deadline has passed.</span></li>)}</ul>
+    </details>
+  )}
+
+  <p class="box"><span class="box-label">Want these by email?</span>The <a href="/email/">weekly Honest Penny email</a> lists what's coming up in the next few weeks, with the one thing worth doing.</p>
+</Base>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
+  .month h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.4rem; }
+  .rows { list-style: none; padding: 0; margin: 0; }
+  .row { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+  .when { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 5rem; border: 2px solid var(--deadline-edge); background: var(--tint-deadline); border-radius: var(--radius); }
+  .wd { font-size: 0.9rem; font-weight: 700; }
+  .d { font-size: 1.9rem; font-weight: 700; line-height: 1; }
+  .label { font-size: 1.1rem; margin: 0 0 0.4rem; max-width: 46rem; }
+  .meta { margin: 0 0 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; font-size: 0.95rem; }
+  .add { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin: 0; }
+  .small-btn { font-size: 0.95rem; min-height: 44px; padding: 0.5rem 0.9rem; }
+  .alt { font-size: 0.95rem; }
+  .alt a { display: inline-block; min-width: 24px; padding: 0.3rem 0; }
+  .past { margin-top: 2.5rem; }
+  @media (max-width: 30rem) { .row { grid-template-columns: 3.75rem minmax(0, 1fr); gap: 0.9rem; } .when { height: 4rem; } .d { font-size: 1.5rem; } }
+</style>

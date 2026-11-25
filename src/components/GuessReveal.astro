@@ -1,0 +1,45 @@
+---
+// "Guess, then see": the reader types a guess (no dragging, WCAG 2.5.7), then sees the real answer next to it.
+// The answer is computed at build time from src/lib/tax.ts, the same code the calculator and tests use.
+import { estimate } from "../lib/tax";
+const income = 70000, raise = 1000;
+const keep = Math.round(raise - (estimate(income + raise).total - estimate(income).total));
+---
+<section class="guess" aria-labelledby="gr-h" data-guess data-keep={keep}>
+  <h3 id="gr-h">Guess first: you earn $70,000 in Alberta and get a $1,000 raise. How much of it do you keep after income tax?</h3>
+  <div class="row">
+    <div class="field"><label for="gr-in">Your guess, in dollars</label><input id="gr-in" type="number" inputmode="numeric" min="0" max="1000" step="10" /></div>
+    <button type="button" data-reveal>Show me</button>
+  </div>
+  <div data-out aria-live="polite"></div>
+  <noscript><p>You keep about <strong class="num">${keep}</strong> of the $1,000.</p></noscript>
+</section>
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-guess]"); if (!root) return;
+    const keep = Number(root.dataset.keep), out = root.querySelector("[data-out]"), input = root.querySelector("#gr-in");
+    const fmt = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+    root.querySelector("[data-reveal]").addEventListener("click", () => {
+      const g = Number(input.value);
+      const bar = (label, v, cls) => `<div class="bar ${cls}"><span class="bl">${label}</span><span class="bt"><span style="width:${Math.max(0, Math.min(100, v / 10))}%"></span></span><span class="num bv">${fmt(v)}</span></div>`;
+      out.innerHTML = (input.value ? bar("Your guess", g, "you") : "") + bar("What you keep", keep, "real") + bar("Income tax on it", 1000 - keep, "tax") +
+        `<p class="verdict">${input.value ? (Math.abs(g - keep) <= 50 ? "Spot on. " : g < keep ? "You keep more than you guessed. " : "You keep a bit less than you guessed. ") : ""}Only the dollars above the bracket line pay the higher rate, so a raise never leaves you worse off from income tax alone.</p>`;
+    });
+  })();
+</script>
+<style>
+  .guess { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); background: var(--kraft); padding: 1.25rem; margin: 2rem 0; }
+  .guess h3 { margin-top: 0; }
+  .row { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem 1rem; }
+  .row .field { margin: 0; }
+  .row input { max-width: 12rem; }
+  .guess :global(.bar) { display: grid; grid-template-columns: 8.5rem 1fr 4.5rem; gap: 0.75rem; align-items: center; margin: 0.75rem 0 0; }
+  .guess :global(.bt) { height: 1.25rem; border: 1px solid var(--ink); background: var(--receipt); }
+  .guess :global(.bt span) { display: block; height: 100%; }
+  .guess :global(.you .bt span) { background: repeating-linear-gradient(45deg, var(--ink) 0 2px, transparent 2px 7px); }
+  .guess :global(.real .bt span) { background: var(--verdigris); }
+  .guess :global(.tax .bt span) { background: var(--copper); }
+  .guess :global(.bv) { text-align: right; font-weight: 700; }
+  .guess :global(.verdict) { margin: 1rem 0 0; }
+  @media (max-width: 30rem) { .guess :global(.bar) { grid-template-columns: 1fr 4rem; } .guess :global(.bl) { grid-column: 1 / -1; font-weight: 700; } }
+</style>

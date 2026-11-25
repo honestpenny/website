@@ -15,8 +15,9 @@ and ~/reports/Honest Penny website build plan.md.
   specific reader which security to buy.
 - **Paid links**: none today. If added: asterisk + disclosure on the page + `paidLinks: true` + update /how-we-make-money/.
 - **Calm, ADHD-friendly design**: one next step, a finish line, no decorative motion, no carousels/countdowns.
-- **Not an AI-template site.** No gradients, shadows, emoji/icon-tile grids, stock photos, Inter. Banned phrases live in
-  `src/lib/site.ts` (each with a reason) and are tested on every page. Design system v2: `docs/DESIGN.md`.
+- **Not an AI-template site.** Design system v3 "Ledger & Patina" (`docs/DESIGN.md`): stamps, receipts, ledgers,
+  copper/verdigris fields. No three-equal-box rows, pills, all-caps, gradients as decoration, shadows, stock people,
+  Inter. Banned phrases live in `src/lib/site.ts` (each with a reason) and are tested on every page.
 
 ## Stack
 Astro 7 static output + MDX content collection (`src/content/guides/*.mdx`, schema in `src/content.config.ts`).
@@ -47,6 +48,14 @@ node scripts/check-live.mjs                 # AFTER every merge: live build.txt 
 ```
 Note: `astro preview` auto-backgrounds in agent shells, so tests use `wrangler dev`. Tests walk every sitemap URL, so
 new pages are covered automatically. After any form change, do one real labelled signup on the live site.
+
+## Tools and their data (fact-check like guides)
+- `/check/` quiz: questions + benefits in `src/data/benefits.ts` (`CHECKED`, `REVIEW_BY`; tests fail when overdue).
+  Wording is always "you might be able to claim"; never promise eligibility or amounts. Every URL official.
+  Evidence: `docs/fact-checks/2026-11-25-quiz-and-help.md`. Re-check every 6 months and after each federal budget.
+- `/dates/` + `/dates/<id>.ics`: built from guide `deadlines` front matter (`short` = calendar title, max 56 chars).
+- `/get-help/`: phone numbers verified 2026-11-25; re-check with the quiz.
+- `/email/`: preview is built from real upcoming dates; never invent a past issue.
 
 ## Adding a guide
 1. Copy an existing `.mdx`; keep `draft: true` until a person has checked every claim.

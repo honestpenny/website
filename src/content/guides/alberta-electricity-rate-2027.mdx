@@ -11,6 +11,7 @@ draft: false
 deadlines:
   - date: 2026-12-31
     label: "Last day of the current default electricity rate (about 12¢ per kWh). A new two-year rate starts January 1, 2027."
+    short: "Last day of the current default electricity rate"
     approximate: false
 sources:
   - title: "Rate of Last Resort"
@@ -45,6 +46,7 @@ import QuickAnswer from "../../components/QuickAnswer.astro";
 import HonestTake from "../../components/HonestTake.astro";
 import Warning from "../../components/Warning.astro";
 import ElectricityCalculator from "../../components/calculators/ElectricityCalculator.astro";
+import Receipt from "../../components/Receipt.astro";
 
 <QuickAnswer>
 - If you never chose a power plan, you're probably on Alberta's default rate, the **Rate of Last Resort (RoLR)**. Your bill will say "Rate of Last Resort" or "RoLR".
@@ -82,6 +84,21 @@ Ask three questions.
 1. **Is the offer's rate lower than what you'll pay on the default rate?** A fixed offer close to or below 12¢ is worth a look. Above about 13.3¢, it's very unlikely to beat the new default rate.
 2. **What else does it charge?** Some retailers add monthly admin or service fees. Small fees can wipe out a lower rate.
 3. **What does it cost to leave?** Ask about exit or cancellation fees before you sign. Some plans have none.
+
+<Receipt
+  title="Example: a home using 600 kWh a month"
+  rows={[
+    { label: "Default rate (ENMAX area, 2026)", amount: "12.06¢/kWh" },
+    { label: "A made-up retailer offer", amount: "11.50¢/kWh", note: "for illustration, not a real offer" },
+    { label: "Energy for a year on the default rate", amount: "$868.32", note: "600 × 12 × 12.06¢" },
+    { label: "Energy for a year on the offer", amount: "$828.00", note: "600 × 12 × 11.50¢" },
+  ]}
+  total={{ label: "Difference over a year (about)", amount: "$40" }}
+  plain="About $3.36 a month, before any extra monthly fees or exit fees the retailer charges."
+  method="We multiply monthly use by 12 months and by each rate, then subtract. This only covers the energy charge: delivery charges are the same whichever retailer you choose, so they don't change the difference. A $5 monthly admin fee would wipe out this saving."
+/>
+
+Try it with your own bill:
 
 <ElectricityCalculator />
 

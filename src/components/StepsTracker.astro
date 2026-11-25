@@ -1,0 +1,51 @@
+---
+// "Progress you keep": tick the 8 Steps off. Ticks are saved in this browser only (localStorage, wrapped in
+// try/catch so blocked storage still works for the visit). No streaks, no points, no nagging.
+import { STEPS } from "../lib/steps";
+---
+<section class="tracker" aria-labelledby="trk-h" data-tracker>
+  <h2 id="trk-h" class="trk-h">Your 8 Steps</h2>
+  <p class="muted small">Tick a step when it's done. Your ticks stay on this device; nothing is sent to us.</p>
+  <ol class="trk">
+    {STEPS.map((s) => (
+      <li>
+        <input type="checkbox" id={`step-${s.n}`} data-step={s.n} />
+        <label for={`step-${s.n}`}><span class="n num">{String(s.n).padStart(2, "0")}</span> <span>{s.title}</span></label>
+        <a href={`#${s.slug}`} class="go">Read<span class="sr-only"> step {s.n}</span></a>
+      </li>
+    ))}
+  </ol>
+  <p class="trk-foot"><span role="status" data-out>0 of 8 done.</span> <button type="button" class="secondary clear" data-clear>Clear my ticks</button></p>
+</section>
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-tracker]"); if (!root) return;
+    const KEY = "hp-steps-v1";
+    const boxes = [...root.querySelectorAll("input[data-step]")];
+    const out = root.querySelector("[data-out]");
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } };
+    const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+    const render = () => {
+      const done = boxes.filter((b) => b.checked).length;
+      out.textContent = done === 8 ? "All 8 done. That's the finish line." : `${done} of 8 done.`;
+    };
+    const ticked = load(); boxes.forEach((b) => { b.checked = ticked.includes(Number(b.dataset.step)); });
+    render();
+    root.addEventListener("change", () => { save(boxes.filter((b) => b.checked).map((b) => Number(b.dataset.step))); render(); });
+    root.querySelector("[data-clear]").addEventListener("click", () => { boxes.forEach((b) => (b.checked = false)); save([]); render(); });
+  })();
+</script>
+<style>
+  .tracker { background: var(--receipt); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 1.25rem 1rem 1rem; margin: 2rem 0; }
+  .trk-h { margin: 0 0 0.25rem; font-size: 1.5rem; }
+  .trk { list-style: none; padding: 0; margin: 0.75rem 0; }
+  .trk li { display: grid; grid-template-columns: 28px 1fr auto; gap: 0.75rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+  .trk input { width: 26px; height: 26px; margin: 0; accent-color: var(--verdigris); }
+  .trk label { font-weight: 400; margin: 0; min-height: 44px; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+  .trk .n { font-weight: 700; color: var(--copper-text); }
+  .trk input:checked + label span:last-child { color: var(--verdigris); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .trk input:checked + label .n { color: var(--verdigris); }
+  .go { font-size: 0.95rem; min-height: 44px; display: inline-flex; align-items: center; padding: 0 0.25rem; }
+  .trk-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin: 0; font-weight: 700; }
+  .clear { font-size: 0.95rem; min-height: 44px; padding: 0.4rem 0.9rem; }
+</style>

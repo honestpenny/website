@@ -1,26 +1,28 @@
 ---
 import Logo from "./Logo.astro";
-// Only topics that have guides. Add a link when its first guide ships.
-const topics = [
-  { href: "/guides/#bills", label: "Bills" },
-  { href: "/guides/#housing", label: "Property tax" },
-  { href: "/guides/#tax", label: "Tax" },
-  { href: "/guides/tfsa-rrsp-fhsa-compared/", label: "Savings accounts" },
+const links = [
+  { href: "/guides/", label: "Guides" },
   { href: "/guides/honest-penny-steps/", label: "The 8 Steps" },
-  { href: "/guides/", label: "All guides" },
+  { href: "/dates/", label: "Key dates" },
+  { href: "/check/", label: "Check what you're owed" },
+  { href: "/email/", label: "Weekly email" },
   { href: "/about/", label: "About" },
 ];
 const here = Astro.url.pathname;
+const current = (href: string) => (here === href || (href === "/guides/" && here.startsWith("/guides/") && here !== "/guides/honest-penny-steps/") ? "page" : undefined);
 ---
 <header class="site-header">
   <div class="wrap bar">
     <Logo />
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
-      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="square" /></svg>
       Menu
     </button>
     <nav id="site-nav" aria-label="Main" class="nav">
-      <ul>{topics.map((t) => <li><a href={t.href} aria-current={here === t.href ? "page" : undefined}>{t.label}</a></li>)}</ul>
+      <ul>
+        {links.map((t) => <li><a href={t.href} aria-current={current(t.href)}>{t.label}</a></li>)}
+        <li class="help"><a href="/get-help/" class="help-link" aria-current={here === "/get-help/" ? "page" : undefined}>Get help</a></li>
+      </ul>
     </nav>
   </div>
 </header>
@@ -29,7 +31,7 @@ const here = Astro.url.pathname;
   (() => {
     const btn = document.querySelector(".menu-btn"), nav = document.getElementById("site-nav");
     if (!btn || !nav) return;
-    const mq = matchMedia("(max-width: 59.99rem)");
+    const mq = matchMedia("(max-width: 67.99rem)");
     const set = (open) => { btn.setAttribute("aria-expanded", String(open)); nav.dataset.open = String(open); };
     const apply = () => { btn.hidden = !mq.matches; set(false); };
     btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
@@ -40,20 +42,24 @@ const here = Astro.url.pathname;
   })();
 </script>
 <style>
-  .site-header { background: var(--paper); border-bottom: 1px solid var(--line); }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1.5rem; min-height: 4.5rem; padding-block: 0.5rem; }
-  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.15rem; }
+  .site-header { background: var(--paper); border-bottom: 2px solid var(--ink); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1.5rem; min-height: 5rem; padding-block: 0.5rem; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
   .nav li { margin: 0; }
-  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.8rem; border-radius: 999px; color: var(--ink); font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.7rem; color: var(--ink); font-weight: 700; font-size: 1rem; text-decoration: none; border-bottom: 3px solid transparent; }
   .nav a:visited { color: var(--ink); }
-  .nav a:hover { background: var(--sunk); text-decoration: underline; }
-  .nav a[aria-current="page"] { background: var(--tint-answer); text-decoration: underline; text-decoration-thickness: 2px; }
-  .menu-btn { background: var(--surface); color: var(--ink); border: 2px solid var(--border); font-size: 1rem; padding: 0.5rem 1rem; min-height: 44px; }
-  .menu-btn:hover { background: var(--sunk); color: var(--ink); border-color: var(--ink); }
-  @media (max-width: 59.99rem) {
+  .nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+  .nav a[aria-current="page"] { border-bottom-color: var(--copper); }
+  .nav .help-link { margin-left: 0.5rem; border: 2px solid var(--ink); border-radius: var(--radius); padding: 0 0.9rem; }
+  .nav .help-link[aria-current="page"] { background: var(--kraft); }
+  .menu-btn { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); font-size: 1rem; padding: 0.5rem 1rem; min-height: 44px; }
+  .menu-btn:hover { background: var(--kraft); color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 67.99rem) {
     .nav { flex-basis: 100%; }
     .nav[data-open="false"] { display: none; }
-    .nav ul { flex-direction: column; gap: 0; padding: 0.25rem 0 0.75rem; }
-    .nav a { display: flex; border-radius: var(--radius-sm); padding: 0 0.75rem; font-size: 1.1rem; min-height: 48px; }
+    .nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: 0.25rem 0 0.75rem; }
+    .nav a { display: flex; padding: 0 0.5rem; font-size: 1.1rem; min-height: 48px; border-bottom: 1px solid var(--rule); }
+    .nav a[aria-current="page"] { border-bottom-color: var(--rule); border-left: 4px solid var(--copper); }
+    .nav .help-link { margin: 0.75rem 0 0; justify-content: center; }
   }
 </style>

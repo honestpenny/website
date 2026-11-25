@@ -11,9 +11,11 @@ draft: false
 deadlines:
   - date: 2027-01-30
     label: "Calgary: complaints received before January 31 paid the lower $40 fee in 2026. Check your 2027 notice"
+    short: "Calgary: last day for the lower complaint fee"
     approximate: true
   - date: 2027-03-23
     label: "Calgary and Edmonton: complaint deadlines in 2026 were both March 23. Your 2027 notice prints your exact date."
+    short: "Property assessment complaint deadline"
     approximate: true
 sources:
   - title: "Customer Review Period"
@@ -47,6 +49,7 @@ import Official from "../../components/Official.astro";
 import QuickAnswer from "../../components/QuickAnswer.astro";
 import HonestTake from "../../components/HonestTake.astro";
 import PropertyTaxCalculator from "../../components/calculators/PropertyTaxCalculator.astro";
+import Receipt from "../../components/Receipt.astro";
 
 <QuickAnswer>
 - Your property tax is based on your **assessment**: what the city says your home was worth on **July 1 of the previous year**.
@@ -109,6 +112,21 @@ What to expect:
 You can withdraw your complaint in writing, for any reason, at least three days before the hearing, for example if the city agrees to a fix.
 
 ## How much could it save?
+
+<Receipt
+  title="Example: a $30,000 lower assessment"
+  rows={[
+    { label: "Assessment on your notice", amount: "$550,000" },
+    { label: "Assessment after a successful fix", amount: "$520,000" },
+    { label: "Last year's property tax bill", amount: "$3,600" },
+    { label: "Share of the bill you no longer pay", amount: "5.45%", note: "$30,000 ÷ $550,000" },
+  ]}
+  total={{ label: "Lower tax each year (about)", amount: "$196" }}
+  plain="That's about $16 a month, every year the lower value sticks."
+  method="Your tax is your assessment times the city's tax rate, so if the rate stays the same, your bill falls by the same share as your assessment: $3,600 × 30,000 ÷ 550,000 = $196.36, rounded to $196. Councils set a new rate each spring, so treat this as an estimate."
+/>
+
+Try it with your own numbers:
 
 <PropertyTaxCalculator />
 
