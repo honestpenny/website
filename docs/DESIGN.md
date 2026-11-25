@@ -17,6 +17,10 @@ reference. v3's paper/serif/ledger look is retired; its tools and trust devices 
   key dates + calendar files, steps tracker, guess-then-reveal, get help in the header.
 - **Still banned:** fake numbers or testimonials, stock people, autoplay/parallax/countdowns/popups, all-caps runs,
   coin artwork from the Mint, text over images.
+- **Logo (2026-11-25):** original copper coin with a cent sign + Bricolage 800 wordmark. One source of truth:
+  `scripts/make-brand.mjs` writes `public/brand/*` (logo light/dark SVG+PNG, mark), `favicon.svg`, `favicon.ico`
+  (16/32/48), `apple-touch-icon.png`, `icon-192/512.png`, `icon-maskable-512.png`, `site.webmanifest`. Change the mark
+  there, rerun it, and update `Logo.astro` to match. Never Mint coin artwork.
 - Screenshots: docs/screenshots/v4-*.png.
 
 

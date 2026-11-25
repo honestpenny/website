@@ -16,8 +16,9 @@ const faq = [
   { q: "Should I stop saving for retirement while I pay off debt?", a: "Keep taking any employer match (Step 3): it's free money. Beyond that, put your extra money on debt until Step 4 is done, then build your emergency fund, then invest." },
   { q: "I've already missed payments. Is it too late?", a: "No. Call a free, non-profit credit counsellor now, before things get worse. They can talk to lenders for you and explain options like a consumer proposal. Our Get help page lists who to call." },
 ];
+const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
 ---
-<Base title="The 8 Steps: a money plan built for Canada" description="The Honest Penny 8 Steps: a Canadian money plan from struggling to building wealth, one step at a time. Find your step, see the finish line, and tick off your progress.">
+<Base jsonLd={[faqLd]} title="The 8 Steps: a money plan built for Canada" description="The Honest Penny 8 Steps: a Canadian money plan from struggling to building wealth, one step at a time. Find your step, see the finish line, and tick off your progress.">
   <section class="band forest hero" aria-labelledby="steps-h1">
     <div class="hero-grid">
       <div>

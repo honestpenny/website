@@ -38,7 +38,7 @@ const related = all.filter((o) => o.id !== g.id).sort((a, b) => Number(b.data.to
 const places = d.applies.map((a) => PLACE_LABEL[a]);
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, "");
 ---
-<Base title={d.title} description={d.summary} jsonLd={[article, crumbs]} ogImage={`/og/${g.id}.png`} ogType="article">
+<Base title={d.title} description={d.summary} jsonLd={[article, crumbs]} ogImage={`/og/${g.id}.png`} ogType="article" published={d.published} modified={d.lastChecked}>
   <header class="g-head">
     <nav aria-label="Breadcrumb" class="crumb"><ol><li><a href="/">Home</a></li><li><a href="/guides/">Guides</a></li><li><a href={`/guides/#${d.topic}`}>{topicLabel(d.topic)}</a></li></ol></nav>
     <h1>{d.title}</h1>
