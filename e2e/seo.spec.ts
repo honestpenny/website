@@ -43,7 +43,8 @@ test.describe("Search and AI visibility", () => {
   test("share cards: every page has og:image that serves a PNG; guides get their own card", async ({ request }) => {
     for (const p of await sitemapPaths(request)) {
       const html = await (await request.get(p)).text();
-      const img = html.match(/<meta property="og:image" content="https:\/\/honestpenny\.ca([^"]+)"/)?.[1];
+      const img = html.match(/<meta property="og:image" content="https:\/\/honestpenny\.ca([^"?]+)(\?v=\d{8})?"/)?.[1];
+      for (const t of ['name="twitter:title"', 'name="twitter:image"', 'property="og:image:type" content="image/png"', 'property="og:image:alt"']) expect(html, `${p}: ${t}`).toContain(t);
       expect(img, `${p}: og:image`).toBeTruthy();
       if (/^\/guides\/.+\//.test(p)) expect(img, p).toBe(`/og/${p.split("/")[2]}.png`);
       const res = await request.get(img!);
