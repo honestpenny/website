@@ -1,0 +1,41 @@
+---
+import { TAX_YEAR } from "../../lib/tax";
+---
+<section class="calc" aria-labelledby="tx-h" data-calc="tax">
+  <h3 id="tx-h">Alberta income tax estimate, {TAX_YEAR}</h3>
+  <p class="muted">A simple estimate using federal and Alberta brackets and basic personal amounts. Nothing you type is sent anywhere.</p>
+  <div class="field"><label for="tx-income">Your taxable income for {TAX_YEAR} <span class="hint">Roughly: income minus RRSP contributions and other deductions</span></label>
+    <input id="tx-income" type="number" inputmode="numeric" min="0" step="1000" value="70000" /></div>
+  <div class="field"><label for="tx-extra">An extra amount to test <span class="hint">A raise, or an RRSP contribution you're thinking about</span></label>
+    <input id="tx-extra" type="number" inputmode="numeric" min="0" step="500" value="5000" /></div>
+  <div class="result" aria-live="polite" data-out></div>
+  <details><summary>How we calculate this</summary>
+    <p>We apply each {TAX_YEAR} federal and Alberta tax rate only to the part of your income inside that bracket, then subtract the federal and Alberta basic personal amount credits. We leave out CPP and EI credits, other credits and deductions, so your real tax is usually a little lower. It's a guide, not your tax bill.</p>
+  </details>
+</section>
+<script>
+  import { estimate } from "../../lib/tax";
+  const fmt = (n: number) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+  const pct = (n: number) => `${(n * 100).toFixed(1).replace(/\.0$/, "")}%`;
+  for (const root of document.querySelectorAll<HTMLElement>('[data-calc="tax"]')) {
+    const v = (id: string) => Number(root.querySelector<HTMLInputElement>(`#${id}`)!.value);
+    const out = root.querySelector<HTMLElement>("[data-out]")!;
+    const run = () => {
+      const inc = v("tx-income"), extra = v("tx-extra");
+      if (!(inc >= 0)) { out.textContent = "Enter your taxable income."; return; }
+      const e = estimate(inc);
+      const up = estimate(inc + extra).total - e.total, down = e.total - estimate(Math.max(0, inc - extra)).total;
+      out.innerHTML = `<p>Estimated income tax: <strong>${fmt(e.total)}</strong> (federal ${fmt(e.fed)}, Alberta ${fmt(e.ab)}).</p>
+        <p>Your <strong>average</strong> rate is about ${pct(e.average)}. Your <strong>marginal</strong> rate, the tax on your next dollar, is ${pct(e.marginal)}.</p>
+        ${extra > 0 ? `<p>Earning ${fmt(extra)} more would add about ${fmt(up)} in tax, so you'd keep ${fmt(extra - up)}. An RRSP contribution of ${fmt(extra)} would cut your tax by about ${fmt(down)}.</p>` : ""}`;
+    };
+    root.addEventListener("input", run); run();
+  }
+</script>
+<style>
+  .calc { border: 2px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .calc h3 { margin-top: 0.25rem; }
+  .result { font-size: 1.1rem; background: var(--tint-answer); padding: 0.75rem 1rem; margin-bottom: 1rem; }
+  .result p:last-child { margin-bottom: 0; }
+  summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+</style>

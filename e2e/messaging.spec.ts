@@ -18,7 +18,7 @@ test.describe("Messaging and trust", () => {
     }
     for (const [p, text] of sources)
       for (const { phrase, why } of BANNED_PHRASES)
-        if (new RegExp(`\\b${phrase.replace(/[-]/g, "\\-")}\\b`).test(text)) problems.push(`${p}: "${phrase}" — ${why}`);
+        if (new RegExp(`\\b${phrase}\\b`, "i").test(text)) problems.push(`${p}: "${phrase}" — ${why}`);
     expect(problems, problems.join("\n")).toEqual([]);
   });
 

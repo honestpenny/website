@@ -165,3 +165,138 @@ rrsp-limit-2027:
   source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
   checked: 2026-11-24
   reviewBy: 2027-03-01
+
+telecom-fee-ban-start:
+  label: CRTC ban on activation, set-up and plan-change fees took effect
+  value: "June 12, 2026"
+  applies: [canada]
+  effective: "since June 12, 2026"
+  source: { title: "CRTC eliminates fees to make it easier to switch internet and cellphone plans", publisher: "CRTC", short: "CRTC", url: "https://www.canada.ca/en/radio-television-telecommunications/news/2026/03/crtc-eliminates-fees-to-make-it-easier-to-switch-internet-and-cellphone-plans.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+wireless-data-overage-cap:
+  label: Wireless Code cap on extra data charges per month (unless the account holder agrees to more)
+  value: "$50"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Annotated Guide to the Wireless Code (2026)", publisher: "Commission for Complaints for Telecom-television Services", short: "CCTS", url: "https://www.ccts-cprst.ca/wp-content/uploads/2026/05/Annotated-Guide-to-the-Wireless-Code-2026.pdf" }
+  checked: 2026-11-24
+  reviewBy: 2027-05-01
+
+wireless-roaming-cap:
+  label: Wireless Code cap on roaming charges per month (unless the account holder agrees to more)
+  value: "$100"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Annotated Guide to the Wireless Code (2026)", publisher: "Commission for Complaints for Telecom-television Services", short: "CCTS", url: "https://www.ccts-cprst.ca/wp-content/uploads/2026/05/Annotated-Guide-to-the-Wireless-Code-2026.pdf" }
+  checked: 2026-11-24
+  reviewBy: 2027-05-01
+
+connecting-families-plans:
+  label: Connecting Families low-cost home internet plans
+  value: "$10 or $20 a month"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Connecting Families: low-cost plans", publisher: "Innovation, Science and Economic Development Canada", short: "Canada.ca", url: "https://ised-isde.canada.ca/site/ised/en/programs-and-initiatives/connecting-families-initiative/low-cost-plans" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+alberta-satellite-rebate:
+  label: Alberta Satellite Rebate, one-time maximum for rural homes without high-speed internet
+  value: "up to $1,000"
+  applies: [alberta]
+  effective: "purchases and applications August 11, 2026 to March 31, 2027"
+  source: { title: "Alberta Satellite Rebate Program", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/alberta-satellite-rebate-program" }
+  checked: 2026-11-24
+  reviewBy: 2027-02-01
+
+federal-lowest-rate-2026:
+  label: Lowest federal income tax rate, 2026
+  value: "14%"
+  applies: [canada]
+  effective: "2026 (14.5% for 2025)"
+  source: { title: "Tax rates and income brackets for individuals: current year", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-31
+
+alberta-lowest-bracket-2026:
+  label: Alberta 8% bracket, 2026 (taxable income up to)
+  value: "$61,200"
+  applies: [alberta]
+  effective: "2026"
+  source: { title: "Personal income tax", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/personal-income-tax" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-31
+
+filing-deadline-2026-returns:
+  label: Deadline to file and pay 2026 personal income tax
+  value: "April 30, 2027"
+  applies: [canada]
+  effective: "2026 tax year (self-employed may file by June 15, 2027 but must pay by April 30)"
+  source: { title: "Important dates for individuals", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/important-dates-individuals.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-02-15
+
+gas-rebate-ceiling:
+  label: Alberta Natural Gas Rebate Program price ceiling (rebated automatically above this)
+  value: "$6.50 per GJ"
+  applies: [alberta]
+  effective: "in effect November 2026"
+  source: { title: "Natural Gas Rebate Program", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/natural-gas-rebate-program" }
+  checked: 2026-11-24
+  reviewBy: 2027-03-01
+
+energy-door-to-door-ban:
+  label: Alberta ban on unsolicited door-to-door sales of energy contracts and household energy products
+  value: "since January 1, 2017"
+  applies: [alberta]
+  effective: "since January 1, 2017"
+  source: { title: "Door-to-door energy sales ban", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/door-to-door-sales-ban" }
+  checked: 2026-11-24
+  reviewBy: 2027-06-01
+
+energy-contract-cooling-off:
+  label: Cooling-off period to cancel a new energy contract without penalty (Energy Marketing Regulation)
+  value: "10 days"
+  applies: [alberta]
+  effective: "current"
+  source: { title: "Energy Marketing Regulation (AR 246/2005)", publisher: "Alberta King's Printer", short: "Alberta law", url: "https://kings-printer.alberta.ca/documents/Regs/2005_246.pdf" }
+  checked: 2026-11-24
+  reviewBy: 2027-06-01
+
+tfsa-cumulative-room-2026:
+  label: Total TFSA room in 2026 for someone 18+ and resident in Canada since 2009 who has never contributed
+  value: "$109,000"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "MP, DB, RRSP, DPSP, ALDA, TFSA limits and YMPE", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-01-15
+
+rrsp-withholding-rates:
+  label: Tax withheld on RRSP withdrawals outside Quebec (up to $5,000 / $5,000–$15,000 / over $15,000)
+  value: "10% / 20% / 30%"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Tax rates on withdrawals", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/making-withdrawals/tax-rates-on-withdrawals.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-06-01
+
+hbp-limit:
+  label: Home Buyers' Plan maximum RRSP withdrawal per person
+  value: "$60,000"
+  applies: [canada]
+  effective: "since April 16, 2024"
+  source: { title: "Participate in the Home Buyers' Plan", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/what-home-buyers-plan/participate-home-buyers-plan.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-06-01
+
+oas-clawback-threshold:
+  label: OAS recovery tax ("clawback") starts above this net income (2025 income; payments July 2026–June 2027)
+  value: "$93,454"
+  applies: [canada]
+  effective: "July 2026 to June 2027"
+  source: { title: "OAS pension recovery tax", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/recovery-tax.html" }
+  checked: 2026-11-24
+  reviewBy: 2027-06-01

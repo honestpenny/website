@@ -19,3 +19,11 @@ test("electricity calculator: 600 kWh, 12.06 vs 11.50 ≈ $40/yr saving", async 
   await page.fill("#ec-admin", "5");
   await expect(out).toContainText("cost about $20 more a year");
 });
+
+test("tax calculator: $70,000 Alberta 2026 ≈ $12,197; $5,000 RRSP saves ≈ $1,525", async ({ page }) => {
+  await page.goto("/guides/alberta-income-tax-brackets-2026/");
+  const out = page.locator('[data-calc="tax"] [data-out]');
+  await expect(out).toContainText("$12,197");
+  await expect(out).toContainText("30.5%");
+  await expect(out).toContainText("cut your tax by about $1,525");
+});

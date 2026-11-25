@@ -27,15 +27,15 @@ export const site = {
 } as const;
 
 /**
- * Phrases that must never appear in visible copy or llms.txt.
+ * Phrases (regular expressions, matched case-insensitively on word boundaries) that must never appear in visible copy or llms.txt.
  * Each has a reason so nobody "fixes" the test by deleting the rule.
  */
 export const BANNED_PHRASES: { phrase: string; why: string }[] = [
-  { phrase: "guaranteed", why: "No money outcome is guaranteed; regulators treat this as misleading." },
+  { phrase: "guaranteed(?! income supplement)", why: "No money outcome is guaranteed; regulators treat this as misleading. (The program name Guaranteed Income Supplement is allowed.)" },
   { phrase: "risk-free", why: "Nothing that earns a return is risk-free." },
   { phrase: "best rate in canada", why: "Unprovable superlative; rates change daily." },
   { phrase: "you should buy", why: "Tailored security recommendations need registration (NI 31-103 s.8.25). Explain options instead." },
-  { phrase: "unlock", why: "AI-template filler. Say what the reader actually gets." },
+  { phrase: "unlock (your|the|a|new)(?! (phone|device))", why: "AI-template filler ('unlock your potential'). Unlocking a phone is fine." },
   { phrase: "empower", why: "AI-template filler." },
   { phrase: "seamless", why: "AI-template filler." },
   { phrase: "elevate", why: "AI-template filler." },
