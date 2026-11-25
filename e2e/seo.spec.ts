@@ -88,6 +88,45 @@ test.describe("Search and AI visibility", () => {
     for (const f of ["/apple-touch-icon.png", "/brand/honest-penny-logo.svg", "/brand/honest-penny-mark.png"]) expect((await request.get(f)).status(), f).toBe(200);
   });
 
+  test("no duplicate titles or descriptions; titles fit search results (<= 70 chars)", async ({ request }) => {
+    const titles = new Map<string, string>(), descs = new Map<string, string>(), problems: string[] = [];
+    for (const p of await sitemapPaths(request)) {
+      const html = await (await request.get(p)).text();
+      const t = html.match(/<title>([^<]+)<\/title>/)?.[1] ?? "";
+      const d = html.match(/<meta name="description" content="([^"]+)"/)?.[1] ?? "";
+      if (titles.has(t)) problems.push(`duplicate title "${t}": ${titles.get(t)} and ${p}`); else titles.set(t, p);
+      if (descs.has(d)) problems.push(`duplicate description: ${descs.get(d)} and ${p}`); else descs.set(d, p);
+      if (t.replace(/&amp;/g, "&").replace(/&#39;/g, "'").replace(/&quot;/g, "\"").length > 70) problems.push(`${p}: title ${t.length} chars`);
+    }
+    expect(problems, problems.join("\n")).toEqual([]);
+  });
+
+  test("every internal link and #anchor resolves (no broken links anywhere)", async ({ request }) => {
+    test.setTimeout(120_000);
+    const pages = await sitemapPaths(request), seen = new Map<string, number>(), problems: string[] = [];
+    const ids = new Map<string, Set<string>>();
+    const htmlOf = new Map<string, string>();
+    for (const p of pages) { const h = await (await request.get(p)).text(); htmlOf.set(p, h); ids.set(p, new Set([...h.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]))); }
+    for (const [p, html] of htmlOf) {
+      for (const [, href] of html.matchAll(/ href="(\/[^"]*|#[^"]+)"/g)) {
+        const [path, hash] = href.startsWith("#") ? [p, href.slice(1)] : href.split("#");
+        if (!seen.has(path)) seen.set(path, (await request.get(path, { maxRedirects: 0 })).status());
+        const st = seen.get(path)!;
+        if (st >= 400) problems.push(`${p}: ${href} → ${st}`);
+        if (hash && ids.has(path) && !ids.get(path)!.has(hash)) problems.push(`${p}: ${href} → missing #${hash}`);
+      }
+    }
+    expect(problems, problems.join("\n")).toEqual([]);
+  });
+
+  test("FAQ structured data matches the visible FAQ on /steps/", async ({ request }) => {
+    const html = await (await request.get("/steps/")).text();
+    const ld = [...html.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g)].map((m) => JSON.parse(m[1])).find((j) => j["@type"] === "FAQPage");
+    expect(ld, "FAQPage JSON-LD").toBeTruthy();
+    const visible = [...html.matchAll(/<summary[^>]*>([^<]+)<\/summary>/g)].map((m) => m[1].replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
+    for (const q of ld.mainEntity) expect(visible, q.name).toContain(q.name);
+  });
+
   test("404 page returns 404 status", async ({ request }) => {
     const res = await request.get("/this-page-does-not-exist/");
     expect(res.status()).toBe(404);

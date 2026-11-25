@@ -6,7 +6,9 @@ import { site } from "../lib/site";
 interface Props { title: string; description: string; jsonLd?: object[]; noindex?: boolean; ogImage?: string; ogType?: "website" | "article"; published?: Date; modified?: Date }
 const { title, description, jsonLd = [], noindex = false, ogImage = "/og/default.png", ogType = "website", published, modified } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
-const fullTitle = Astro.url.pathname === "/" ? `${site.name}: ${site.tagline}` : `${title} | ${site.name}`;
+// Search results show about 60-70 characters: add the brand only when it fits (C2C lesson: keep titles short).
+const fullTitle = Astro.url.pathname === "/" ? `${site.name}: free, independent money help for Alberta`
+  : `${title} | ${site.name}`.length <= 70 ? `${title} | ${site.name}` : title;
 // Version the share image so Facebook/LinkedIn/X refetch it after a change (they cache by URL).
 const imgVersion = (modified ?? new Date()).toISOString().slice(0, 10).replaceAll("-", "");
 const image = `${new URL(ogImage, site.url).href}?v=${imgVersion}`;
