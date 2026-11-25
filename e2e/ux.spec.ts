@@ -10,7 +10,7 @@ test("menu: disclosure on phone (Escape closes, focus returns); plain nav on des
   const nav = page.locator("#site-nav");
   if (!isPhone()) {
     await expect(btn).toBeHidden();
-    await expect(nav.getByRole("link", { name: "All guides" })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Guides", exact: true })).toBeVisible();
     return;
   }
   await expect(btn).toBeVisible();
@@ -57,7 +57,7 @@ test("guides: tables sit in focusable scroll regions, contents links all resolve
   test.skip(isPhone());
   for (const p of (await sitemapPaths(request)).filter((p) => /^\/guides\/.+\//.test(p))) {
     await page.goto(p);
-    const bare = await page.locator("article table").evaluateAll((ts) => ts.filter((t) => !t.closest(".table-wrap[tabindex='0']")).length);
+    const bare = await page.locator("article table").evaluateAll((ts) => ts.filter((t) => !t.closest(".table-wrap[tabindex='0'], .receipt")).length);
     expect(bare, `${p}: table not in a focusable .table-wrap`).toBe(0);
     const broken = await page.locator(".toc-side a, .toc-inline a").evaluateAll((as) =>
       as.map((a) => a.getAttribute("href")!.slice(1)).filter((id) => !document.getElementById(id)));

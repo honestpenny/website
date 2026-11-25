@@ -1,5 +1,33 @@
 # Design notes
 
+## v3 (2026-11-25): "Ledger & Patina"
+From deep research (~/reports/Honest Penny creative UI direction.md). v2 still read as "basic" because of template
+furniture (rows of three boxes, pill buttons, uppercase eyebrows, copper only as thin rules). v3 makes the brand
+**the paperwork of honest money**, so every decorative device is also a trust signal:
+- **Checked stamp** (`Stamp.astro`): who checked, when, next check. Real HTML text; inked frame is decorative.
+- **Receipts** (`Receipt.astro`): worked examples as torn-edge receipts, real `<table>`, mono figures, a plain-words
+  line and "How we worked this out". Say when a figure is rounded.
+- **Ledgers:** tables ruled top and bottom in ink; guide lists as ledger entries (no cards); 8 Steps as a numbered ledger.
+- **Fact marks:** each official number carries a small mono source mark (`CRA`, `Mint`) linking to the source.
+- **Colour fields:** deep copper (#6B3412) and spruce (#1F4D4A) full-bleed bands at full strength.
+  Text copper is #8F4A1C (6.26:1); #B5652B only for fills, rules, large display. NEVER copper on spruce (2.19:1).
+  Verdigris #2E7566 = "done/settled" (ticks, progress). Kraft #F1E7D8 panels, receipt #FFFDF7.
+- **Type:** Source Serif 4 variable with optical sizes (H1 up to ~4.75rem uses the Display cut), Atkinson Hyperlegible
+  Next body, Atkinson Hyperlegible Mono for figures. No italics for emphasis, no all-caps (tested).
+- **Corners:** 4px. No pills. Buttons are square-ish.
+- **Signature tools:** `/check/` (GOV.UK question pages, "Question 3 of 7", Not sure, results first, localStorage),
+  `/dates/` (calendar + RFC 5545 `.ics` with a 3-day reminder + Google/Outlook links), 8 Steps tracker (ticks you keep,
+  no streaks), guess-then-reveal (typed, not dragged), `/email/` (honest preview built from real dates, archive),
+  `/get-help/` (linked from the header on every page: WCAG 3.2.6).
+- **Chinook arch** (`ChinookBand.astro`): seasonal sky band, ONLY as the weekly email header.
+- **Spots** (`Spot.astro`): original object drawings (jar, receipt, calendar). Replace with a commissioned illustrator
+  later (buy-out licence in writing).
+- **Legal:** the logo is an original disc + tick. Never reproduce Royal Canadian Mint coin designs (licence via
+  image@mint.ca), the Alberta coat of arms, or Alberta Blue + Gold as the main pair.
+- **Avoid list:** three equal boxes in a row, pills, eyebrows in caps, Inter/Fraunces/Instrument Serif, gradients as
+  decoration, glow, shadows, stock people, mountains/rodeo type, streaks/countdowns/popups, email gates on tools.
+
+
 ## v2 (2026-11-25): "basic" → modern, still calm
 Kevin's verdict on v1: "looks basic". v2 keeps the rules (no gradients, shadows, stock photos, emoji icons, motion) and
 adds the structure modern money/editorial sites use (MSE, Which?, NerdWallet CA, Wealthsimple Learn, GOV.UK,

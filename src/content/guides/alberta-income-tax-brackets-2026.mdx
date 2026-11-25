@@ -11,6 +11,7 @@ draft: false
 deadlines:
   - date: 2027-04-30
     label: "File your 2026 tax return and pay any balance owing (self-employed: file by June 15, but still pay by April 30)."
+    short: "Tax deadline: file and pay for 2026"
     approximate: false
 sources:
   - title: "Tax rates and income brackets for individuals: current year"
@@ -41,6 +42,13 @@ import QuickAnswer from "../../components/QuickAnswer.astro";
 import HonestTake from "../../components/HonestTake.astro";
 import Warning from "../../components/Warning.astro";
 import TaxCalculator from "../../components/calculators/TaxCalculator.astro";
+import Receipt from "../../components/Receipt.astro";
+import GuessReveal from "../../components/GuessReveal.astro";
+import { estimate } from "../../lib/tax";
+
+export const money = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+export const before = estimate(70000);
+export const after = estimate(65000);
 
 <QuickAnswer>
 - In 2026 the lowest federal rate is <Fact id="federal-lowest-rate-2026" />, and Alberta's lowest rate is 8% on taxable income up to <Fact id="alberta-lowest-bracket-2026" />. Together, an Albertan pays **22%** on income in the lowest band.
@@ -96,6 +104,20 @@ Add the two together and you get your **marginal rate**: the tax on your next do
 *Between $181,440 and $258,482, add about 0.3 percentage points, because the federal basic personal amount shrinks over that range.
 
 ## Try it
+
+<GuessReveal />
+
+<Receipt
+  title="Example: a $5,000 RRSP contribution on $70,000"
+  rows={[
+    { label: "Income tax on $70,000 (federal + Alberta)", amount: money(before.total) },
+    { label: "Taxable income after the contribution", amount: "$65,000" },
+    { label: "Income tax on $65,000", amount: money(after.total) },
+  ]}
+  total={{ label: "Tax you save this year", amount: money(before.total - after.total) }}
+  plain={`That's ${((before.total - after.total) / 50).toFixed(1)}¢ back on every dollar you put in: your marginal rate.`}
+  method="We run the 2026 federal and Alberta brackets and basic personal amounts on both incomes, using the same code as the calculator below. Amounts are rounded to the nearest dollar. The money is taxed when you take it out of the RRSP later."
+/>
 
 <TaxCalculator />
 

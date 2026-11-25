@@ -1,0 +1,153 @@
+---
+// "Check what you're owed": GOV.UK question-page pattern. One question at a time, Back + Continue, plain
+// "Question 3 of 7" progress, "Not sure" accepted, answers kept on this device (localStorage, try/catch), results
+// first with an optional email afterwards. Without JavaScript the full checklist is shown instead.
+import Base from "../../layouts/Base.astro";
+import { QUESTIONS, BENEFITS } from "../../data/benefits";
+import Spot from "../../components/Spot.astro";
+const data = JSON.stringify({ questions: QUESTIONS, benefits: BENEFITS });
+---
+<Base title="Check what you're owed" description="Seven quick questions, then a checklist of federal and Alberta benefits and credits you might be able to claim, each linked to the official page. Nothing you answer leaves your device.">
+  <div class="quiz" data-quiz>
+    <section class="start" data-start>
+      <Spot name="receipt" />
+      <p class="kicker">Check what you're owed</p>
+      <h1>Find benefits and credits you might be missing</h1>
+      <p class="lede">Answer seven quick questions. You'll get a short checklist of federal and Alberta benefits you might be able to claim, with the official link for each, that you can print or keep.</p>
+      <ul class="promise">
+        <li>About 3 minutes</li>
+        <li>You don't need any bills or documents in front of you</li>
+        <li>"Not sure" is always a fine answer</li>
+        <li>Nothing you answer leaves your device</li>
+      </ul>
+      <button type="button" class="go" data-begin>Start now <span aria-hidden="true">→</span></button>
+      <p class="muted small resume" data-resume hidden>You started this before. <button type="button" class="linkish" data-results-now>See your checklist</button> or start again.</p>
+      <noscript>
+        <p class="box"><span class="box-label">JavaScript is off</span>The questions need JavaScript, so here's the full list instead. Each one says who it's for.</p>
+      </noscript>
+    </section>
+
+    <form class="step" data-step hidden novalidate>
+      <button type="button" class="back linkish" data-back>‹ Back</button>
+      <p class="progress" data-progress aria-live="polite"></p>
+      <fieldset>
+        <legend><h2 class="q" tabindex="-1" data-q></h2></legend>
+        <p class="hint" data-hint hidden></p>
+        <div class="opts" data-opts></div>
+      </fieldset>
+      <p class="err" data-err role="alert" hidden>Choose an answer, or pick "Not sure" if there is one.</p>
+      <button type="submit">Continue</button>
+    </form>
+
+    <section class="results" data-results hidden aria-labelledby="res-h">
+      <h2 id="res-h" tabindex="-1">Your checklist</h2>
+      <p class="lede">Based on your answers, you <strong>might</strong> be able to claim these. Each link goes to the official page, which has the exact rules and amounts.</p>
+      <ol class="list" data-list></ol>
+      <div class="after no-print">
+        <button type="button" data-print>Print this checklist</button>
+        <a class="button secondary" href="/email/">Get deadline reminders by email</a>
+      </div>
+      <details class="answers no-print">
+        <summary>Your answers</summary>
+        <dl data-answers></dl>
+        <p><button type="button" class="secondary" data-restart>Change my answers</button> <button type="button" class="secondary" data-clear>Clear my answers</button></p>
+      </details>
+      <p class="muted small">This is general information, not advice, and it can't tell you whether you'll be approved or how much you'll get. Rules change; the official page always wins. Spotted a mistake? <a href="/corrections/">Tell us</a>.</p>
+    </section>
+
+    <section class="all" data-all aria-labelledby="all-h">
+      <h2 id="all-h">Every benefit this check covers</h2>
+      <ol class="list">
+        {BENEFITS.map((b) => (
+          <li><h3><a href={b.url} rel="noopener">{b.title}</a></h3><p>{b.who}</p><p class="how"><strong>How:</strong> {b.how} <span class="muted">({b.by}{b.alberta ? ", Alberta only" : ""})</span></p></li>
+        ))}
+      </ol>
+    </section>
+  </div>
+  <script type="application/json" id="quiz-data" set:html={data} />
+</Base>
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-quiz]");
+    const { questions: Q, benefits: B } = JSON.parse(document.getElementById("quiz-data").textContent);
+    const KEY = "hp-check-v1";
+    const $ = (s) => root.querySelector(s);
+    const start = $("[data-start]"), form = $("[data-step]"), results = $("[data-results]"), all = $("[data-all]");
+    let answers = {}, i = 0;
+    try { answers = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch {} };
+    const show = (el) => { for (const s of [start, form, results]) s.hidden = s !== el; };
+    all.hidden = true;
+    if (Q.every((q) => answers[q.id])) $("[data-resume]").hidden = false;
+
+    const ask = (n) => {
+      i = n; const q = Q[i];
+      $("[data-progress]").textContent = `Question ${i + 1} of ${Q.length}`;
+      $("[data-q]").textContent = q.q;
+      const hint = $("[data-hint]"); hint.hidden = !q.hint; hint.textContent = q.hint || "";
+      $("[data-opts]").innerHTML = q.options.map((o, k) =>
+        `<div class="opt"><input type="radio" name="a" id="o${k}" value="${o.v}" ${answers[q.id] === o.v ? "checked" : ""}><label for="o${k}">${o.label}</label></div>`).join("");
+      $("[data-err]").hidden = true;
+      show(form); $("[data-q]").focus();
+    };
+    const match = (b) => b.when.some((c) => Object.entries(c).every(([k, ok]) => { const v = answers[k]; return v === undefined || v === "notsure" || ok.includes(v); }))
+      && !(b.alberta && answers.where === "other");
+    const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const finish = () => {
+      const hits = B.filter(match);
+      $("[data-list]").innerHTML = hits.map((b, k) =>
+        `<li${k === 0 ? ' class="first"' : ""}>${k === 0 ? '<p class="start-here">Start here</p>' : ""}<h3><a href="${b.url}" rel="noopener">${esc(b.title)}</a></h3><p>${esc(b.who)}</p><p class="how"><strong>How:</strong> ${esc(b.how)} <span class="muted">(${esc(b.by)})</span></p></li>`).join("");
+      $("[data-answers]").innerHTML = Q.map((q) => `<dt>${esc(q.q)}</dt><dd>${esc((q.options.find((o) => o.v === answers[q.id]) || { label: "Not answered" }).label)}</dd>`).join("");
+      show(results); $("#res-h").focus(); window.scrollTo(0, 0);
+    };
+
+    $("[data-begin]").addEventListener("click", () => ask(0));
+    $("[data-results-now]").addEventListener("click", finish);
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = form.querySelector("input[name=a]:checked");
+      if (!v) { $("[data-err]").hidden = false; form.querySelector("input[name=a]").focus(); return; }
+      answers[Q[i].id] = v.value; save();
+      i + 1 < Q.length ? ask(i + 1) : finish();
+    });
+    $("[data-back]").addEventListener("click", () => (i > 0 ? ask(i - 1) : (show(start), $("[data-begin]").focus())));
+    $("[data-print]").addEventListener("click", () => window.print());
+    $("[data-restart]").addEventListener("click", () => ask(0));
+    $("[data-clear]").addEventListener("click", () => { answers = {}; try { localStorage.removeItem(KEY); } catch {} ; $("[data-resume]").hidden = true; show(start); $("[data-begin]").focus(); });
+  })();
+</script>
+<style>
+  .quiz { max-width: 46rem; padding-top: clamp(1.5rem, 4vw, 3rem); }
+  .promise { list-style: none; padding: 0; margin: 1.5rem 0 2rem; border-top: 2px solid var(--ink); }
+  .promise li { padding: 0.6rem 0 0.6rem 2rem; border-bottom: 1px solid var(--rule); margin: 0; position: relative; }
+  .promise li::before { content: ""; position: absolute; left: 0.2rem; top: 0.85rem; width: 0.9rem; height: 0.5rem; border-left: 3px solid var(--verdigris); border-bottom: 3px solid var(--verdigris); transform: rotate(-45deg); }
+  .go { font-size: 1.2rem; padding: 1rem 1.75rem; }
+  .linkish { background: none; border: 0; color: var(--link); text-decoration: underline; padding: 0; min-height: 44px; font: inherit; font-weight: 700; }
+  .linkish:hover { background: none; color: var(--link); text-decoration-thickness: 2px; }
+  .resume { margin-top: 1rem; }
+  .back { margin-bottom: 0.5rem; }
+  .progress { font-family: var(--mono); font-weight: 700; color: var(--copper-text); margin: 0 0 0.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; }
+  legend { padding: 0; }
+  .q { font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.6rem); margin: 0 0 1rem; }
+  .q:focus { outline: none; }
+  .opts :global(.opt) { display: flex; align-items: center; gap: 0.75rem; border: 2px solid var(--border); border-radius: var(--radius); background: var(--receipt); margin: 0 0 0.6rem; padding: 0 1rem; max-width: 30rem; }
+  .opts :global(.opt:has(input:checked)) { border-color: var(--spruce); background: var(--tint-answer); }
+  .opts :global(input) { width: 24px; height: 24px; margin: 0; accent-color: var(--spruce); flex: none; }
+  .opts :global(label) { flex: 1; margin: 0; min-height: 52px; display: flex; align-items: center; font-weight: 700; cursor: pointer; }
+  .err { color: var(--danger); font-weight: 700; }
+  .list { list-style: none; padding: 0; margin: 1.5rem 0; border-top: 2px solid var(--ink); counter-reset: item; }
+  .list :global(li) { padding: 1rem 0 1rem 3rem; border-bottom: 1px solid var(--rule); margin: 0; position: relative; counter-increment: item; }
+  .list :global(li)::before { content: counter(item, decimal-leading-zero); position: absolute; left: 0; top: 1.05rem; font: 700 1.2rem/1 var(--mono); color: var(--copper-text); }
+  .list :global(li.first) { background: var(--tint-honest); padding-right: 1rem; }
+  .list :global(.start-here) { font-weight: 700; color: var(--copper-text); margin: 0 0 0.25rem; }
+  .list :global(h3) { margin: 0 0 0.35rem; font-size: 1.25rem; }
+  .list :global(p) { margin: 0 0 0.4rem; }
+  .list :global(.how) { font-size: 1rem; }
+  .after { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
+  .answers { margin: 1.5rem 0; border-top: 1px solid var(--rule); padding-top: 0.5rem; }
+  .answers :global(dt) { font-weight: 700; margin-top: 0.75rem; }
+  .answers :global(dd) { margin: 0.15rem 0 0; }
+  #res-h:focus { outline: none; }
+  @media print { .start, .step, .all { display: none !important; } .list :global(li.first) { background: none; border: 1px solid #000; } }
+</style>

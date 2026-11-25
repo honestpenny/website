@@ -22,7 +22,7 @@ const guides = defineCollection({
     draft: z.boolean().default(true),
     // Deadlines shown in a deadline box and on the homepage "coming up" list.
     deadlines: z
-      .array(z.object({ date: z.coerce.date(), label: z.string(), approximate: z.boolean().default(false) }))
+      .array(z.object({ date: z.coerce.date(), label: z.string(), short: z.string().max(56).optional(), approximate: z.boolean().default(false) }))
       .default([]),
     sources: z
       .array(z.object({ title: z.string(), url: z.url(), publisher: z.string(), checked: z.coerce.date() }))

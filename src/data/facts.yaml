@@ -300,3 +300,12 @@ oas-clawback-threshold:
   source: { title: "OAS pension recovery tax", publisher: "Government of Canada", short: "Canada.ca", url: "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/recovery-tax.html" }
   checked: 2026-11-24
   reviewBy: 2027-06-01
+
+penny-distribution-ended:
+  label: Date the Royal Canadian Mint stopped distributing pennies
+  value: "February 4, 2013"
+  applies: [canada]
+  effective: "2013-02-04"
+  source: { title: "Frequently asked questions: the penny", publisher: "Royal Canadian Mint", short: "Mint", url: "https://www.mint.ca/en/faq" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25

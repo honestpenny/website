@@ -8,16 +8,16 @@ const groups = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
 ---
 <Base title="All guides" description="Every Honest Penny guide to cutting bills, claiming benefits and saving money in Alberta and Canada, grouped by topic.">
   <header class="head">
-    <p class="eyebrow">{guides.length} guides · checked against official sources</p>
+    <p class="kicker">{guides.length} guides, each checked against official sources</p>
     <h1>All guides</h1>
     <p class="lede">We're starting with the things Albertans can act on this winter. New guides are added every week.</p>
-    <nav aria-label="Jump to a topic"><ul class="jump">{groups.map((g) => <li><a class="chip" href={`#${g.id}`}>{g.label}</a></li>)}</ul></nav>
+    <nav aria-label="Jump to a topic"><ul class="jump">{groups.map((g) => <li><a class="tag jump-tag" href={`#${g.id}`}>{g.label}</a></li>)}</ul></nav>
   </header>
   {groups.map((grp) => (
     <section aria-labelledby={grp.id} class="grp">
       <h2 id={grp.id}>{grp.label}</h2>
       <p class="muted">{grp.blurb}</p>
-      <ul class="cards">{grp.items.map((g) => <GuideRow g={g} showTopic={false} />)}</ul>
+      <ul class="entries">{grp.items.map((g) => <GuideRow g={g} showTopic={false} />)}</ul>
     </section>
   ))}
 </Base>
@@ -25,7 +25,8 @@ const groups = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
   .head { padding: clamp(1.5rem, 4vw, 3rem) 0 0.5rem; }
   .jump { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .jump li { margin: 0; }
-  .jump .chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 1rem; font-size: 0.95rem; }
+  .jump-tag { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem; font-size: 1rem; }
   .grp h2 { margin-bottom: 0.25rem; }
-  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); padding: 0; }
+  .entries { padding: 0; margin: 0; max-width: 52rem; }
+  .grp h2 { border-bottom: 0; }
 </style>

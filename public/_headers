@@ -29,3 +29,9 @@ https://:project.:subdomain.workers.dev/*
 # Generated share cards: cache for a day.
 /og/*
   Cache-Control: public, max-age=86400
+
+# Add-to-calendar files.
+/dates/*.ics
+  Content-Type: text/calendar; charset=utf-8
+  Content-Disposition: attachment
+  X-Robots-Tag: noindex

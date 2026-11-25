@@ -1,0 +1,58 @@
+---
+// Same place on every page (header "Get help", WCAG 3.2.6 Consistent Help). Free, non-commercial help only.
+// Phone numbers and links verified: docs/fact-checks/2026-11-25-quiz-and-help.md. Re-check every 6 months.
+import Base from "../layouts/Base.astro";
+const groups = [
+  { h: "If you're in crisis right now", tone: "urgent", items: [
+    { name: "9-8-8 Suicide Crisis Helpline", what: "Call or text 9-8-8, any time, day or night. Free and confidential.", href: "https://988.ca/", tel: "988" },
+    { name: "Alberta Mental Health Helpline", what: "Free, confidential support for Albertans, 24 hours a day. In an emergency, call 911.", href: "https://www.albertahealthservices.ca/amh/amh.aspx", tel: "1-877-303-2642" },
+  ] },
+  { h: "If money worries are getting on top of you", items: [
+    { name: "211 Alberta", what: "Call or text 2-1-1, or chat online, 24 hours a day, to find local help with money, food, housing and more. Free and confidential.", href: "https://ab.211.ca/", tel: "211" },
+    { name: "Money Mentors", what: "Alberta's non-profit credit counselling agency. Call before you miss a payment.", href: "https://moneymentors.ca/contact-us/", tel: "1-888-294-0076" },
+    { name: "Credit Counselling Society", what: "Free credit counselling, accredited by Canada's national association of non-profit credit counselling organizations. Calgary 403-263-9905, Edmonton 780-701-0083.", href: "https://nomoredebts.org/contact-us", tel: "1-888-527-8999" },
+  ] },
+  { h: "Help with taxes and benefits", items: [
+    { name: "Free tax clinics", what: "Volunteers file your return for free if your income is modest and your taxes are simple.", href: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/community-volunteer-income-tax-program/need-a-hand-complete-your-tax-return.html" },
+    { name: "Check what you're owed", what: "Our seven-question checklist of federal and Alberta benefits you might be missing.", href: "/check/" },
+  ] },
+  { h: "If a company won't fix a problem", items: [
+    { name: "Utilities Consumer Advocate", what: "Free help with Alberta electricity and natural gas bills and disputes.", href: "https://ucahelps.alberta.ca/" },
+    { name: "Commission for Complaints for Telecom-television Services", what: "Free complaints service for phone, internet and TV.", href: "https://www.ccts-cprst.ca/" },
+    { name: "General Insurance OmbudService", what: "Free help with home and car insurance complaints, after your insurer's own process.", href: "https://giocanada.org/" },
+    { name: "Financial Consumer Agency of Canada", what: "Your rights with banks, and how to complain about one.", href: "https://www.canada.ca/en/financial-consumer-agency/services/complaints.html", tel: "1-866-461-3222" },
+  ] },
+];
+---
+<Base title="Get help" description="Free, non-commercial help for Albertans: crisis lines, 211 Alberta, non-profit credit counselling, free tax clinics and complaint services for bills and insurance.">
+  <div class="prose">
+    <p class="kicker">Get help</p>
+    <h1>Free help, from people who aren't selling anything</h1>
+    <p class="lede">Money trouble is common and it isn't a personal failing. These services are free. None of them pay us, and we don't get anything for sending you there.</p>
+    {groups.map((g) => (
+      <section aria-labelledby={g.h.replace(/\W+/g, "-")} class:list={["grp", g.tone]}>
+        <h2 id={g.h.replace(/\W+/g, "-")}>{g.h}</h2>
+        <ul class="help">
+          {g.items.map((i) => (
+            <li>
+              <h3><a href={i.href} rel={i.href.startsWith("http") ? "noopener" : undefined}>{i.name}</a></h3>
+              <p>{i.what}</p>
+              {"tel" in i && i.tel && <p><a class="tel num" href={`tel:${i.tel.replace(/\D/g, "")}`}>Call {i.tel}</a></p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="muted small">We check these numbers and links regularly. If one is wrong, <a href="/corrections/">tell us</a>.</p>
+  </div>
+</Base>
+<style>
+  .help { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .help li { padding: 1rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+  .help h3 { margin: 0 0 0.3rem; }
+  .help p { margin: 0 0 0.4rem; }
+  .tel { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 1.15rem; }
+  .urgent .help { border-top-color: var(--danger); }
+  .urgent { background: var(--tint-warn); padding: 0.25rem 1.25rem 0.75rem; margin: 2rem 0; border-left: 5px solid var(--danger); }
+  .urgent h2 { margin-top: 1rem; }
+</style>

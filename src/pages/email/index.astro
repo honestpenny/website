@@ -1,0 +1,83 @@
+---
+import Base from "../../layouts/Base.astro";
+import Signup from "../../components/Signup.astro";
+import ChinookBand from "../../components/ChinookBand.astro";
+import Spot from "../../components/Spot.astro";
+import { allDeadlines, isPast, calTitle } from "../../lib/deadlines";
+import { site } from "../../lib/site";
+const upcoming = (await allDeadlines()).filter((d) => !isPast(d.date)).slice(0, 3);
+const md = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" }).replace(".", "");
+---
+<Base title="The weekly Honest Penny email" description="One short email a week for Albertans: deadlines coming up, one thing worth doing, and what changed. Free, no ads, unsubscribe in one click.">
+  <header class="head">
+    <Spot name="jar" />
+    <p class="kicker">Weekly email</p>
+    <h1>One short email a week. The dates, the one thing worth doing, and what changed.</h1>
+    <p class="lede">Free. No ads, no sponsors, no selling your address. Unsubscribe in one click from any email.</p>
+  </header>
+
+  <div class="split">
+    <section aria-labelledby="what-h">
+      <h2 id="what-h">What's in each one</h2>
+      <ol class="what">
+        <li><strong>This week's tally.</strong> The money deadlines coming up in Alberta and Canada, with an add-to-calendar link for each.</li>
+        <li><strong>One thing worth doing.</strong> A single action that takes under an hour, with the guide that shows you how.</li>
+        <li><strong>What changed.</strong> New rates, rules and limits, each linked to the official announcement. If we corrected a guide, we say so.</li>
+        <li><strong>The catch.</strong> Every tip says who it doesn't suit.</li>
+      </ol>
+      <p>Each email is also published on this page, so you can read past issues before you sign up.</p>
+    </section>
+
+    <section class="preview" aria-labelledby="pv-h">
+      <h2 id="pv-h" class="sr-only">What this week's email would include</h2>
+      <p class="pv-note muted small">A preview built from this week's real dates. No issue has been sent yet.</p>
+      <div class="mail">
+        <ChinookBand />
+        <div class="mail-body">
+          <p class="mail-from"><strong>{site.name}</strong> · weekly email</p>
+          <h3>This week's tally</h3>
+          <ul class="mail-rows">
+            {upcoming.map((d) => <li><span class="num">{md(d.date)}</span><span>{calTitle(d)}</span></li>)}
+          </ul>
+          <h3>One thing worth doing</h3>
+          <p>Check what you're owed: seven questions, a checklist of benefits you might be missing. <a href="/check/">Start the check</a></p>
+          <p class="mail-catch"><strong>The catch:</strong> it can't tell you exact amounts. Filing your tax return is what gets the money to you.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <Signup />
+
+  <section aria-labelledby="past-h">
+    <h2 id="past-h">Past issues</h2>
+    <p>The first issue goes out before Alberta's January deadlines. Every issue will be listed here with its date.</p>
+  </section>
+
+  <section aria-labelledby="your-h">
+    <h2 id="your-h">Your address and your consent</h2>
+    <ul>
+      <li>We only email you if you sign up yourself and tick the consent box. The box is never ticked for you.</li>
+      <li>Every email says who it's from, gives our contact details and has a one-click unsubscribe.</li>
+      <li>We use Kit, a US company, to send the email. Read <a href="/privacy/">our privacy notice</a> for what that means.</li>
+    </ul>
+  </section>
+</Base>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 0.5rem; max-width: 52rem; }
+  .split { display: grid; gap: 2rem 4rem; align-items: start; }
+  @media (min-width: 60rem) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .what { padding-left: 1.4rem; }
+  .what li { margin-bottom: 0.9rem; }
+  .what li::marker { font-family: var(--mono); font-weight: 700; color: var(--copper-text); }
+  .pv-note { margin: 3.25rem 0 0.5rem; }
+  @media (max-width: 59.99rem) { .pv-note { margin-top: 0; } }
+  .mail { border: 2px solid var(--ink); background: var(--receipt); }
+  .mail-body { padding: 1.25rem 1.35rem; }
+  .mail-from { margin: 0 0 0.75rem; font-size: 0.95rem; }
+  .mail h3 { margin: 1rem 0 0.5rem; font-size: 1.25rem; }
+  .mail-rows { list-style: none; padding: 0; margin: 0; }
+  .mail-rows li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0.75rem; padding: 0.45rem 0; border-bottom: 1px dotted var(--border); margin: 0; font-size: 1rem; }
+  .mail-rows .num { font-weight: 700; }
+  .mail-catch { font-size: 0.95rem; border-top: 1px solid var(--rule); padding-top: 0.6rem; margin: 0; }
+</style>
