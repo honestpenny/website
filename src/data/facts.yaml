@@ -152,7 +152,7 @@ condo-deductible-chargeback-max:
   label: Most an Alberta condo corporation can charge an owner back (lesser of actual cost or deductible)
   value: "$50,000"
   applies: [alberta]
-  effective: "since February 15, 2026"
+  effective: "since February 26, 2026"
   source: { title: "Supporting Alberta's condominium communities", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/supporting-albertas-condominium-communities" }
   checked: 2026-11-24
   reviewBy: 2027-03-01
