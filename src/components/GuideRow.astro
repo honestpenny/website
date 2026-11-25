@@ -7,21 +7,16 @@ interface Props { g: CollectionEntry<"guides">; headingLevel?: 2 | 3 | 4; showTo
 const { g, headingLevel = 3, showTopic = true } = Astro.props;
 const H = `h${headingLevel}` as "h2" | "h3" | "h4";
 ---
-<li class="entry">
-  <H class="entry-h"><a href={`/guides/${g.id}/`}>{g.data.title}</a></H>
-  <p class="entry-sum">{g.data.summary}</p>
-  <p class="entry-meta">{showTopic && <><span class="tag">{topicLabel(g.data.topic)}</span> </>}<span class="muted">{readingMinutes(g)} min read · checked <time datetime={isoDate(g.data.lastChecked)}>{longDate(g.data.lastChecked)}</time></span></p>
+<li class="card lift entry">
+  {showTopic && <span class="tag">{topicLabel(g.data.topic)}</span>}
+  <H class="entry-h"><a class="card-link" href={`/guides/${g.id}/`}>{g.data.title}</a></H>
+  <p class="entry-sum muted">{g.data.summary}</p>
+  <p class="entry-meta"><span>{readingMinutes(g)} min read</span><span aria-hidden="true">·</span><span>Checked <time datetime={isoDate(g.data.lastChecked)}>{longDate(g.data.lastChecked)}</time></span></p>
 </li>
 <style>
-  .entry { position: relative; list-style: none; margin: 0; padding: 1.25rem 0 1.15rem; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; }
-  .entry:first-child { border-top: 2px solid var(--ink); }
-  .entry:focus-within { outline: 3px solid var(--copper); outline-offset: 2px; }
-  .entry-h { font-family: var(--serif); font-weight: 650; font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem); margin: 0; line-height: 1.2; }
-  .entry-h a { color: var(--ink); text-decoration: none; }
-  .entry-h a:visited { color: var(--ink); }
-  .entry-h a::after { content: ""; position: absolute; inset: 0; }
-  .entry-h a:focus-visible { outline: none; }
-  .entry:hover .entry-h a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
-  .entry-sum { margin: 0; max-width: 46rem; }
-  .entry-meta { margin: 0.2rem 0 0; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .entry { display: flex; flex-direction: column; gap: 0.6rem; }
+  .entry .tag { align-self: flex-start; }
+  .entry-h { font-size: 1.3rem; margin: 0.1rem 0 0; line-height: 1.2; }
+  .entry-sum { margin: 0; font-size: 1rem; }
+  .entry-meta { margin: auto 0 0; padding-top: 0.5rem; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.4rem; color: var(--muted); }
 </style>

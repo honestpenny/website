@@ -4,13 +4,13 @@
 // first with an optional email afterwards. Without JavaScript the full checklist is shown instead.
 import Base from "../../layouts/Base.astro";
 import { QUESTIONS, BENEFITS } from "../../data/benefits";
-import Spot from "../../components/Spot.astro";
+import Icon from "../../components/Icon.astro";
 const data = JSON.stringify({ questions: QUESTIONS, benefits: BENEFITS });
 ---
 <Base title="Check what you're owed" description="Seven quick questions, then a checklist of federal and Alberta benefits and credits you might be able to claim, each linked to the official page. Nothing you answer leaves your device.">
   <div class="quiz" data-quiz>
     <section class="start" data-start>
-      <Spot name="receipt" />
+      <span class="hero-icon" aria-hidden="true"><Icon name="receipt" size={36} /></span>
       <p class="kicker">Check what you're owed</p>
       <h1>Find benefits and credits you might be missing</h1>
       <p class="lede">Answer seven quick questions. You'll get a short checklist of federal and Alberta benefits you might be able to claim, with the official link for each, that you can print or keep.</p>
@@ -119,33 +119,33 @@ const data = JSON.stringify({ questions: QUESTIONS, benefits: BENEFITS });
 <style>
   .quiz { max-width: 46rem; padding-top: clamp(1.5rem, 4vw, 3rem); }
   .promise { list-style: none; padding: 0; margin: 1.5rem 0 2rem; border-top: 2px solid var(--ink); }
-  .promise li { padding: 0.6rem 0 0.6rem 2rem; border-bottom: 1px solid var(--rule); margin: 0; position: relative; }
-  .promise li::before { content: ""; position: absolute; left: 0.2rem; top: 0.85rem; width: 0.9rem; height: 0.5rem; border-left: 3px solid var(--verdigris); border-bottom: 3px solid var(--verdigris); transform: rotate(-45deg); }
+  .promise li { padding: 0.6rem 0 0.6rem 2rem; border-bottom: 1px solid var(--line); margin: 0; position: relative; }
+  .promise li::before { content: ""; position: absolute; left: 0.2rem; top: 0.85rem; width: 0.9rem; height: 0.5rem; border-left: 3px solid var(--green); border-bottom: 3px solid var(--green); transform: rotate(-45deg); }
   .go { font-size: 1.2rem; padding: 1rem 1.75rem; }
   .linkish { background: none; border: 0; color: var(--link); text-decoration: underline; padding: 0; min-height: 44px; font: inherit; font-weight: 700; }
   .linkish:hover { background: none; color: var(--link); text-decoration-thickness: 2px; }
   .resume { margin-top: 1rem; }
   .back { margin-bottom: 0.5rem; }
-  .progress { font-family: var(--mono); font-weight: 700; color: var(--copper-text); margin: 0 0 0.5rem; }
+  .progress { font-family: var(--sans); font-weight: 700; color: var(--penny-text); margin: 0 0 0.5rem; }
   fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; }
   legend { padding: 0; }
   .q { font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.6rem); margin: 0 0 1rem; }
   .q:focus { outline: none; }
-  .opts :global(.opt) { display: flex; align-items: center; gap: 0.75rem; border: 2px solid var(--border); border-radius: var(--radius); background: var(--receipt); margin: 0 0 0.6rem; padding: 0 1rem; max-width: 30rem; }
-  .opts :global(.opt:has(input:checked)) { border-color: var(--spruce); background: var(--tint-answer); }
-  .opts :global(input) { width: 24px; height: 24px; margin: 0; accent-color: var(--spruce); flex: none; }
+  .opts :global(.opt) { display: flex; align-items: center; gap: 0.75rem; border: 2px solid var(--border); border-radius: var(--r-sm); background: var(--card); margin: 0 0 0.6rem; padding: 0 1rem; max-width: 30rem; }
+  .opts :global(.opt:has(input:checked)) { border-color: var(--forest); background: var(--mint); }
+  .opts :global(input) { width: 24px; height: 24px; margin: 0; accent-color: var(--forest); flex: none; }
   .opts :global(label) { flex: 1; margin: 0; min-height: 52px; display: flex; align-items: center; font-weight: 700; cursor: pointer; }
   .err { color: var(--danger); font-weight: 700; }
   .list { list-style: none; padding: 0; margin: 1.5rem 0; border-top: 2px solid var(--ink); counter-reset: item; }
-  .list :global(li) { padding: 1rem 0 1rem 3rem; border-bottom: 1px solid var(--rule); margin: 0; position: relative; counter-increment: item; }
-  .list :global(li)::before { content: counter(item, decimal-leading-zero); position: absolute; left: 0; top: 1.05rem; font: 700 1.2rem/1 var(--mono); color: var(--copper-text); }
-  .list :global(li.first) { background: var(--tint-honest); padding-right: 1rem; }
-  .list :global(.start-here) { font-weight: 700; color: var(--copper-text); margin: 0 0 0.25rem; }
+  .list :global(li) { padding: 1rem 0 1rem 3rem; border-bottom: 1px solid var(--line); margin: 0; position: relative; counter-increment: item; }
+  .list :global(li)::before { content: counter(item, decimal-leading-zero); position: absolute; left: 0; top: 1.05rem; font: 700 1.2rem/1 var(--sans); color: var(--penny-text); }
+  .list :global(li.first) { background: var(--peach); padding-right: 1rem; }
+  .list :global(.start-here) { font-weight: 700; color: var(--penny-text); margin: 0 0 0.25rem; }
   .list :global(h3) { margin: 0 0 0.35rem; font-size: 1.25rem; }
   .list :global(p) { margin: 0 0 0.4rem; }
   .list :global(.how) { font-size: 1rem; }
   .after { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
-  .answers { margin: 1.5rem 0; border-top: 1px solid var(--rule); padding-top: 0.5rem; }
+  .answers { margin: 1.5rem 0; border-top: 1px solid var(--line); padding-top: 0.5rem; }
   .answers :global(dt) { font-weight: 700; margin-top: 0.75rem; }
   .answers :global(dd) { margin: 0.15rem 0 0; }
   #res-h:focus { outline: none; }

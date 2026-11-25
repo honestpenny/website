@@ -3,161 +3,218 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Signup from "../components/Signup.astro";
 import GuideRow from "../components/GuideRow.astro";
-import Stamp from "../components/Stamp.astro";
+import Icon from "../components/Icon.astro";
 import Fact from "../components/Fact.astro";
 import { site } from "../lib/site";
 import { isoDate } from "../lib/format";
 import { TOPICS, byChecked } from "../lib/guides";
 import { allDeadlines, isPast, calTitle } from "../lib/deadlines";
 import { STEPS } from "../lib/steps";
+import { BENEFITS, QUESTIONS } from "../data/benefits";
 
 const guides = (await getCollection("guides", ({ data }) => !data.draft)).sort(byChecked);
 const upcoming = (await allDeadlines()).filter((d) => !isPast(d.date));
-const tally = upcoming.slice(0, 3);
-const mon = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" }).replace(".", "");
+const md = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" }).replace(".", "");
+type IconName = "bolt" | "home" | "receipt" | "jar" | "calc" | "car" | "check";
+const topicMeta: Record<string, { icon: IconName; tint: string }> = {
+  bills: { icon: "bolt", tint: "tint-butter" }, housing: { icon: "home", tint: "tint-sky" }, tax: { icon: "receipt", tint: "tint-peach" },
+  savings: { icon: "jar", tint: "tint-mint" }, benefits: { icon: "check", tint: "tint-mint" }, debt: { icon: "calc", tint: "tint-peach" },
+  investing: { icon: "jar", tint: "tint-sky" }, travel: { icon: "car", tint: "tint-butter" },
+};
 const topics = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.topic === t.id) })).filter((t) => t.items.length);
-const newest = guides[0].data.lastChecked;
-const tools = [
-  { href: "/check/", title: "Check what you're owed", text: "Seven questions. A checklist of benefits and credits you might be missing, with the official link for each." },
-  { href: "/guides/alberta-income-tax-brackets-2026/#tx-h", title: "Alberta tax calculator", text: "Your 2026 tax, and what a raise or RRSP contribution really changes." },
-  { href: "/guides/challenge-property-assessment-alberta/#ptc-h", title: "Property tax saving", text: "What a lower assessment would knock off your tax bill." },
-  { href: "/guides/alberta-electricity-rate-2027/#ec-h", title: "Power rate comparison", text: "Is a retailer's offer really cheaper than the default rate?" },
-];
 ---
 <Base title="Home" description={site.description}>
   <section class="hero">
     <div class="hero-copy">
-      <p class="kicker">Free, independent money help for Alberta and Canada</p>
-      <h1>Money help for Albertans that isn't selling you anything</h1>
-      <p class="lede">Plain guides to cutting bills, claiming what you're owed and saving more. Every number links to the official source, with the date we checked it.</p>
+      <p class="kicker"><Icon name="shield" size={18} /> Free, independent, Alberta first</p>
+      <h1>Money help that's actually on your side.</h1>
+      <p class="lede">Plain guides to cutting bills, claiming what you're owed and saving more. Every number links to the official source, with the date we checked it. No ads, no sponsors.</p>
       <div class="cta">
-        <a class="button" href="/check/">Check what you're owed <span aria-hidden="true">→</span></a>
-        <a class="text-cta" href="/guides/honest-penny-steps/">Or start the 8 Steps</a>
+        <a class="button penny big" href="/check/">Check what you're owed <Icon name="arrow" size={20} /></a>
+        <a class="button secondary big" href="/guides/">Browse guides</a>
       </div>
-      <p class="penny">The penny left our pockets on <Fact id="penny-distribution-ended" />. <strong>Every cent still counts.</strong></p>
+      <ul class="ticks" aria-label="What you get">
+        <li><Icon name="check" size={18} /> {QUESTIONS.length} questions, about 3 minutes</li>
+        <li><Icon name="check" size={18} /> {BENEFITS.length} federal and Alberta benefits covered</li>
+        <li><Icon name="check" size={18} /> Nothing you answer leaves your device</li>
+      </ul>
     </div>
 
-    <aside class="tally-wrap" aria-labelledby="tally-h">
-      <div class="tally">
-        <h2 id="tally-h" class="tally-h">Coming up</h2>
-        <p class="tally-sub num">As of {new Date().toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric", timeZone: "America/Edmonton" })}</p>
-        <ol class="tally-rows">
-          {tally.map((d) => (
-            <li><time class="num" datetime={isoDate(d.date)}>{d.approximate ? "~" : ""}{mon(d.date)}</time><a href={`/dates/#${d.id}`}>{calTitle(d)}</a></li>
-          ))}
-        </ol>
-        <p class="tally-total"><span>Dates to know</span><span class="num">{upcoming.length}</span></p>
-        <p class="tally-foot"><a href="/dates/">See every date and add them to your calendar</a></p>
+    <div class="device-wrap" aria-hidden="true">
+      <div class="device">
+        <div class="screen">
+          <p class="d-progress">Question 3 of {QUESTIONS.length}</p>
+          <p class="d-q">Do any children under 18 live with you?</p>
+          <p class="d-opt on"><span class="dot"></span>Yes</p>
+          <p class="d-opt"><span class="dot"></span>No</p>
+          <p class="d-btn">Continue</p>
+        </div>
       </div>
-      <Signup compact />
-    </aside>
-  </section>
-
-  <section class="field-band copper owed section" aria-labelledby="owed-h">
-    <div class="owed-grid">
-      <h2 id="owed-h">Many benefits only reach you if you file a tax return.</h2>
-      <div>
-        <p class="big">Answer seven quick questions and get a checklist of the federal and Alberta benefits and credits you might be able to claim, each with its official link.</p>
-        <p>About 3 minutes. You don't need any bills in front of you. Nothing you answer leaves your device.</p>
-        <a class="button on-field" href="/check/">Start the check <span aria-hidden="true">→</span></a>
+      <div class="float f1">
+        <span class="f-ic"><Icon name="check" size={18} /></span>
+        <span><strong>Canada Child Benefit</strong><br /><span class="f-sub">You might be able to claim</span></span>
       </div>
+      {upcoming[0] && (
+        <div class="float f2">
+          <span class="f-ic peach"><Icon name="calendar" size={18} /></span>
+          <span><strong>{md(upcoming[0].date)}</strong><br /><span class="f-sub">{calTitle(upcoming[0])}</span></span>
+        </div>
+      )}
     </div>
   </section>
 
-  <section class="section steps" aria-labelledby="steps-h">
-    <div class="steps-intro">
-      <h2 id="steps-h">The 8 Steps</h2>
-      <p>A money plan built for Canada, in order. Do one step at a time; each makes the next easier. Tick them off as you go: your ticks stay on this device.</p>
-      <a class="button secondary" href="/guides/honest-penny-steps/">Read the 8 Steps</a>
-    </div>
-    <ol class="ledger">
-      {STEPS.map((s) => (
-        <li><span class="n num">{String(s.n).padStart(2, "0")}</span><span class="t"><a href={`/guides/honest-penny-steps/#${s.slug}`}>{s.title}</a><span class="muted">{s.short}</span></span></li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="section topics" aria-labelledby="topics-h">
-    <h2 id="topics-h" class="section-h">What do you want to sort out?</h2>
-    {topics.map((t) => (
-      <div class="topic">
-        <div class="topic-h"><h3 id={`t-${t.id}`}>{t.label}</h3><p class="muted">{t.blurb}</p></div>
-        <ul class="entries" aria-labelledby={`t-${t.id}`}>{t.items.map((g) => <GuideRow g={g} showTopic={false} headingLevel={4} />)}</ul>
-      </div>
-    ))}
-    <p><a href="/guides/">All {guides.length} guides</a></p>
-  </section>
-
-  <section class="field-band spruce section" aria-labelledby="tools-h">
-    <h2 id="tools-h" class="section-h">Tools that do the sums</h2>
-    <p class="tools-sub">They run in your browser. Nothing you type is sent anywhere.</p>
-    <ul class="tools">
-      {tools.map((t) => <li><a href={t.href}><span class="tool-t">{t.title} <span aria-hidden="true">→</span></span><span class="tool-x">{t.text}</span></a></li>)}
+  <section class="sources-strip" aria-label="Where our facts come from">
+    <p class="muted">Facts checked against</p>
+    <ul>
+      <li>Canada Revenue Agency</li><li>Government of Alberta</li><li>CRTC</li><li>Utilities Consumer Advocate</li><li>City of Calgary</li><li>City of Edmonton</li>
     </ul>
   </section>
 
-  <section class="section trust" aria-labelledby="why-h">
-    <div><Stamp checked={newest} by={site.author.name} /></div>
-    <div>
-      <h2 id="why-h" class="section-h">Why you can trust a page here</h2>
-      <p class="lede">Every guide carries a stamp like this one: who checked it, when, and when we check it next. Every official number has a small source mark next to it, like <span class="num">CRA</span> or <span class="num">Alberta</span>, that takes you to the government page.</p>
-      <p>No company can pay to be listed, ranked or reviewed (<a href="/editorial-code/">our editorial code</a>). We tell you exactly how we make money; right now, <a href="/how-we-make-money/">we don't</a>. When we get something wrong, we fix it and <a href="/corrections/">log the change</a>.</p>
+  <section class="band forest section" aria-labelledby="tools-h">
+    <h2 id="tools-h" class="section-h">Tools that find you money</h2>
+    <p class="lead-forest">Free, quick, and they run in your browser. Nothing you type is sent anywhere.</p>
+    <ul class="grid tools">
+      <li class="card tool lift">
+        <span class="icon"><Icon name="check" /></span>
+        <h3><a class="card-link" href="/check/">Check what you're owed</a></h3>
+        <p class="muted">{QUESTIONS.length} questions, then a checklist of benefits and credits you might be missing, each linked to the official page.</p>
+        <div class="mini"><span class="pill ok">Canada Workers Benefit</span><span class="pill ok">Canadian Dental Care Plan</span><span class="pill">and more</span></div>
+      </li>
+      <li class="card tool lift">
+        <span class="icon"><Icon name="calendar" /></span>
+        <h3><a class="card-link" href="/dates/">Key money dates</a></h3>
+        <p class="muted">Every Alberta and Canadian deadline from our guides. Add any of them to your own calendar.</p>
+        <div class="mini dates">{upcoming.slice(0, 3).map((d) => <span class="drow"><time datetime={isoDate(d.date)}>{md(d.date)}</time>{calTitle(d)}</span>)}</div>
+      </li>
+      <li class="card tool lift">
+        <span class="icon"><Icon name="steps" /></span>
+        <h3><a class="card-link" href="/guides/honest-penny-steps/">The 8 Steps</a></h3>
+        <p class="muted">A money plan built for Canada, one step at a time. Tick them off as you go.</p>
+        <div class="mini"><div class="bar"><span style="width: 37.5%"></span></div><span class="f-sub">Example: 3 of 8 done</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="topics-h">
+    <div class="split-head">
+      <h2 id="topics-h" class="section-h">What do you want to sort out?</h2>
+      <a class="button secondary" href="/guides/">All {guides.length} guides</a>
     </div>
+    <ul class="grid topics">
+      {topics.map((t) => (
+        <li class={`card lift topic ${topicMeta[t.id]?.tint ?? "tint-mint"}`}>
+          <span class="icon"><Icon name={topicMeta[t.id]?.icon ?? "check"} /></span>
+          <h3><a class="card-link" href={`/guides/#${t.id}`}>{t.label}</a></h3>
+          <p>{t.blurb}</p>
+          <p class="count">{t.items.length} {t.items.length === 1 ? "guide" : "guides"} <Icon name="arrow" size={18} /></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section band" aria-labelledby="latest-h">
+    <h2 id="latest-h" class="section-h">Recently checked guides</h2>
+    <ul class="grid">{guides.slice(0, 6).map((g) => <GuideRow g={g} />)}</ul>
+  </section>
+
+  <section class="section steps" aria-labelledby="steps-h">
+    <div>
+      <h2 id="steps-h" class="section-h">A plan, not a pep talk.</h2>
+      <p class="lede">The 8 Steps take you from struggling to building wealth, in order, using Canadian accounts and benefits. Built for here, not copied from the US.</p>
+      <a class="button big" href="/guides/honest-penny-steps/">Start the 8 Steps <Icon name="arrow" size={20} /></a>
+    </div>
+    <ol class="step-list">
+      {STEPS.map((s) => <li><span class="sn" aria-hidden="true">{s.n}</span><span><a href={`/guides/honest-penny-steps/#${s.slug}`}><span class="sr-only">Step {s.n}: </span>{s.title}</a><span class="muted">{s.short}</span></span></li>)}
+    </ol>
+  </section>
+
+  <Signup />
+
+  <section class="section" aria-labelledby="why-h">
+    <h2 id="why-h" class="section-h">Why people can trust us</h2>
+    <ul class="grid why">
+      <li class="card"><span class="icon tint"><Icon name="shield" /></span><h3>Nobody pays to be here</h3><p class="muted">No company can pay to be listed, ranked or reviewed. <a href="/editorial-code/">Our editorial code</a></p></li>
+      <li class="card"><span class="icon tint"><Icon name="receipt" /></span><h3>Every number has a source</h3><p class="muted">Official figures carry a small link to the government page, like this: <Fact id="tfsa-limit-2026" />.</p></li>
+      <li class="card"><span class="icon tint"><Icon name="check" /></span><h3>Checked, dated, corrected</h3><p class="muted">Each guide shows when it was last checked. When we get it wrong, we <a href="/corrections/">fix it and say so</a>.</p></li>
+    </ul>
+    <p class="money">How do we make money? <a href="/how-we-make-money/">Right now, we don't.</a> The penny left our pockets on <Fact id="penny-distribution-ended" />, but every cent still counts.</p>
   </section>
 </Base>
 <style>
-  .hero { display: grid; gap: 2.5rem; padding: clamp(2rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); align-items: start; }
-  @media (min-width: 64rem) { .hero { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 4.5rem; } }
-  .hero h1 { max-width: 15ch; }
-  .lede { max-width: 38rem; }
-  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin: 2rem 0 1.75rem; }
-  .text-cta { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
-  .penny { font-size: 1.05rem; border-top: 1px solid var(--rule); padding-top: 1rem; max-width: 38rem; }
+  .hero { display: grid; gap: 3rem; padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(2rem, 5vw, 4rem); align-items: center; }
+  @media (min-width: 64rem) { .hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 4rem; } }
+  .hero h1 { max-width: 12ch; }
+  .lede { max-width: 36rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0 1.5rem; }
+  .big { font-size: 1.15rem; padding: 1rem 1.75rem; min-height: 56px; }
+  .ticks { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 1rem; color: var(--muted); }
+  .ticks li { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; }
+  .ticks :global(svg) { color: var(--green); }
 
-  .tally-wrap { display: grid; gap: 1.25rem; }
-  .tally { --edge: 9px; background: var(--receipt); padding: calc(var(--edge) + 1.1rem) 1.4rem calc(var(--edge) + 1rem); border-inline: 1px solid var(--rule);
-    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 90deg, #0000 91deg) bottom / calc(2 * var(--edge)) 51% repeat-x, conic-gradient(from 135deg at top, #0000, #000 1deg 90deg, #0000 91deg) top / calc(2 * var(--edge)) 51% repeat-x;
-            mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 90deg, #0000 91deg) bottom / calc(2 * var(--edge)) 51% repeat-x, conic-gradient(from 135deg at top, #0000, #000 1deg 90deg, #0000 91deg) top / calc(2 * var(--edge)) 51% repeat-x; }
-  .tally-h { font-size: 1.5rem; margin: 0; }
-  .tally-sub { margin: 0.2rem 0 0.75rem; font-size: 0.85rem; color: var(--muted); padding-bottom: 0.6rem; border-bottom: 2px dashed var(--border); }
-  .tally-rows { list-style: none; padding: 0; margin: 0; }
-  .tally-rows li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px dotted var(--border); margin: 0; font-size: 1rem; }
-  .tally-rows time { font-weight: 700; }
-  .tally-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; border-top: 2px solid var(--ink); margin: 0.6rem 0 0.75rem; padding-top: 0.5rem; }
-  .tally-foot { margin: 0; font-size: 0.95rem; }
+  .device-wrap { position: relative; display: grid; place-items: center; padding: 2.5rem 0; min-height: 36rem; }
+  .device-wrap::before { content: ""; position: absolute; inset: 8% 6%; border-radius: 40px; background: var(--peach); }
+  .device { position: relative; width: 17rem; border-radius: 42px; background: #16201f; padding: 0.7rem; box-shadow: var(--shadow); }
+  .screen { background: #ffffff; border-radius: 34px; padding: 5.25rem 1.25rem 1.5rem; min-height: 32rem; position: relative; }
+  .screen::before { content: ""; position: absolute; top: 0.8rem; left: 50%; translate: -50% 0; width: 5.5rem; height: 1.4rem; border-radius: 999px; background: #16201f; }
+  .screen p { color: #16201f; margin: 0; }
+  .screen .d-progress { font-weight: 700; font-size: 0.8rem; color: #b2531c; margin-bottom: 0.6rem; }
+  .screen .d-q { font: 800 1.45rem/1.1 var(--display); letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .screen .d-opt { display: flex; align-items: center; gap: 0.6rem; border: 2px solid #d7dbd9; border-radius: 14px; padding: 0.8rem 0.9rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .screen .d-opt.on { border-color: #12332e; background: #dff3ec; }
+  .dot { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid #56615f; }
+  .d-opt.on .dot { border: 5px solid #12332e; }
+  .screen .d-btn { margin-top: 1.25rem; background: #12332e; color: #ffffff; text-align: center; border-radius: 999px; padding: 0.8rem; font-weight: 700; }
+  .float { position: absolute; display: flex; align-items: center; gap: 0.7rem; background: var(--card); color: var(--ink); border-radius: 18px; padding: 0.75rem 1rem; box-shadow: var(--shadow); font-size: 0.95rem; line-height: 1.25; max-width: 16rem; }
+  .f1 { left: -0.5rem; bottom: 6%; } .f2 { right: -0.5rem; top: 4%; }
+  .f-ic { width: 2.25rem; height: 2.25rem; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--green); flex: none; }
+  .f-ic.peach { background: var(--peach); color: var(--penny-text); }
+  .f-sub { color: var(--muted); font-size: 0.85rem; }
+  @media (max-width: 40rem) { .device-wrap { min-height: 34rem; } .float { font-size: 0.85rem; max-width: 12.5rem; } .f1 { left: -0.25rem; bottom: 3%; } .f2 { right: -0.25rem; top: 2%; } }
 
-  .owed-grid { display: grid; gap: 1.5rem 4rem; }
-  @media (min-width: 56rem) { .owed-grid { grid-template-columns: 1.1fr 1fr; align-items: end; } }
-  .owed h2 { font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem); margin: 0; max-width: 16ch; }
-  .owed .big { font-size: 1.25rem; }
+  .sources-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 2rem; padding: 1.5rem 0 2.5rem; border-top: 1px solid var(--line); }
+  .sources-strip p { margin: 0; font-weight: 700; }
+  .sources-strip ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; padding: 0; margin: 0; }
+  .sources-strip li { margin: 0; font: 700 1.05rem/1.2 var(--display); color: var(--muted); letter-spacing: -0.01em; }
 
-  .steps { display: grid; gap: 2rem 4rem; }
-  @media (min-width: 60rem) { .steps { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); } }
-  .steps-intro h2 { margin-top: 0; font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem); }
-  .ledger { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-    background: var(--receipt); }
-  .ledger li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 0.75rem; align-items: baseline; padding: 0.8rem 0.75rem; border-bottom: 1px solid var(--rule); margin: 0; }
-  .ledger li:last-child { border-bottom: 0; }
-  .ledger .n { font-size: 1.4rem; font-weight: 700; color: var(--copper-text); }
-  .ledger .t { display: flex; flex-direction: column; gap: 0.1rem; }
-  .ledger a { font: 650 1.2rem/1.25 var(--serif); color: var(--ink); }
-  .ledger a:visited { color: var(--ink); }
-  .ledger .muted { font-size: 0.95rem; }
+  .lead-forest { font-size: 1.2rem; max-width: 40rem; margin-bottom: 2rem; }
+  .tool { display: flex; flex-direction: column; gap: 0.5rem; }
+  .band.forest .tool { color: var(--ink); }
+  .tool h3 { margin: 0; font-size: 1.45rem; }
+  .tool p { margin: 0; }
+  .band.forest .tool :is(h3, p, li) { color: var(--ink); }
+  .band.forest .tool .muted, .band.forest .tool .f-sub { color: var(--muted); }
+  .band.forest .tool .card-link { color: var(--ink); }
+  .tool .icon { background: var(--mint); color: var(--green); }
+  .mini { margin-top: auto; padding-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .pill { font-size: 0.85rem; font-weight: 700; background: var(--soft); border-radius: 999px; padding: 0.35rem 0.7rem; }
+  .pill.ok { background: var(--mint); }
+  .mini.dates { flex-direction: column; align-items: stretch; gap: 0.35rem; }
+  .drow { display: flex; gap: 0.75rem; font-size: 0.9rem; background: var(--soft); border-radius: 10px; padding: 0.45rem 0.7rem; }
+  .drow time { font-weight: 700; min-width: 3.25rem; }
+  .bar { flex: 1 1 100%; height: 0.6rem; border-radius: 999px; background: var(--soft); overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--green); border-radius: 999px; }
 
-  .topic { display: grid; gap: 0.5rem 3rem; padding: 1.5rem 0; }
-  @media (min-width: 56rem) { .topic { grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr); } }
-  .topic-h h3 { font-size: 1.75rem; margin: 1rem 0 0.25rem; }
-  .entries { padding: 0; margin: 0; }
+  .split-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+  .split-head h2 { margin: 0; }
+  .topic h3 { margin: 0 0 0.35rem; font-size: 1.5rem; }
+  .topic p { margin: 0; color: var(--ink); }
+  .topic .icon { color: var(--ink); }
+  .topic .count { margin-top: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem; }
+  .topics { grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
 
-  .tools-sub { margin-bottom: 1.5rem; }
-  .tools { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--on-field); }
-  .tools li { margin: 0; border-bottom: 1px solid var(--on-field); }
-  .tools a { display: grid; gap: 0.2rem 3rem; padding: 1.1rem 0; text-decoration: none; }
-  @media (min-width: 56rem) { .tools a { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: baseline; } }
-  .tool-t { font: 650 1.4rem/1.25 var(--serif); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-  .tools a:hover .tool-t { text-decoration-thickness: 3px; }
-  .tool-x { font-size: 1.05rem; }
+  .steps { display: grid; gap: 2.5rem 5rem; align-items: start; }
+  @media (min-width: 60rem) { .steps { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); } }
+  .step-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .step-list li { display: grid; grid-template-columns: 2.75rem 1fr; gap: 1rem; align-items: center; margin: 0; background: var(--soft); border-radius: var(--r-sm); padding: 0.75rem 1rem; }
+  .sn { width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--forest); color: #fff; display: grid; place-items: center; font: 800 1.15rem/1 var(--display); }
+  @media (prefers-color-scheme: dark) { .sn { background: var(--green); color: #0f1715; } }
+  .step-list a { font: 700 1.1rem/1.25 var(--display); color: var(--ink); text-decoration: none; }
+  .step-list a:visited { color: var(--ink); }
+  .step-list a:hover { text-decoration: underline; }
+  .step-list .muted { display: block; font-size: 0.92rem; }
 
-  .trust { display: grid; gap: 2rem 4rem; align-items: start; }
-  @media (min-width: 56rem) { .trust { grid-template-columns: auto minmax(0, 1fr); } }
+  .why .icon.tint { background: var(--mint); color: var(--green); }
+  .why h3 { margin: 0 0 0.4rem; }
+  .why p { margin: 0; }
+  .money { margin-top: 2rem; font-size: 1.1rem; }
 </style>

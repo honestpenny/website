@@ -1,6 +1,26 @@
 # Design notes
 
-## v3 (2026-11-25): "Ledger & Patina"
+## v4 (2026-11-25): "Modern" (current)
+Kevin's verdict on v3 (Ledger & Patina): still "basic" and old-fashioned. He chose **Wealthsimple / Wise** as the
+reference. v3's paper/serif/ledger look is retired; its tools and trust devices stay, restyled.
+- **Type:** Bricolage Grotesque (variable, OFL) at weight 800 with tight tracking for headings; Atkinson Hyperlegible
+  Next for body. Big: H1 up to 5.4rem.
+- **Colour:** white page, warm soft grey sections (#F6F4F0), one brand colour **forest #12332E** (bands, primary
+  buttons, footer) and one bright **penny #FF9A5C** accent (main call to action, with ink text 7.96:1; never text on
+  white). Copper text #B2531C. Pastel card tints: mint, peach, sky, butter (ink on each >= 13:1). Dark mode tested.
+- **Shape:** rounded cards (20px) with a soft shadow, pill buttons, pill tags, small hover lift (off under reduced motion).
+- **Hero:** big headline + penny button + a real-looking phone showing the actual quiz question, with two floating
+  cards (a benefit result and the next real deadline). Decorative (aria-hidden); the real tool is one click away.
+- **Sections:** "Facts checked against" strip of official sources (names, not logos), forest band with three tool
+  cards, pastel topic cards, guide cards, 8 Steps list with numbered circles, forest email card, three trust cards.
+- **Kept from v3:** fact-checked badge (was the stamp), worked-example cards (were receipts), source pills, quiz,
+  key dates + calendar files, steps tracker, guess-then-reveal, get help in the header.
+- **Still banned:** fake numbers or testimonials, stock people, autoplay/parallax/countdowns/popups, all-caps runs,
+  coin artwork from the Mint, text over images.
+- Screenshots: docs/screenshots/v4-*.png.
+
+
+## v3 (2026-11-25): "Ledger & Patina" (retired: read as old-fashioned)
 From deep research (~/reports/Honest Penny creative UI direction.md). v2 still read as "basic" because of template
 furniture (rows of three boxes, pill buttons, uppercase eyebrows, copper only as thin rules). v3 makes the brand
 **the paperwork of honest money**, so every decorative device is also a trust signal:

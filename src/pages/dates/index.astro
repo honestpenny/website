@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import { allDeadlines, isPast, googleLink, outlookLink, calTitle } from "../../lib/deadlines";
 import { longDate, isoDate } from "../../lib/format";
 import { topicLabel } from "../../lib/guides";
-import Spot from "../../components/Spot.astro";
+import Icon from "../../components/Icon.astro";
 const all = await allDeadlines();
 const upcoming = all.filter((d) => !isPast(d.date));
 const past = all.filter((d) => isPast(d.date)).reverse();
@@ -14,7 +14,7 @@ const wd = (d: Date) => d.toLocaleDateString("en-CA", { weekday: "short", timeZo
 ---
 <Base title="Key money dates for Albertans" description="Alberta and Canadian money deadlines in one calendar: tax, power and gas rates, insurance and property assessments. Add any date to your own calendar.">
   <header class="head">
-    <Spot name="calendar" />
+    <span class="hero-icon" aria-hidden="true"><Icon name="calendar" size={36} /></span>
     <p class="kicker">Key dates</p>
     <h1>Money deadlines for Albertans, in one calendar</h1>
     <p class="lede">Every date comes from a guide we've checked against the official source. Add the ones that matter to your own calendar: you'll get a reminder three days before. Nothing is sent to us.</p>
@@ -52,12 +52,12 @@ const wd = (d: Date) => d.toLocaleDateString("en-CA", { weekday: "short", timeZo
 </Base>
 <style>
   .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
-  .month h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.4rem; }
-  .rows { list-style: none; padding: 0; margin: 0; }
-  .row { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
-  .when { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 5rem; border: 2px solid var(--deadline-edge); background: var(--tint-deadline); border-radius: var(--radius); }
+  .month h2 { margin-bottom: 1.25rem; }
+  .rows { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  .row { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.25rem; padding: 1.25rem; margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
+  .when { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 5rem; border-radius: 16px; background: var(--peach); }
   .wd { font-size: 0.9rem; font-weight: 700; }
-  .d { font-size: 1.9rem; font-weight: 700; line-height: 1; }
+  .d { font: 800 2rem/1 var(--display); }
   .label { font-size: 1.1rem; margin: 0 0 0.4rem; max-width: 46rem; }
   .meta { margin: 0 0 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; font-size: 0.95rem; }
   .add { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin: 0; }
@@ -65,5 +65,5 @@ const wd = (d: Date) => d.toLocaleDateString("en-CA", { weekday: "short", timeZo
   .alt { font-size: 0.95rem; }
   .alt a { display: inline-block; min-width: 24px; padding: 0.3rem 0; }
   .past { margin-top: 2.5rem; }
-  @media (max-width: 30rem) { .row { grid-template-columns: 3.75rem minmax(0, 1fr); gap: 0.9rem; } .when { height: 4rem; } .d { font-size: 1.5rem; } }
+  @media (max-width: 30rem) { .row { grid-template-columns: 3.75rem minmax(0, 1fr); gap: 0.9rem; } .when { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 5rem; border-radius: 16px; background: var(--peach); } .d { font-size: 1.5rem; } }
 </style>

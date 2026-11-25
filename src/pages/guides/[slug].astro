@@ -86,7 +86,7 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, "");
 
   <section class="related no-print" aria-labelledby="rel-h">
     <h2 id="rel-h">Read next</h2>
-    <ul class="entries">{related.map((r) => <GuideRow g={r} />)}</ul>
+    <ul class="grid">{related.map((r) => <GuideRow g={r} />)}</ul>
   </section>
 </Base>
 <script is:inline>
@@ -105,8 +105,9 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, "");
   })();
 </script>
 <style>
-  .g-head { padding: clamp(1.5rem, 4vw, 3rem) 0 2rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
-  .g-head h1 { max-width: 20ch; }
+  .g-head { position: relative; isolation: isolate; padding: clamp(1.75rem, 5vw, 3.5rem) 0 2.25rem; margin-bottom: 2.5rem; }
+  .g-head::before { content: ""; position: absolute; inset: 0 calc(50% - 50vw); z-index: -1; background: var(--soft); }
+  .g-head h1 { max-width: 18ch; font-size: clamp(2.3rem, 1.5rem + 3.4vw, 4.2rem); }
   .g-head .lede { max-width: var(--measure); }
   .crumb ol { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; font-size: 0.95rem; }
   .crumb li { margin: 0; display: flex; align-items: center; }
@@ -120,20 +121,20 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, "");
   .g-grid { display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 64rem) { .g-grid { grid-template-columns: minmax(0, var(--measure)) minmax(14rem, 18rem); justify-content: space-between; } .toc-inline { display: none; } }
   @media (max-width: 63.99rem) { .toc-side { display: none; } }
-  .toc-side nav { position: sticky; top: 1.5rem; border-left: 2px solid var(--rule); padding-left: 1rem; max-height: calc(100vh - 3rem); overflow: auto; }
-  .toc-h { font: 650 1.1rem/1.3 var(--serif); margin: 0 0 0.5rem; }
+  .toc-side nav { position: sticky; top: 1.5rem; background: var(--soft); border-radius: var(--r); padding: 1.25rem 1.25rem 1.25rem 1rem; max-height: calc(100vh - 3rem); overflow: auto; }
+  .toc-h { font: 650 1.1rem/1.3 var(--display); margin: 0 0 0.5rem; }
   .toc-side ol { list-style: none; padding: 0; margin: 0; font-size: 0.95rem; }
   .toc-side li { margin: 0; }
-  .toc-side a { display: block; padding: 0.4rem 0.6rem; margin-left: calc(-1rem - 2px); border-left: 2px solid transparent; color: var(--muted); text-decoration: none; line-height: 1.35; }
+  .toc-side a { display: block; padding: 0.4rem 0.6rem; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; color: var(--muted); text-decoration: none; line-height: 1.35; }
   .toc-side a:hover { color: var(--ink); text-decoration: underline; }
-  .toc-side a[aria-current] { color: var(--ink); font-weight: 700; border-left-color: var(--copper); }
-  .toc-inline { border: 1px solid var(--border); border-radius: var(--radius); background: var(--receipt); padding: 0.25rem 1.1rem; margin: 1.5rem 0; }
+  .toc-side a[aria-current] { color: var(--ink); font-weight: 700; border-left-color: var(--penny); background: var(--card); }
+  .toc-inline { border: 0; border-radius: var(--r); background: var(--soft); padding: 0.25rem 1.1rem; margin: 1.5rem 0; }
   .toc-inline ol { margin: 0.25rem 0 0.9rem; padding-left: 1.3rem; }
   .toc-inline a { display: inline-block; padding: 0.15rem 0; }
 
   .g-body :global(h2) { padding-top: 0.5rem; }
-  .sources { margin-top: 3.5rem; padding-top: 0.5rem; border-top: 2px solid var(--ink); }
-  .sources ol li::marker { font-family: var(--mono); color: var(--copper-text); font-weight: 700; }
+  .sources { margin-top: 3.5rem; padding: 0.5rem 1.5rem 1rem; background: var(--soft); border-radius: var(--r); }
+  .sources ol li::marker { color: var(--penny-text); font-weight: 700; }
   .sources ol { padding-left: 1.3rem; }
   .sources li { margin-bottom: 0.8rem; }
   .related { margin-top: 4rem; }

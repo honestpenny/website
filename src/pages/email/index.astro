@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Signup from "../../components/Signup.astro";
 import ChinookBand from "../../components/ChinookBand.astro";
-import Spot from "../../components/Spot.astro";
+import Icon from "../../components/Icon.astro";
 import { allDeadlines, isPast, calTitle } from "../../lib/deadlines";
 import { site } from "../../lib/site";
 const upcoming = (await allDeadlines()).filter((d) => !isPast(d.date)).slice(0, 3);
@@ -10,7 +10,7 @@ const md = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "nu
 ---
 <Base title="The weekly Honest Penny email" description="One short email a week for Albertans: deadlines coming up, one thing worth doing, and what changed. Free, no ads, unsubscribe in one click.">
   <header class="head">
-    <Spot name="jar" />
+    <span class="hero-icon" aria-hidden="true"><Icon name="mail" size={36} /></span>
     <p class="kicker">Weekly email</p>
     <h1>One short email a week. The dates, the one thing worth doing, and what changed.</h1>
     <p class="lede">Free. No ads, no sponsors, no selling your address. Unsubscribe in one click from any email.</p>
@@ -69,15 +69,15 @@ const md = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "nu
   @media (min-width: 60rem) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
   .what { padding-left: 1.4rem; }
   .what li { margin-bottom: 0.9rem; }
-  .what li::marker { font-family: var(--mono); font-weight: 700; color: var(--copper-text); }
+  .what li::marker { font-family: var(--sans); font-weight: 700; color: var(--penny-text); }
   .pv-note { margin: 3.25rem 0 0.5rem; }
   @media (max-width: 59.99rem) { .pv-note { margin-top: 0; } }
-  .mail { border: 2px solid var(--ink); background: var(--receipt); }
+  .mail { border: 2px solid var(--ink); background: var(--card); }
   .mail-body { padding: 1.25rem 1.35rem; }
   .mail-from { margin: 0 0 0.75rem; font-size: 0.95rem; }
   .mail h3 { margin: 1rem 0 0.5rem; font-size: 1.25rem; }
   .mail-rows { list-style: none; padding: 0; margin: 0; }
   .mail-rows li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0.75rem; padding: 0.45rem 0; border-bottom: 1px dotted var(--border); margin: 0; font-size: 1rem; }
   .mail-rows .num { font-weight: 700; }
-  .mail-catch { font-size: 0.95rem; border-top: 1px solid var(--rule); padding-top: 0.6rem; margin: 0; }
+  .mail-catch { font-size: 0.95rem; border-top: 1px solid var(--line); padding-top: 0.6rem; margin: 0; }
 </style>

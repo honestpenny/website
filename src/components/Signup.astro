@@ -28,13 +28,17 @@ const { compact = false } = Astro.props;
   </div>
 </section>
 <style>
-  .signup { display: grid; gap: 1.25rem 3rem; align-items: start; margin: 2rem 0; padding: clamp(1.5rem, 4vw, 2.5rem); background: var(--receipt); border: 2px solid var(--ink); border-radius: var(--radius); }
+  .signup { display: grid; gap: 1.5rem 3rem; align-items: center; margin: 2rem 0; padding: clamp(1.75rem, 5vw, 3.5rem); background: var(--forest); color: var(--on-forest); border-radius: calc(var(--r) + 8px); }
   @media (min-width: 52rem) { .signup:not(.compact) { grid-template-columns: 1.1fr 1fr; } }
-  .signup h2 { margin: 0 0 0.6rem; }
-  .compact { margin: 0; padding: 1.25rem; border-width: 1px; border-color: var(--border); }
-  .compact h2 { font-size: 1.35rem; }
+  .signup h2 { margin: 0 0 0.75rem; color: var(--on-forest); }
+  .signup p { color: var(--on-forest-muted); }
+  .signup a, .signup a:visited { color: var(--on-forest); }
+  .signup label { color: var(--on-forest); }
+  .compact { margin: 0; padding: 1.5rem; border-radius: var(--r); }
+  .compact h2 { font-size: 1.5rem; }
   .su-copy > :last-child, .su-act > :last-child { margin-bottom: 0; }
-  .soon-box { margin: 0; }
+  .soon-box { margin: 0; background: var(--forest-2); color: var(--on-forest); }
+  .soon-box :global(.box-label) { color: var(--on-forest); }
   .consent { display: flex; gap: 0.6rem; align-items: flex-start; }
   .consent input { width: 24px; height: 24px; margin-top: 0.2rem; flex: none; }
   .consent label { font-weight: 400; }
