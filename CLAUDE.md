@@ -15,9 +15,10 @@ and ~/reports/Honest Penny website build plan.md.
   specific reader which security to buy.
 - **Paid links**: none today. If added: asterisk + disclosure on the page + `paidLinks: true` + update /how-we-make-money/.
 - **Calm, ADHD-friendly design**: one next step, a finish line, no decorative motion, no carousels/countdowns.
-- **Not an AI-template site.** Design system v3 "Ledger & Patina" (`docs/DESIGN.md`): stamps, receipts, ledgers,
-  copper/verdigris fields. No three-equal-box rows, pills, all-caps, gradients as decoration, shadows, stock people,
-  Inter. Banned phrases live in `src/lib/site.ts` (each with a reason) and are tested on every page.
+- **Modern, Wealthsimple/Wise-style** (Kevin's pick, 2026-11-25; v4 in `docs/DESIGN.md`): bold Bricolage headlines,
+  white space, forest + penny colours, rounded cards, real product UI in the hero. Kevin rejected v2 and v3 as
+  "basic"/old-fashioned: don't drift back to paper/serif/ledger looks. Still no fake numbers, stock people, all-caps,
+  popups or decorative motion. Banned phrases live in `src/lib/site.ts` (each with a reason) and are tested on every page.
 
 ## Stack
 Astro 7 static output + MDX content collection (`src/content/guides/*.mdx`, schema in `src/content.config.ts`).

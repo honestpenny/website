@@ -36,15 +36,15 @@ import { STEPS } from "../lib/steps";
   })();
 </script>
 <style>
-  .tracker { background: var(--receipt); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 1.25rem 1rem 1rem; margin: 2rem 0; }
-  .trk-h { margin: 0 0 0.25rem; font-size: 1.5rem; }
+  .tracker { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 1.5rem; margin: 2rem 0; }
+  .trk-h { margin: 0 0 0.25rem; font-size: 1.6rem; }
   .trk { list-style: none; padding: 0; margin: 0.75rem 0; }
-  .trk li { display: grid; grid-template-columns: 28px 1fr auto; gap: 0.75rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
-  .trk input { width: 26px; height: 26px; margin: 0; accent-color: var(--verdigris); }
+  .trk li { display: grid; grid-template-columns: 28px 1fr auto; gap: 0.75rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--line); margin: 0; }
+  .trk input { width: 26px; height: 26px; margin: 0; accent-color: var(--green); }
   .trk label { font-weight: 400; margin: 0; min-height: 44px; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-  .trk .n { font-weight: 700; color: var(--copper-text); }
-  .trk input:checked + label span:last-child { color: var(--verdigris); text-decoration: line-through; text-decoration-thickness: 1px; }
-  .trk input:checked + label .n { color: var(--verdigris); }
+  .trk .n { font-weight: 800; color: var(--penny-text); font-family: var(--display); }
+  .trk input:checked + label span:last-child { color: var(--green); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .trk input:checked + label .n { color: var(--green); }
   .go { font-size: 0.95rem; min-height: 44px; display: inline-flex; align-items: center; padding: 0 0.25rem; }
   .trk-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin: 0; font-weight: 700; }
   .clear { font-size: 0.95rem; min-height: 44px; padding: 0.4rem 0.9rem; }

@@ -14,7 +14,7 @@ const cols = [
 ];
 ---
 <footer class="site-footer">
-  <div class="wrap grid">
+  <div class="wrap fgrid">
     <div class="about">
       <Logo />
       <p class="how"><strong>How this site works:</strong> Honest Penny is free and independent. No company can pay to be listed or ranked. General information only, not personal financial advice. <a href="/terms/">Read our terms</a>. If something here is wrong, <a href="/corrections/">tell us and we'll fix it</a>.</p>
@@ -26,17 +26,22 @@ const cols = [
       </nav>
     ))}
   </div>
-  <div class="wrap base"><p class="muted small">© {new Date().getFullYear()} {site.name}. Made in {site.region}. Contact: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></div>
+  <div class="wrap base"><p class="small">© {new Date().getFullYear()} {site.name}. Made in {site.region}. Contact: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></div>
 </footer>
 <style>
-  .site-footer { background: var(--kraft); border-top: 2px solid var(--ink); margin-top: 5rem; padding: 3rem 0 1.5rem; font-size: 1rem; }
-  .grid { display: grid; gap: 2rem; grid-template-columns: 1fr; }
-  @media (min-width: 48rem) { .grid { grid-template-columns: 1.5fr 1fr 1fr 1.1fr; } }
+  .site-footer { background: var(--forest); color: var(--on-forest); margin-top: 6rem; padding: 4rem 0 2rem; font-size: 1rem; }
+  .site-footer :global(.logo), .site-footer :global(.logo:visited) { color: var(--on-forest); }
+  .site-footer p { color: var(--on-forest-muted); }
+  .site-footer a, .site-footer a:visited { color: var(--on-forest); }
+  .fgrid { display: grid; gap: 2rem; grid-template-columns: 1fr; }
+  @media (min-width: 48rem) { .fgrid { grid-template-columns: 1.5fr 1fr 1fr 1.1fr; } }
   .how { max-width: 30rem; margin-top: 1rem; }
-  .col-h { font: 650 1.15rem/1.3 var(--serif); margin: 0 0 0.5rem; }
+  .col-h { font: 700 1.1rem/1.3 var(--display); margin: 0 0 0.6rem; color: var(--on-forest); }
   .links { list-style: none; padding: 0; margin: 0; }
   .links li { margin: 0; }
-  .links a { display: inline-flex; align-items: center; min-height: 40px; min-width: 24px; }
-  .base { border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 1rem; }
+  .links a { display: inline-flex; align-items: center; min-height: 40px; min-width: 24px; text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+  .base { border-top: 1px solid rgb(255 255 255 / 0.2); margin-top: 2.5rem; padding-top: 1.25rem; }
   .base p { margin: 0; }
+  .site-footer strong { color: var(--on-forest); }
 </style>

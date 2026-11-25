@@ -15,7 +15,7 @@ const current = (href: string) => (here === href || (href === "/guides/" && here
   <div class="wrap bar">
     <Logo />
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
-      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="square" /></svg>
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
       Menu
     </button>
     <nav id="site-nav" aria-label="Main" class="nav">
@@ -42,24 +42,25 @@ const current = (href: string) => (here === href || (href === "/guides/" && here
   })();
 </script>
 <style>
-  .site-header { background: var(--paper); border-bottom: 2px solid var(--ink); }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1.5rem; min-height: 5rem; padding-block: 0.5rem; }
-  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
+  .site-header { background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1.5rem; min-height: 4.75rem; padding-block: 0.5rem; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem; }
   .nav li { margin: 0; }
-  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.7rem; color: var(--ink); font-weight: 700; font-size: 1rem; text-decoration: none; border-bottom: 3px solid transparent; }
+  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.85rem; border-radius: 999px; color: var(--ink); font-weight: 700; font-size: 1rem; text-decoration: none; }
   .nav a:visited { color: var(--ink); }
-  .nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
-  .nav a[aria-current="page"] { border-bottom-color: var(--copper); }
-  .nav .help-link { margin-left: 0.5rem; border: 2px solid var(--ink); border-radius: var(--radius); padding: 0 0.9rem; }
-  .nav .help-link[aria-current="page"] { background: var(--kraft); }
-  .menu-btn { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); font-size: 1rem; padding: 0.5rem 1rem; min-height: 44px; }
-  .menu-btn:hover { background: var(--kraft); color: var(--ink); border-color: var(--ink); }
+  .nav a:hover { background: var(--soft); }
+  .nav a[aria-current="page"] { background: var(--mint); }
+  .nav .help-link { margin-left: 0.5rem; background: var(--forest); color: var(--on-forest); padding: 0 1.1rem; }
+  .nav .help-link:visited { color: var(--on-forest); }
+  .nav .help-link:hover, .nav .help-link[aria-current="page"] { background: var(--forest-2); color: var(--on-forest); }
+  @media (prefers-color-scheme: dark) { .nav .help-link, .nav .help-link:visited { background: var(--green); color: #0f1715; } .nav .help-link:hover { background: #a6e4d4; color: #0f1715; } }
+  .menu-btn { background: var(--soft); color: var(--ink); border: 0; font-size: 1rem; padding: 0.5rem 1.1rem; min-height: 44px; }
+  .menu-btn:hover { background: var(--mint); color: var(--ink); }
   @media (max-width: 67.99rem) {
     .nav { flex-basis: 100%; }
     .nav[data-open="false"] { display: none; }
-    .nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: 0.25rem 0 0.75rem; }
-    .nav a { display: flex; padding: 0 0.5rem; font-size: 1.1rem; min-height: 48px; border-bottom: 1px solid var(--rule); }
-    .nav a[aria-current="page"] { border-bottom-color: var(--rule); border-left: 4px solid var(--copper); }
-    .nav .help-link { margin: 0.75rem 0 0; justify-content: center; }
+    .nav ul { flex-direction: column; align-items: stretch; gap: 0.25rem; padding: 0.5rem 0 1rem; }
+    .nav a { display: flex; padding: 0 1rem; font-size: 1.1rem; min-height: 52px; border-radius: var(--r-sm); }
+    .nav .help-link { margin: 0.5rem 0 0; justify-content: center; }
   }
 </style>

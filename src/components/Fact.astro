@@ -11,9 +11,9 @@ const { value, source, checked } = fact.data;
 ---
 <span class="fact" data-fact={id}>{value}{!nosource && <>{"\u00a0"}<a class="src" href={source.url} rel="noopener" aria-label={`Source: ${source.publisher}, checked ${longDate(checked)}`} title={`${source.title}, ${source.publisher}. Checked ${longDate(checked)}.`}>{source.short}</a></>}</span>
 <style>
-  /* Ledger footnote mark: the source's short name in mono, glued to the value by a no-break space. */
-  .src { white-space: nowrap; font: 700 0.72em/1 var(--mono); vertical-align: 0.32em; padding: 0.15em 0.35em; border: 1px solid currentColor; border-radius: 2px;
-    color: var(--copper-text); text-decoration: none; }
-  .src:visited { color: var(--copper-text); }
-  .src:hover { background: var(--tint-honest); text-decoration: underline; }
+  /* Source pill: the source's short name, glued to the value by a no-break space. */
+  .src { white-space: nowrap; font: 700 0.7em/1 var(--sans); vertical-align: 0.25em; padding: 0.25em 0.55em; border-radius: 999px;
+    background: var(--mint); color: var(--ink); text-decoration: none; }
+  .src:visited { color: var(--ink); }
+  .src:hover { text-decoration: underline; background: var(--sky); }
 </style>

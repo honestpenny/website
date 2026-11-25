@@ -10,7 +10,7 @@ import { site } from "../../lib/site";
 
 const font = (pkg: string, file: string) => readFileSync(new URL(`../../../node_modules/@fontsource/${pkg}/files/${file}`, import.meta.url));
 const fonts = [
-  { name: "Serif", data: font("source-serif-4", "source-serif-4-latin-700-normal.woff"), weight: 700 as const, style: "normal" as const },
+  { name: "Display", data: font("bricolage-grotesque", "bricolage-grotesque-latin-800-normal.woff"), weight: 800 as const, style: "normal" as const },
   { name: "Sans", data: font("atkinson-hyperlegible-next", "atkinson-hyperlegible-next-latin-400-normal.woff"), weight: 400 as const, style: "normal" as const },
   { name: "Sans", data: font("atkinson-hyperlegible-next", "atkinson-hyperlegible-next-latin-700-normal.woff"), weight: 700 as const, style: "normal" as const },
 ];
@@ -28,15 +28,15 @@ const h = (type: string, style: Record<string, unknown>, children?: unknown) => 
 
 export const GET: APIRoute = async ({ props }) => {
   const { kicker, title } = props as { kicker: string; title: string };
-  const tree = h("div", { width: 1200, height: 630, display: "flex", flexDirection: "column", position: "relative", background: "#FBF8F3", padding: "56px 72px", borderTop: "16px solid #B5652B", fontFamily: "Sans", color: "#211E1A" }, [
-    h("div", { display: "flex", alignItems: "center", gap: 18, width: 1056 }, [
-      h("div", { display: "flex", width: 60, height: 60, borderRadius: "50%", background: "#8C4718", alignItems: "center", justifyContent: "center" }, [h("div", { width: 52, height: 52, borderRadius: "50%", background: "#B5652B" })]),
-      h("div", { fontFamily: "Serif", fontSize: 40, fontWeight: 700 }, site.name),
-      h("div", { marginLeft: "auto", fontSize: 28, fontWeight: 700, color: "#5C554D" }, "honestpenny.ca"),
+  const tree = h("div", { width: 1200, height: 630, display: "flex", flexDirection: "column", background: "#12332E", padding: "60px 72px", fontFamily: "Sans", color: "#FFFFFF" }, [
+    h("div", { display: "flex", alignItems: "center", gap: 16, width: 1056 }, [
+      h("div", { width: 56, height: 56, borderRadius: "50%", background: "#FF9A5C" }),
+      h("div", { fontFamily: "Display", fontSize: 40, fontWeight: 800, letterSpacing: -1 }, site.name),
+      h("div", { marginLeft: "auto", fontSize: 26, fontWeight: 700, color: "#C9D8D4" }, "honestpenny.ca"),
     ]),
-    h("div", { display: "flex", flexDirection: "column", gap: 20, marginTop: 150 }, [
-      h("div", { fontSize: 30, fontWeight: 700, color: "#8C4718", textTransform: "uppercase", letterSpacing: 2 }, kicker),
-      h("div", { fontFamily: "Serif", fontSize: title.length > 55 ? 62 : 72, fontWeight: 700, lineHeight: 1.1, maxWidth: 1040 }, title),
+    h("div", { display: "flex", flexDirection: "column", gap: 22, marginTop: 120 }, [
+      h("div", { display: "flex", alignSelf: "flex-start", fontSize: 26, fontWeight: 700, color: "#16201F", background: "#FF9A5C", borderRadius: 999, padding: "10px 22px" }, kicker),
+      h("div", { fontFamily: "Display", fontSize: title.length > 55 ? 64 : 76, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2, maxWidth: 1056 }, title),
     ]),
   ]);
   const svg = await satori(tree as any, { width: 1200, height: 630, fonts });

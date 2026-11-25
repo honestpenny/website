@@ -17,7 +17,7 @@ const groups = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
     <section aria-labelledby={grp.id} class="grp">
       <h2 id={grp.id}>{grp.label}</h2>
       <p class="muted">{grp.blurb}</p>
-      <ul class="entries">{grp.items.map((g) => <GuideRow g={g} showTopic={false} />)}</ul>
+      <ul class="grid">{grp.items.map((g) => <GuideRow g={g} showTopic={false} />)}</ul>
     </section>
   ))}
 </Base>
@@ -27,6 +27,6 @@ const groups = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
   .jump li { margin: 0; }
   .jump-tag { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem; font-size: 1rem; }
   .grp h2 { margin-bottom: 0.25rem; }
-  .entries { padding: 0; margin: 0; max-width: 52rem; }
+  .grp { margin-top: 1rem; }
   .grp h2 { border-bottom: 0; }
 </style>
