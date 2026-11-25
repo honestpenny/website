@@ -27,8 +27,8 @@ fhsa-annual-limit:
   value: "$8,000"
   applies: [canada]
   effective: "since 2023"
-  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" }
-  checked: 2026-11-24
+  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account/contributing-your-fhsa.html" }
+  checked: 2026-11-25
   reviewBy: 2027-03-01
 
 fhsa-lifetime-limit:
@@ -36,8 +36,8 @@ fhsa-lifetime-limit:
   value: "$40,000"
   applies: [canada]
   effective: "since 2023"
-  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" }
-  checked: 2026-11-24
+  source: { title: "First Home Savings Account", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account/contributing-your-fhsa.html" }
+  checked: 2026-11-25
   reviewBy: 2027-03-01
 
 cesg-lifetime:

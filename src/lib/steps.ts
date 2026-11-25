@@ -14,7 +14,7 @@ export const STEPS = [
     finish: "No payday loans, credit card balances or high-interest debt left.",
     tools: [{ href: "/get-help/", label: "Free, non-profit credit counselling" }, { href: "/guides/honest-penny-steps/#step-4-clear-expensive-debt-one-at-a-time", label: "How to pick which debt first" }] },
   { n: 5, title: "Build a full emergency fund", slug: "step-5-build-a-full-emergency-fund", short: "Three to six months of essentials.",
-    finish: "Three months of essential costs saved (six or more if your work is seasonal or one income).",
+    finish: "Three months of essential costs saved (six or more if your work is seasonal, commission-based, or in energy or construction, or you rely on one income).",
     tools: [{ href: "/guides/tfsa-rrsp-fhsa-compared/", label: "Why a TFSA is a good home for it" }] },
   { n: 6, title: "Invest 15% for the long term", slug: "step-6-invest-15-for-the-long-term", short: "Low-fee funds, in a TFSA or RRSP.",
     finish: "15% of your gross income goes to long-term investing, counting any employer match.",
