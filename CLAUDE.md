@@ -31,7 +31,10 @@ Assets-only Worker (`wrangler.jsonc`, no `main`), deployed by **Cloudflare Worke
 - `public/robots.txt`: search + answer bots allowed, training bots disallowed, Content-Signal `ai-input=yes, ai-train=no`.
   Cloudflare AI crawler policy must be **Search Allow / Agent Allow / Training Disallow — never Block** (Block also
   blocks Googlebot and Bingbot).
-- `/build.txt` serves `WORKERS_CI_COMMIT_SHA`.
+- Worker name is `website` (must match the dashboard). Preview host: https://website.honest-penny-dns.workers.dev
+  (noindex). Build: `npm run build`, deploy `npx wrangler deploy`, build var `NODE_VERSION=24` (+ `PUBLIC_KIT_FORM_ID` later).
+- `/build.txt` serves the built commit from `git rev-parse HEAD` (Workers Builds' `WORKERS_CI_COMMIT_SHA` came
+  through as "main", so it's only trusted when it's a real 40-character SHA).
 
 ## Test before done (desktop + phone, production build)
 ```
