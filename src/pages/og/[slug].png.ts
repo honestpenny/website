@@ -28,16 +28,16 @@ const h = (type: string, style: Record<string, unknown>, children?: unknown) => 
 
 export const GET: APIRoute = async ({ props }) => {
   const { kicker, title } = props as { kicker: string; title: string };
-  const tree = h("div", { width: 1200, height: 630, display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#FBF8F3", padding: "64px 72px", borderTop: "16px solid #B5652B", fontFamily: "Sans", color: "#211E1A" }, [
-    h("div", { display: "flex", alignItems: "center", gap: 18 }, [
-      h("div", { width: 56, height: 56, borderRadius: 28, background: "#B5652B", border: "4px solid #8C4718" }),
+  const tree = h("div", { width: 1200, height: 630, display: "flex", flexDirection: "column", position: "relative", background: "#FBF8F3", padding: "56px 72px", borderTop: "16px solid #B5652B", fontFamily: "Sans", color: "#211E1A" }, [
+    h("div", { display: "flex", alignItems: "center", gap: 18, width: 1056 }, [
+      h("div", { display: "flex", width: 60, height: 60, borderRadius: "50%", background: "#8C4718", alignItems: "center", justifyContent: "center" }, [h("div", { width: 52, height: 52, borderRadius: "50%", background: "#B5652B" })]),
       h("div", { fontFamily: "Serif", fontSize: 40, fontWeight: 700 }, site.name),
+      h("div", { marginLeft: "auto", fontSize: 28, fontWeight: 700, color: "#5C554D" }, "honestpenny.ca"),
     ]),
-    h("div", { display: "flex", flexDirection: "column", gap: 20 }, [
+    h("div", { display: "flex", flexDirection: "column", gap: 20, marginTop: 150 }, [
       h("div", { fontSize: 30, fontWeight: 700, color: "#8C4718", textTransform: "uppercase", letterSpacing: 2 }, kicker),
       h("div", { fontFamily: "Serif", fontSize: title.length > 55 ? 62 : 72, fontWeight: 700, lineHeight: 1.1, maxWidth: 1040 }, title),
     ]),
-    h("div", { fontSize: 28, color: "#5C554D" }, "honestpenny.ca · Every number linked to its official source"),
   ]);
   const svg = await satori(tree as any, { width: 1200, height: 630, fonts });
   const png = new Resvg(svg).render().asPng();
