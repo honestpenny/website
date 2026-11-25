@@ -10,7 +10,7 @@ import { STEPS } from "../lib/steps";
 const faq = [
   { q: "Do I have to do the steps in order?", a: "Mostly, yes: each step makes the next one easier. Step 1 (filing your taxes) can happen any time, and if something goes wrong, like a lost job, it's fine to drop back a step and rebuild." },
   { q: "My partner isn't on board. What now?", a: "Start with Step 1 together, because it's about money coming in, not cutting back. Agree on the finish line for the next step only. Money plans work better as a shared goal than as a lecture." },
-  { q: "My work is seasonal, or in oil and gas, or on commission.", a: "Make your Step 5 emergency fund bigger: six months or more. Alberta's economy rises and falls with oil prices, and Employment Insurance replaces only part of your pay." },
+  { q: "My work is seasonal, commission-based, or in energy or construction.", a: "Make your Step 5 emergency fund bigger: six months or more. Alberta's economy rises and falls with oil prices, and Employment Insurance usually pays 55% of your average insurable earnings, up to a weekly maximum." },
   { q: "I'm on a low income or on benefits.", a: "Step 1 matters most for you: many benefits only arrive if you file. When you save, a TFSA is usually better than an RRSP on a low income, because TFSA withdrawals don't reduce federal income-tested benefits." },
   { q: "Is my car loan \"expensive debt\"?", a: "Step 4 is about high-interest debt: payday loans, credit cards and high-interest lines of credit. A low-interest car loan can be paid on schedule while you work through the steps. Avoid taking on a new one if you can." },
   { q: "Should I stop saving for retirement while I pay off debt?", a: "Keep taking any employer match (Step 3): it's free money. Beyond that, put your extra money on debt until Step 4 is done, then build your emergency fund, then invest." },
@@ -87,7 +87,7 @@ const faq = [
             <p>Why more than the $1,000 popular US plans use? Theirs is in US dollars and hasn't gone up with prices. A Canadian cushion needs to be a little bigger.</p>
           </>}
           {s.n === 3 && <>
-            <p>If your employer matches what you put into a pension or group RRSP, put in enough to get the full match. A 50% or 100% match is an instant return you can't get anywhere else.</p>
+            <p>If your employer matches what you put into a pension or group RRSP, put in enough to get the full match. A 50% or 100% match is an instant return you can't get anywhere else. Check whether it vests: some matches only become yours after you've worked there for a set time.</p>
             <p>Some US plans tell you to pause this while you pay off debt. We don't: turning down free money makes the debt harder to clear, not easier.</p>
           </>}
           {s.n === 4 && <>
@@ -95,12 +95,12 @@ const faq = [
             <p>Then pay the minimum on everything and put every extra dollar on one debt. Pick the smallest balance if you need a quick win, or the highest interest rate if one is much more expensive. When it's gone, roll that payment onto the next.</p>
           </>}
           {s.n === 5 && <>
-            <p>Save three months of essential costs, or six months or more if your work is seasonal, commission-based or in energy, or your household relies on one income.</p>
-            <p>A TFSA savings account is a good home for it: the interest is tax-free and you can take money out any time.</p>
+            <p>Save three months of essential costs, or six months or more if your work is seasonal, commission-based, or in energy or construction, or your household relies on one income.</p>
+            <p>A TFSA savings account is a good home for it: the interest is tax-free and you can take money out any time. The room you take out comes back on January 1 of the next year, so don't put it back sooner unless you have unused room: over-contributing costs 1% a month.</p>
           </>}
           {s.n === 6 && <>
-            <p>Aim to put 15% of your gross income towards the long term, counting any employer match. On a modest income, start with the TFSA (up to <Fact id="tfsa-limit-2026" /> in 2026); in a higher tax bracket, the RRSP often makes more sense.</p>
-            <p>Use low-fee, all-in-one index funds, and plan with realistic returns: FP Canada tells planners to assume about <Fact id="fpcanada-cdn-equity-return" /> a year for Canadian stocks before fees, not the 12% you'll hear from some US personalities.</p>
+            <p>Aim to put 15% of your gross income towards the long term (mostly retirement), counting any employer match. On a modest income, start with the TFSA (up to <Fact id="tfsa-limit-2026" /> in 2026); in a higher tax bracket, the RRSP often makes more sense.</p>
+            <p>Use low-fee, all-in-one index funds, and plan with realistic returns: FP Canada's 2026 projection guidelines suggest planners use about <Fact id="fpcanada-cdn-equity-return" /> a year for Canadian stocks before fees (less after fees), not the 12% you'll hear from some US personalities.</p>
           </>}
           {s.n === 7 && <>
             <p>RESP: the government adds a Canada Education Savings Grant of 20% on the first $2,500 you save each year per child, up to <Fact id="cesg-lifetime" /> per child.</p>
@@ -121,18 +121,17 @@ const faq = [
 
   <section class="section" aria-labelledby="diff-h">
     <h2 id="diff-h" class="section-h">How this differs from popular US plans</h2>
-    <p class="lede">US plans like Dave Ramsey's Baby Steps have helped millions of people by keeping things simple. We keep the simple order, and change what doesn't fit Canada.</p>
+    <p class="lede">US plans like Dave Ramsey's Baby Steps are popular because they keep things simple. We keep the simple order, and change what doesn't fit Canada.</p>
     <div class="table-wrap" role="region" tabindex="0" aria-label="Comparison with US plans">
       <table>
         <thead><tr><th scope="col">Topic</th><th scope="col">Popular US plans</th><th scope="col">The Honest Penny 8 Steps</th></tr></thead>
         <tbody>
           <tr><th scope="row">First step</th><td>Save a starter emergency fund</td><td>File your taxes and claim benefits first (Step 1): it can find money before you save any</td></tr>
           <tr><th scope="row">Starter cushion</th><td>$1,000 (US dollars)</td><td>$2,000, or one month of essentials if that's less</td></tr>
-          <tr><th scope="row">Employer match</th><td>Often paused while you pay debt</td><td>Always take it (Step 3)</td></tr>
+          <tr><th scope="row">Employer match</th><td>Often paused while you pay debt</td><td>Take it in almost every case (Step 3)</td></tr>
           <tr><th scope="row">Which debt first</th><td>Smallest balance, always</td><td>Payday loans first; then smallest for a quick win, or highest interest if one is much more expensive</td></tr>
           <tr><th scope="row">Accounts</th><td>401(k), Roth IRA, 529</td><td>TFSA, RRSP, FHSA, RESP and workplace pensions</td></tr>
           <tr><th scope="row">Expected returns</th><td>Often 10% to 12%</td><td>Around <Fact id="fpcanada-cdn-equity-return" nosource /> for Canadian stocks before fees (FP Canada guidance)</td></tr>
-          <tr><th scope="row">When it goes wrong</th><td>Often a tough-love tone</td><td>No shame: call a free, non-profit counsellor early</td></tr>
         </tbody>
       </table>
     </div>
@@ -143,6 +142,7 @@ const faq = [
     <div class="faq">
       {faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
     </div>
+    <p class="muted">These steps are general information, a sensible order for most people, not personal advice.</p>
     <p>Want the full detail, with every source? <a href="/guides/honest-penny-steps/">Read the 8 Steps guide</a>. Struggling right now? <a href="/get-help/">Get free help</a>.</p>
   </section>
 
