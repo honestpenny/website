@@ -5,7 +5,8 @@ test("property tax calculator: $30k cut on $550k, $3,600 bill ≈ $196/yr", asyn
   // "Outbound" = any request to another origin (works locally and with TEST_URL against the live site).
   const origin = new URL(baseURL!).origin;
   const outbound: string[] = [];
-  page.on("request", (r) => { if (!r.url().startsWith(origin) && !r.url().startsWith("data:")) outbound.push(r.url()); });
+  // Cloudflare Web Analytics (page views only, disclosed on /privacy/) is allowed; anything else is a leak.
+  page.on("request", (r) => { const u = r.url(); if (!u.startsWith(origin) && !u.startsWith("data:") && !/^https:\/\/(static\.)?cloudflareinsights\.com\//.test(u)) outbound.push(u); if (/cloudflareinsights/.test(u) && /ptc-|income|assess/i.test(r.postData() ?? "")) outbound.push("analytics carried form data: " + u); });
   await page.goto("/guides/challenge-property-assessment-alberta/");
   const out = page.locator('[data-calc="property-tax"] [data-out]');
   await expect(out).toContainText("$196 less a year");

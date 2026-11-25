@@ -39,6 +39,8 @@ Assets-only Worker (`wrangler.jsonc`, no `main`), deployed by **Cloudflare Worke
 - **SEO/AI visibility (copied from Code To Cloud):** one `#org` entity id that every Article's author/publisher points
   at; per-guide share cards `/og/<slug>.png`; sitemap `lastmod` = guide `lastChecked` (tested); IndexNow after each
   deploy (`scripts/indexnow.mjs`, `.github/workflows/indexnow.yml`, key file in `public/`; exits cleanly pre-launch).
+- **Cloudflare Web Analytics** is ON (Kevin, 2026-11-25): cookie-free page views, auto-injected by Cloudflare, allowed in
+  the CSP and disclosed on /privacy/. Never add another analytics or tracking tool without updating /privacy/ first.
 - `/build.txt` serves the built commit from `git rev-parse HEAD` (Workers Builds' `WORKERS_CI_COMMIT_SHA` came
   through as "main", so it's only trusted when it's a real 40-character SHA).
 
