@@ -426,3 +426,21 @@ boc-inflation-target:
   source: { title: "Inflation-control target", publisher: "Bank of Canada", short: "Bank of Canada", url: "https://www.bankofcanada.ca/rates/indicators/key-variables/inflation-control-target/" }
   checked: 2026-11-25
   reviewBy: 2027-11-25
+
+rrsp-deadline-2026-tax-year:
+  label: Last day to contribute to an RRSP for the 2026 tax year
+  value: "March 1, 2027"
+  applies: [canada]
+  effective: "2026 tax year"
+  source: { title: "T4040 RRSPs and Other Registered Plans for Retirement (2026)", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4040/rrsps-other-registered-plans-retirement.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-03-02
+
+rrsp-overcontribution-buffer:
+  label: RRSP over-contribution allowed before the 1% a month tax (age 18+)
+  value: "$2,000"
+  applies: [canada]
+  effective: "current"
+  source: { title: "What happens if you go over your RRSP/PRPP deduction limit", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/contributing-a-rrsp-prpp/what-happens-you-over-your-rrsp-prpp-deduction-limit.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
