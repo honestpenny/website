@@ -24,13 +24,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // Satori takes a React-like element tree; plain objects keep us free of a JSX runtime.
-const h = (type: string, style: Record<string, unknown>, children?: unknown) => ({ type, props: { style, children } });
+const h = (type: string, style: Record<string, unknown>, children?: unknown, attrs: Record<string, unknown> = {}) => ({ type, props: { style, children, ...attrs } });
+const MARK = `data:image/svg+xml;base64,${readFileSync(new URL("../../../public/brand/honest-penny-mark.svg", import.meta.url)).toString("base64")}`;
 
 export const GET: APIRoute = async ({ props }) => {
   const { kicker, title } = props as { kicker: string; title: string };
   const tree = h("div", { width: 1200, height: 630, display: "flex", flexDirection: "column", background: "#12332E", padding: "60px 72px", fontFamily: "Sans", color: "#FFFFFF" }, [
     h("div", { display: "flex", alignItems: "center", gap: 16, width: 1056 }, [
-      h("div", { width: 56, height: 56, borderRadius: "50%", background: "#FF9A5C" }),
+      h("img", { width: 60, height: 60 }, undefined, { src: MARK }),
       h("div", { fontFamily: "Display", fontSize: 40, fontWeight: 800, letterSpacing: -1 }, site.name),
       h("div", { marginLeft: "auto", fontSize: 26, fontWeight: 700, color: "#C9D8D4" }, "honestpenny.ca"),
     ]),

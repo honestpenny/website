@@ -35,3 +35,9 @@ https://:project.:subdomain.workers.dev/*
   Content-Type: text/calendar; charset=utf-8
   Content-Disposition: attachment
   X-Robots-Tag: noindex
+
+# Icons and brand files: cache for a week.
+/brand/*
+  Cache-Control: public, max-age=604800
+/site.webmanifest
+  Content-Type: application/manifest+json

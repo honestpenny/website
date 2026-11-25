@@ -75,6 +75,18 @@ test.describe("Search and AI visibility", () => {
     expect((await res.text()).trim()).toBe(key);
   });
 
+  test("brand: favicon.ico, SVG favicon, apple touch icon and web manifest icons are all served", async ({ request }) => {
+    const home = await (await request.get("/")).text();
+    for (const tag of ['rel="icon" href="/favicon.ico"', 'rel="icon" href="/favicon.svg"', 'rel="apple-touch-icon"', 'rel="manifest"']) expect(home, tag).toContain(tag);
+    const ico = await request.get("/favicon.ico");
+    expect(ico.status()).toBe(200);
+    expect((await ico.body()).subarray(0, 4).toString("hex"), "ICO header").toBe("00000100");
+    const manifest = await (await request.get("/site.webmanifest")).json();
+    expect(manifest.name).toBe("Honest Penny");
+    for (const i of manifest.icons) expect((await request.get(i.src)).status(), i.src).toBe(200);
+    for (const f of ["/apple-touch-icon.png", "/brand/honest-penny-logo.svg", "/brand/honest-penny-mark.png"]) expect((await request.get(f)).status(), f).toBe(200);
+  });
+
   test("404 page returns 404 status", async ({ request }) => {
     const res = await request.get("/this-page-does-not-exist/");
     expect(res.status()).toBe(404);
