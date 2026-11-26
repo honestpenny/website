@@ -1,0 +1,146 @@
+---
+// Budget planner: every line can be weekly, every two weeks, monthly or yearly; we convert to monthly.
+// Splits the result into the three-account setup. Saved on this device only (localStorage, try/catch); printable.
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+const groups = [
+  { id: "income", h: "Money coming in", hint: "Pay after deductions, plus benefits and other regular income.", lines: ["Take-home pay", "Partner's take-home pay", "Canada Child Benefit and other benefits", "Other income"] },
+  { id: "fixed", h: "Fixed bills", hint: "The same (or nearly) every time, or on autopay. These go in your bills account. For power and gas, use your budget-billing amount or your winter average.", lines: ["Rent or mortgage", "Condo fees", "Phone", "Internet and TV", "Car payment", "Car insurance (if paid monthly)", "Home or tenant insurance (if paid monthly)", "Loan and credit card minimums", "Childcare", "Subscriptions", "Electricity", "Natural gas (heating)"] },
+  { id: "variable", h: "Everyday spending", hint: "Changes month to month. This goes in your spending account. Use your tracked average.", lines: ["Groceries", "Gas for the car and transit", "Eating out and takeout", "Kids' activities", "Personal care and clothing", "Fun and hobbies", "Other"] },
+  { id: "irregular", h: "Costs that don't come every month", hint: "Enter them as yearly amounts. We work out what to set aside each month.", lines: ["Vehicle registration", "Car insurance (if paid yearly)", "Home insurance (if paid yearly)", "Property tax (if paid yearly)", "Car repairs and maintenance", "Christmas and birthdays", "Back to school", "Travel", "Other yearly costs"] },
+];
+const freq = [["week", "a week"], ["2weeks", "every 2 weeks"], ["month", "a month"], ["year", "a year"]];
+---
+<Base title="Budget planner" description="A free budget planner for Albertans: enter amounts weekly, every two weeks, monthly or yearly, and see what goes to your bills, spending and savings accounts. Nothing leaves your device.">
+  <header class="head">
+    <span class="hero-icon" aria-hidden="true"><Icon name="calc" size={36} /></span>
+    <p class="kicker">Budget planner</p>
+    <h1>Build your budget in 15 minutes</h1>
+    <p class="lede">Enter what comes in and what goes out, in whatever way you think about it: weekly, every two weeks, monthly or yearly. We'll turn it into a monthly plan and split it across your bills, spending and savings accounts.</p>
+    <p class="muted small">Saved on this device only. Nothing is sent to us. Leave anything blank that doesn't apply. New to budgeting? Read <a href="/guides/how-to-build-a-budget/">how to build a budget</a> first.</p>
+  </header>
+
+  <form class="planner" data-planner novalidate>
+    {groups.map((g) => (
+      <fieldset class="card grp" data-group={g.id}>
+        <legend><h2>{g.h}</h2></legend>
+        <p class="muted small">{g.hint}</p>
+        {g.lines.map((line, i) => (
+          <div class="line">
+            <label for={`${g.id}-${i}`}>{line}</label>
+            <div class="inputs">
+              <span class="dollar" aria-hidden="true">$</span>
+              <input id={`${g.id}-${i}`} type="number" inputmode="decimal" min="0" step="any" data-amt />
+              {g.id === "irregular"
+                ? <span class="per">a year</span>
+                : <select aria-label={`How often: ${line}`} data-freq>{freq.map(([v, l]) => <option value={v} selected={v === "month"}>{l}</option>)}</select>}
+            </div>
+          </div>
+        ))}
+      </fieldset>
+    ))}
+  </form>
+
+  <section class="results card" aria-labelledby="res-h" aria-live="polite">
+    <h2 id="res-h">Your monthly plan</h2>
+    <dl class="totals">
+      <div><dt>Coming in</dt><dd data-t="income">$0</dd></div>
+      <div><dt>Fixed bills</dt><dd data-t="fixed">$0</dd></div>
+      <div><dt>Everyday spending</dt><dd data-t="variable">$0</dd></div>
+      <div><dt>Set aside for yearly costs</dt><dd data-t="irregular">$0</dd></div>
+      <div class="left"><dt>Left for savings and extra debt payments</dt><dd data-t="left">$0</dd></div>
+    </dl>
+    <p class="msg" data-msg></p>
+
+    <h3>Your three accounts, each month</h3>
+    <ul class="accts">
+      <li><strong>Bills account</strong> <span data-a="bills">$0</span><span class="muted small">fixed bills + yearly-cost set-aside</span></li>
+      <li><strong>Spending account</strong> <span data-a="spending">$0</span><span class="muted small">everyday spending</span></li>
+      <li><strong>Savings</strong> <span data-a="savings">$0</span><span class="muted small">what's left: emergency fund first, then goals or extra debt payments</span></li>
+    </ul>
+    <p class="muted small">These are monthly amounts. If you're paid every two weeks, each payday transfer is the monthly amount × 12 ÷ 26 (about 46%); if you're paid weekly, × 12 ÷ 52.</p>
+    <p class="small"><a href="/guides/set-up-bank-accounts-bills-spending-savings/">How to set up the three accounts</a></p>
+
+    <details>
+      <summary>Compare with the 50/30/20 rule of thumb</summary>
+      <p data-503020></p>
+      <p class="muted small">50/30/20 is a popular starting point, not a rule, and it's hard to hit on a low income or with high rent. Our groups don't match needs and wants exactly: groceries, power and heating are needs, and subscriptions, gifts and travel are wants. Treat this as a rough guide.</p>
+    </details>
+
+    <div class="actions no-print">
+      <button type="button" data-print>Print my budget</button>
+      <button type="button" class="secondary" data-clear>Clear everything</button>
+    </div>
+  </section>
+  <p class="muted small">This is a planning tool, not financial advice. Struggling to make it balance? <a href="/check/">Check what you're owed</a> and <a href="/get-help/">get free help</a>.</p>
+</Base>
+<script is:inline>
+  (() => {
+    const KEY = "hp-budget-v1";
+    const form = document.querySelector("[data-planner]");
+    const toMonth = { week: 52 / 12, "2weeks": 26 / 12, month: 1, year: 1 / 12 };
+    const fmt = (n) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+    const rows = [...form.querySelectorAll(".line")];
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { return {}; } };
+    const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+    const saved = load();
+    rows.forEach((r) => { const i = r.querySelector("[data-amt]"), f = r.querySelector("[data-freq]"); const s = saved[i.id]; if (s) { i.value = s.a ?? ""; if (f && s.f) f.value = s.f; } });
+    const set = (sel, v) => { document.querySelector(sel).textContent = fmt(v); };
+    const run = () => {
+      const t = { income: 0, fixed: 0, variable: 0, irregular: 0 }, state = {};
+      rows.forEach((r) => {
+        const g = r.closest("[data-group]").dataset.group, i = r.querySelector("[data-amt]"), f = r.querySelector("[data-freq]");
+        const a = Number(i.value) || 0, fr = g === "irregular" ? "year" : f.value;
+        t[g] += a * toMonth[fr]; if (i.value) state[i.id] = { a: i.value, f: f?.value };
+      });
+      save(state);
+      const left = t.income - t.fixed - t.variable - t.irregular;
+      for (const k of Object.keys(t)) set(`[data-t="${k}"]`, t[k]);
+      set('[data-t="left"]', left);
+      set('[data-a="bills"]', t.fixed + t.irregular); set('[data-a="spending"]', t.variable); set('[data-a="savings"]', Math.max(0, left));
+      const msg = document.querySelector("[data-msg]");
+      msg.textContent = t.income === 0 ? "Start with what comes in."
+        : left < 0 ? `You're about ${fmt(-left)} a month short. That's useful to know: start with the biggest bills and any benefits you might be missing.`
+        : left === 0 ? "Every dollar has a job. Try to build in some savings, even a little."
+        : `You have about ${fmt(left)} a month for savings and extra debt payments: ${Math.round((left / t.income) * 100)}% of what comes in.`;
+      document.querySelector('[data-t="left"]').closest("div").classList.toggle("short", left < 0);
+      const needs = t.fixed + t.irregular;
+      document.querySelector("[data-503020]").textContent = t.income > 0
+        ? `Fixed bills and yearly costs are ${Math.round((needs / t.income) * 100)}% of what comes in, everyday spending is ${Math.round((t.variable / t.income) * 100)}%, and savings and extra debt payments are ${Math.max(0, Math.round((left / t.income) * 100))}%. 50/30/20 suggests about 50% on needs (including groceries, power and heating), 30% on wants and 20% on savings and extra debt.`
+        : "";
+    };
+    form.addEventListener("input", run); run();
+    document.querySelector("[data-print]").addEventListener("click", () => window.print());
+    document.querySelector("[data-clear]").addEventListener("click", () => { if (confirm("Clear every amount in your budget?")) { rows.forEach((r) => { r.querySelector("[data-amt]").value = ""; }); try { localStorage.removeItem(KEY); } catch {} run(); } });
+  })();
+</script>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
+  .planner { display: grid; gap: 1.25rem; margin-bottom: 1.5rem; }
+  @media (min-width: 64rem) { .planner { grid-template-columns: 1fr 1fr; } }
+  .grp { margin: 0; min-width: 0; }
+  .grp legend { padding: 0; }
+  .grp h2 { font-size: 1.5rem; margin: 0 0 0.25rem; }
+  .line { display: grid; gap: 0.25rem 1rem; padding: 0.55rem 0; border-top: 1px solid var(--line); }
+  @media (min-width: 34rem) { .line { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+  .line label { margin: 0; font-weight: 700; }
+  .inputs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; min-width: 0; }
+  .dollar { font-weight: 700; color: var(--muted); }
+  .inputs input { width: 7.5rem; max-width: 100%; flex: 1 1 6rem; min-height: 44px; }
+  .inputs select { font: inherit; min-height: 44px; border: 2px solid var(--border); border-radius: var(--r-sm); background: var(--card); color: var(--ink); padding: 0 0.5rem; }
+  .per { color: var(--muted); font-size: 0.95rem; min-width: 7rem; }
+  .results { position: relative; }
+  .results h2 { margin-top: 0; }
+  .totals { display: grid; gap: 0.4rem; margin: 0 0 1rem; }
+  .totals div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+  .totals dt { font-weight: 700; }
+  .totals dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .totals .left { border-bottom: 0; background: var(--mint); border-radius: var(--r-sm); padding: 0.75rem 1rem; font-size: 1.15rem; }
+  .totals .left.short { background: var(--peach); }
+  .msg { font-size: 1.05rem; }
+  .accts { list-style: none; padding: 0; display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .accts li { background: var(--soft); border-radius: var(--r-sm); padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.2rem; margin: 0; }
+  .accts span:not(.muted) { font: 800 1.6rem/1.1 var(--display); }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  @media print { .planner .line:has(input:placeholder-shown) { display: none; } }
+</style>

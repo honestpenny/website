@@ -122,12 +122,12 @@ care-first-avg-saving:
   reviewBy: 2027-03-01
 
 auto-renewal-cap-2027:
-  label: Most your premium can rise at renewal in 2027 because of an insurer rate change
+  label: Cap on how much an insurer rate change (filed after January 1, 2027) can raise your premium at renewal; does not limit the 2026 to 2027 change
   value: "10%"
   applies: [alberta]
-  effective: "from January 1, 2027"
-  source: { title: "Automobile insurance reform", publisher: "Government of Alberta", short: "Alberta.ca", url: "https://www.alberta.ca/automobile-insurance-reform" }
-  checked: 2026-11-24
+  effective: "rate filings submitted after January 1, 2027"
+  source: { title: "Care-First: your premium questions answered", publisher: "Automobile Insurance Rate Board", short: "AIRB", url: "https://www.airbfordrivers.ca/care-first-your-premium-questions-answered/" }
+  checked: 2026-11-25
   reviewBy: 2027-03-01
 
 good-driver-cap-2026:
@@ -444,3 +444,84 @@ rrsp-overcontribution-buffer:
   source: { title: "What happens if you go over your RRSP/PRPP deduction limit", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/contributing-a-rrsp-prpp/what-happens-you-over-your-rrsp-prpp-deduction-limit.html" }
   checked: 2026-11-25
   reviewBy: 2027-11-25
+
+cdic-coverage-per-category:
+  label: CDIC deposit insurance per insured category, per member institution
+  value: "$100,000"
+  applies: [canada]
+  effective: "current"
+  source: { title: "What's covered", publisher: "Canada Deposit Insurance Corporation", short: "CDIC", url: "https://www.cdic.ca/your-coverage/whats-covered/" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
+
+nsf-fee-cap:
+  label: Maximum NSF fee at federally regulated banks (from March 12, 2026)
+  value: "$10"
+  applies: [canada]
+  effective: "2026-03-12"
+  source: { title: "New NSF fee regulations bring down cost of banking", publisher: "Financial Consumer Agency of Canada", short: "FCAC", url: "https://www.canada.ca/en/financial-consumer-agency/news/2026/03/new-nsf-fee-regulations-bring-down-cost-of-banking-for-canadians.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
+
+low-cost-account-fee:
+  label: Maximum monthly fee for a low-cost bank account under the 2025 commitment
+  value: "$4 a month"
+  applies: [canada]
+  effective: "2025-12-01"
+  source: { title: "Low-cost and no-cost bank accounts", publisher: "Financial Consumer Agency of Canada", short: "FCAC", url: "https://www.canada.ca/en/financial-consumer-agency/services/banking/bank-accounts/low-cost-no-cost.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
+
+ab-vehicle-registration-1yr:
+  label: Alberta one-year passenger vehicle registration renewal, online (starting price)
+  value: "$102"
+  applies: [alberta]
+  effective: "2026"
+  source: { title: "Renew vehicle registration (eServices)", publisher: "Government of Alberta", short: "Alberta", url: "https://eservices.alberta.ca/renew-vehicle-registration.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-01
+
+cra-instalment-threshold:
+  label: Net tax owing above which the CRA may require quarterly instalments (current and either of the two previous years)
+  value: "$3,000"
+  applies: [canada]
+  effective: "2026"
+  source: { title: "Who pays instalments", publisher: "Canada Revenue Agency", short: "CRA", url: "https://www.canada.ca/en/revenue-agency/services/payments/payments-cra/individual-payments/income-tax-instalments/who-pays-instalments.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-11-25
+
+appr-delay-comp-large:
+  label: Compensation from a large airline for a delay or cancellation within its control (3-6h / 6-9h / 9h+ late on arrival)
+  value: "$400 / $700 / $1,000"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Air Passenger Protection Regulations (SOR/2019-150), s.19", publisher: "Justice Laws (Government of Canada)", short: "APPR", url: "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2019-150/FullText.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-25
+
+appr-delay-comp-small:
+  label: Compensation from a small airline for a delay or cancellation within its control (3-6h / 6-9h / 9h+)
+  value: "$125 / $250 / $500"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Air Passenger Protection Regulations (SOR/2019-150), s.19", publisher: "Justice Laws (Government of Canada)", short: "APPR", url: "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2019-150/FullText.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-25
+
+appr-denied-boarding:
+  label: Compensation for denied boarding (0-6h / 6-9h / 9h+ late on arrival)
+  value: "$900 / $1,800 / $2,400"
+  applies: [canada]
+  effective: "current"
+  source: { title: "Air Passenger Protection Regulations (SOR/2019-150), s.20", publisher: "Justice Laws (Government of Canada)", short: "APPR", url: "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2019-150/FullText.html" }
+  checked: 2026-11-25
+  reviewBy: 2027-05-25
+
+amvic-comp-fund-max:
+  label: Maximum AMVIC compensation fund payout per transaction (2026 transactions)
+  value: "$31,518.27"
+  applies: [alberta]
+  effective: "2026"
+  source: { title: "Compensation fund", publisher: "Alberta Motor Vehicle Industry Council", short: "AMVIC", url: "https://www.amvic.org/consumer/compensation-fund/" }
+  checked: 2026-11-25
+  reviewBy: 2027-01-31

@@ -1,0 +1,111 @@
+---
+// Phone/internet fee complaint letter. Our own template (no official CRTC/CCTS template exists). Uses the CCTS
+// three-part test for fees banned since June 12, 2026. Nothing typed leaves the device; the user copies the text.
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+---
+<Base title="Phone or internet fee complaint letter" description="Charged an activation, set-up or plan-change fee in Canada since June 12, 2026? Check if it's allowed and get a ready-to-send complaint letter, then the CCTS steps.">
+  <header class="head">
+    <span class="hero-icon" aria-hidden="true"><Icon name="phone" size={36} /></span>
+    <p class="kicker">Fee complaint letter</p>
+    <h1>Charged a fee for switching or changing your plan?</h1>
+    <p class="lede">Since June 12, 2026, most cellphone providers, and the large internet providers covered by the CRTC's Internet Code, generally can't charge activation, set-up or plan-change fees, unless a technician has to install service at your home or you chose an optional extra. Check your fee and get a letter you can send. Nothing you type leaves your device.</p>
+  </header>
+
+  <form class="card letter-form" data-fl novalidate>
+    <h2>1. Is the fee likely not allowed?</h2>
+    <p class="muted small">The complaints commission (CCTS) uses the last three questions. See its <a href="https://www.ccts-cprst.ca/which-fees-are-allowed/" rel="noopener">list of fees and providers</a>.</p>
+    {[
+      ["q0", "Is this for a cellphone, or for home internet from a large provider covered by the Internet Code (Bell, Rogers, TELUS, Vidéotron, Cogeco, Eastlink, SaskTel, Xplore or one of their brands)?"],
+      ["q1", "Was the fee charged for activating service or changing your plan?"],
+      ["q2", "Did you buy something optional at the same time (an extra you chose), or did a technician come to your home?"],
+      ["q3", "Was the fee charged on or after June 12, 2026?"],
+    ].map(([id, q]) => (
+      <fieldset class="q"><legend>{q}</legend>
+        <label class="opt"><input type="radio" name={id} value="yes" /> Yes</label>
+        <label class="opt"><input type="radio" name={id} value="no" /> No</label>
+      </fieldset>
+    ))}
+    <div class="verdict" data-verdict aria-live="polite"></div>
+
+    <h2>2. Your details</h2>
+    <div class="grid2">
+      <div class="field"><label for="fl-name">Your name</label><input id="fl-name" type="text" autocomplete="name" /></div>
+      <div class="field"><label for="fl-provider">Provider</label><input id="fl-provider" type="text" placeholder="e.g. your phone or internet company" /></div>
+      <div class="field"><label for="fl-account">Account number</label><input id="fl-account" type="text" /></div>
+      <div class="field"><label for="fl-fee">Fee name on your bill</label><input id="fl-fee" type="text" placeholder="e.g. Activation fee" /></div>
+      <div class="field"><label for="fl-amount">Amount charged</label><input id="fl-amount" type="number" inputmode="decimal" min="0" step="any" /></div>
+      <div class="field"><label for="fl-date">Date charged</label><input id="fl-date" type="date" /></div>
+    </div>
+  </form>
+
+  <section class="card out" aria-labelledby="lt-h">
+    <h2 id="lt-h">3. Your letter</h2>
+    <p class="muted small">Send it through your provider's chat, email or account messages, and keep a copy.</p>
+    <pre class="letter" data-letter tabindex="0"></pre>
+    <p class="actions"><button type="button" data-copy>Copy the letter</button> <span role="status" data-copied></span></p>
+  </section>
+
+  <section aria-labelledby="next-h">
+    <h2 id="next-h">If they don't fix it</h2>
+    <ol>
+      <li><strong>Give them a reasonable chance</strong> to fix it, and note the date and name of everyone you talk to.</li>
+      <li><strong>Complain to the CCTS</strong>, free and independent. The <a href="https://www.ccts-cprst.ca/for-consumers/telecom-complaints/online-complaint-form/" rel="noopener">online form</a> takes about 15 minutes. You have a year from when you noticed the fee. The CCTS may accept it up to 18 months if you raised it with the provider within the year and were still trying to sort it out.</li>
+      <li>Once the CCTS accepts your complaint and sends it to the provider, the provider must reply within 20 days and must stop trying to collect the disputed amount until it's closed. <strong>Keep paying the rest of your bill.</strong> If the CCTS decides the fee was allowed, you'll owe it.</li>
+    </ol>
+    <h3>Fees that are still allowed</h3>
+    <p>Reconnection after a disconnection for non-payment, bill reprints, 3G service maintenance, and, if your contract says so, unreturned equipment, what's left on a financed phone, and early cancellation of a fixed-term internet contract. Some new SIM and device set-up fees are being reviewed by the CRTC, and the CCTS may pause complaints about them until it decides.</p>
+    <p class="muted small">This is our own template, not an official form. Rules from the CCTS page <a href="https://www.ccts-cprst.ca/which-fees-are-allowed/" rel="noopener">Which fees are allowed?</a>, checked November 25, 2026. General information, not legal advice. More in our <a href="/guides/cut-phone-internet-bills-alberta/">phone and internet guide</a>.</p>
+  </section>
+</Base>
+<script is:inline>
+  (() => {
+    const form = document.querySelector("[data-fl]"), pre = document.querySelector("[data-letter]");
+    const val = (id) => form.querySelector(`#${id}`).value.trim();
+    const ans = (n) => form.querySelector(`input[name=${n}]:checked`)?.value;
+    const run = () => {
+      const a = [ans("q0"), ans("q1"), ans("q2"), ans("q3")], v = document.querySelector("[data-verdict]");
+      const review = '<p class="muted small">Is this a Bell device-handling charge, a TELUS SIM or eSIM fee, or a Rogers device set-up, shipping or SIM fee? The CRTC is still deciding whether these are allowed, and the CCTS may pause complaints about them. You can still send the letter, but expect a wait.</p>';
+      const eligible = a[0] === "yes" && a[1] === "yes" && a[2] === "no" && a[3] === "yes";
+      if (a.some((x) => !x)) v.innerHTML = "";
+      else if (a[0] === "no") v.innerHTML = '<p class="meh"><strong>The June 2026 fee ban may not cover your provider.</strong> It applies to cellphone providers and the large internet providers covered by the Internet Code. You can still ask your provider to explain or waive the fee, and complain to the CCTS about billing problems.</p>';
+      else if (eligible) v.innerHTML = '<p class="good"><strong>This fee is likely not allowed.</strong> Ask for a refund with the letter below.</p>' + review;
+      else v.innerHTML = '<p class="meh"><strong>This fee may be allowed.</strong> Fees for optional extras, technician visits, or charges before June 12, 2026 can still apply. You can still ask your provider to explain or waive it.</p>';
+      const copyBtn = document.querySelector("[data-copy]");
+      copyBtn.disabled = !eligible;
+      if (!eligible) { pre.textContent = "Answer the questions first. We only write a refund letter when the fee looks banned. If yours may be allowed, you can still ask your provider to explain or waive it."; return; }
+      const amount = val("fl-amount") ? `$${Number(val("fl-amount")).toFixed(2)}` : "[amount]";
+      const date = val("fl-date") ? new Date(val("fl-date") + "T12:00:00").toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" }) : "[date]";
+      pre.textContent = `To ${val("fl-provider") || "[provider]"},
+
+Account number: ${val("fl-account") || "[account number]"}
+
+On ${date}, you charged me ${amount} for "${val("fl-fee") || "[fee name]"}". This was charged when I activated service or changed my plan. I did not buy an optional extra, and no technician came to my home.
+
+Since June 12, 2026, under CRTC 2026-43 (which amended the Wireless Code and the Internet Code), providers covered by those codes generally can't charge activation fees, or installation or plan-change fees, unless a technician has to physically install the service or equipment at the customer's home or business, or the customer explicitly agreed to buy an optional product or service. The Commission for Complaints for Telecom-television Services (CCTS) explains this on its page "Which fees are allowed?".
+
+Please refund ${amount} to my account and confirm in writing within 14 days. If this isn't resolved, I will file a complaint with the CCTS.
+
+Thank you,
+${val("fl-name") || "[your name]"}`;
+    };
+    form.addEventListener("input", run); form.addEventListener("change", run); run();
+    document.querySelector("[data-copy]").addEventListener("click", async () => {
+      const s = document.querySelector("[data-copied]");
+      try { await navigator.clipboard.writeText(pre.textContent); s.textContent = "Copied."; } catch { s.textContent = "Select the letter and copy it."; }
+    });
+  })();
+</script>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
+  .letter-form, .out { max-width: 48rem; margin-bottom: 1.5rem; }
+  .letter-form h2, .out h2 { margin-top: 0.5rem; font-size: 1.5rem; }
+  .q { border: 0; padding: 0; margin: 0 0 1rem; }
+  .q legend { font-weight: 700; padding: 0; margin-bottom: 0.25rem; }
+  .opt { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 400; min-height: 44px; margin: 0 1.5rem 0 0; }
+  .opt input { width: 24px; height: 24px; flex: none; margin: 0; accent-color: var(--forest); }
+  :global(.good) { background: var(--mint); border-radius: var(--r-sm); padding: 0.8rem 1rem; }
+  :global(.meh) { background: var(--butter); border-radius: var(--r-sm); padding: 0.8rem 1rem; }
+  .grid2 { display: grid; gap: 0 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .letter { white-space: pre-wrap; font: 400 1rem/1.55 var(--sans); background: var(--soft); border-radius: var(--r-sm); padding: 1rem 1.25rem; margin: 0 0 1rem; }
+</style>

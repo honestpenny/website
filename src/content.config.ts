@@ -10,7 +10,7 @@ const guides = defineCollection({
   schema: z.object({
     title: z.string().max(70),
     summary: z.string().max(160),
-    topic: z.enum(["bills", "benefits", "tax", "savings", "debt", "travel", "housing", "investing"]),
+    topic: z.enum(["budget", "bills", "benefits", "tax", "savings", "debt", "travel", "housing", "investing"]),
     // Where the guide's rules apply. Alberta first; "canada" means federal rules for everyone.
     applies: z.array(z.enum(["alberta", "calgary", "edmonton", "canada"])).min(1),
     author: z.string(),

@@ -107,3 +107,36 @@ test("8 Steps page: find your step, tick earlier steps, progress shared with the
   await page.goto("/guides/honest-penny-steps/");
   await expect(page.locator("[data-tracker] [role=status]")).toHaveText("3 of 8 done.");
 });
+
+test("Care-First renewal check: late-2026 car → rewrite tip (same insurer); motorcycle → told not to rewrite; 2027 → no cap promise", async ({ page }) => {
+  await page.goto("/car-insurance-renewal-check/");
+  const out = page.locator("[data-rc-out]");
+  await page.fill("#rc-old", "2000"); await page.fill("#rc-new", "2200");
+  await page.getByLabel("Between September 1 and December 31, 2026").check();
+  await expect(out).toContainText("same insurer");
+  await page.getByLabel("Yes, this renewal is for a motorcycle").check();
+  await expect(out).toContainText("Don't ask for a Care-First rewrite on a motorcycle");
+  await page.getByLabel("No", { exact: true }).check();
+  await page.getByLabel("In 2027 (on or after January 1)").check();
+  await expect(out).toContainText("does not limit the change from your 2026 to your 2027 premium");
+  await page.getByLabel("Before September 1, 2026").check();
+  await expect(out).toContainText("prorated rewrite doesn't apply");
+});
+
+test("Phone fee letter: no letter or copy until the fee looks banned and the provider is covered", async ({ page }) => {
+  await page.goto("/phone-fee-letter/");
+  const copy = page.getByRole("button", { name: "Copy the letter" });
+  await expect(copy).toBeDisabled();
+  const pick = async (name: string, v: string) => page.locator(`input[name=${name}][value=${v}]`).check();
+  await pick("q0", "yes"); await pick("q1", "yes"); await pick("q2", "yes"); await pick("q3", "yes");
+  await expect(page.locator("[data-verdict]")).toContainText("may be allowed");
+  await expect(copy).toBeDisabled();
+  await pick("q2", "no");
+  await expect(page.locator("[data-verdict]")).toContainText("likely not allowed");
+  await expect(copy).toBeEnabled();
+  await page.fill("#fl-provider", "Example Mobile");
+  await expect(page.locator("[data-letter]")).toContainText("To Example Mobile");
+  await pick("q0", "no");
+  await expect(page.locator("[data-verdict]")).toContainText("may not cover your provider");
+  await expect(copy).toBeDisabled();
+});

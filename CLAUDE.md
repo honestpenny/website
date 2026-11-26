@@ -103,7 +103,11 @@ compared, Honest Penny Steps. Added 2026-11-25: 2027 tax brackets (`YEARS[2027]`
 T4127 Jan 2027; re-check against CRA's rates page in January), RRSP vs TFSA vs non-registered withdrawals (+ withdrawal
 calculator). `/steps/` landing page. Fact-check reports: `docs/fact-checks/`. MSE research + roadmap:
 ~/reports/MSE value adds for Alberta.md (next: Care-First renewal checker, phone-fee complaint letter, template letters).
-Next: airline refunds (APPR / Bill C-31 status), TFSA 2027 limit when CRA announces it, RoLR 2027 rates (~Dec 2), Calgary/Edmonton 2027 assessment dates (Jan).
+Added 2026-11-25 (2nd batch): budget guide, account-setup guide, /budget/ planner, Care-First renewal check
+(/car-insurance-renewal-check/: AIRB says the 10% cap does NOT limit 2026->2027), phone fee letter (/phone-fee-letter/),
+flight delay/cancellation guide (APPR; Bill C-31 not law yet), car negotiation + AI guide (AMVIC all-in pricing).
+Scheduled cloud routines (claude.ai/code/routines) open PRs for: RoLR 2027-28 (Dec 3), TFSA 2027 (Dec 10, Jan 5),
+CRA 2027 rates page (Jan 20). Next: re-check Bill C-31 after Royal Assent, CRTC 2026-155 ruling on carrier SIM/device fees, RoLR 2027 rates (~Dec 2), Calgary/Edmonton 2027 assessment dates (Jan).
 Yearly: update `src/lib/tax.ts` brackets each January (test pins $70,000 → total).
 
 ## Repo identity
