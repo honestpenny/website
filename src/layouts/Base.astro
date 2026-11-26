@@ -60,6 +60,7 @@ const graph = Astro.url.pathname === "/" ? [org, website, ...jsonLd] : jsonLd;
     <meta name="twitter:image:alt" content={imageAlt} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+    <link rel="alternate" type="application/rss+xml" href="/news/rss.xml" title="Honest Penny: what's new" />
     {graph.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
   </head>
   <body>

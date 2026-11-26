@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { newsSorted, STATUS_LABEL } from "../../data/news";
+import { longDate } from "../../lib/format";
+const items = newsSorted();
+const d = (s: string) => new Date(s + "T12:00:00Z");
+---
+<Base title="What's new: money news for Albertans" description="Official money announcements that affect Albertans and Canadians, in plain language: what changed, whether it's law yet, and what to do. Every item links to the official source.">
+  <header class="head">
+    <span class="hero-icon" aria-hidden="true"><Icon name="mail" size={36} /></span>
+    <p class="kicker">What's new</p>
+    <h1>Money news that affects you, in plain words</h1>
+    <p class="lede">Official announcements only, each with what it means, whether it's law yet, and what to do. Every item links to the government or regulator page it comes from.</p>
+    <p class="small"><a href="/news/rss.xml">Follow by RSS</a> · or get it in the <a href="/email/">weekly email</a></p>
+  </header>
+  <ol class="news">
+    {items.map((n) => (
+      <li class="card" id={n.id}>
+        <p class="meta"><time datetime={n.date}>{longDate(d(n.date))}</time>{n.status && <span class={`tag st-${n.status}`}>{STATUS_LABEL[n.status]}</span>}</p>
+        <h2>{n.title}</h2>
+        <p>{n.summary}</p>
+        {n.todo && <p class="todo"><strong>What to do:</strong> {n.todo}</p>}
+        <p class="src small">Source: <a href={n.source.url} rel="noopener">{n.source.title}</a> ({n.source.publisher})</p>
+        {n.related && <p class="rel">{n.related.map((r) => <a class="tag" href={r.href}>{r.label} <Icon name="arrow" size={14} /></a>)}</p>}
+      </li>
+    ))}
+  </ol>
+  <p class="muted small">General information, not advice. Proposed laws can change before they pass. Spotted a mistake? <a href="/corrections/">Tell us</a>.</p>
+</Base>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
+  .news { list-style: none; padding: 0; margin: 1rem 0 2rem; display: grid; gap: 1.25rem; max-width: 52rem; }
+  .news li { margin: 0; }
+  .news h2 { font-size: clamp(1.35rem, 1.2rem + 0.8vw, 1.8rem); margin: 0.25rem 0 0.75rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin: 0; color: var(--muted); font-weight: 700; font-size: 0.95rem; }
+  .st-proposed, .st-passed-not-in-force { background: var(--butter); }
+  .st-in-force { background: var(--mint); }
+  .todo { background: var(--mint); border-radius: var(--r-sm); padding: 0.75rem 1rem; }
+  .src { margin-bottom: 0.5rem; }
+  .rel { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; }
+  .rel .tag { min-height: 40px; padding: 0 0.85rem; gap: 0.3rem; }
+</style>
