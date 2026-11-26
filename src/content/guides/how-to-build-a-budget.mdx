@@ -1,0 +1,159 @@
+---
+title: "How to build a budget that actually works"
+summary: "A step-by-step way to build a budget for real life in Alberta: track first, plan for irregular costs, handle pay that goes up and down, and keep it going."
+topic: budget
+applies: ["alberta", "canada"]
+author: "Honest Penny team"
+published: 2026-11-25
+lastChecked: 2026-11-25
+nextReview: 2027-05-25
+draft: false
+sources:
+  - title: "Make a budget"
+    publisher: "Financial Consumer Agency of Canada"
+    url: "https://www.canada.ca/en/financial-consumer-agency/services/make-budget.html"
+    checked: 2026-11-25
+  - title: "Budgeting over time (research)"
+    publisher: "Financial Consumer Agency of Canada"
+    url: "https://www.canada.ca/en/financial-consumer-agency/programs/research/budgeting-time.html"
+    checked: 2026-11-25
+  - title: "Setting up an emergency fund"
+    publisher: "Financial Consumer Agency of Canada"
+    url: "https://www.canada.ca/en/financial-consumer-agency/services/savings-investments/setting-up-emergency-funds.html"
+    checked: 2026-11-25
+  - title: "Who pays instalments"
+    publisher: "Canada Revenue Agency"
+    url: "https://www.canada.ca/en/revenue-agency/services/payments/payments-cra/individual-payments/income-tax-instalments/who-pays-instalments.html"
+    checked: 2026-11-25
+  - title: "Vehicle registration renewal"
+    publisher: "Government of Alberta"
+    url: "https://www.alberta.ca/vehicle-registration-renewal"
+    checked: 2026-11-25
+  - title: "Tax Instalment Payment Plan (TIPP)"
+    publisher: "City of Calgary"
+    url: "https://www.calgary.ca/property-owners/taxes/tipp-instalment-payments.html"
+    checked: 2026-11-25
+  - title: "Electricity payment options (budget billing)"
+    publisher: "Utilities Consumer Advocate (Government of Alberta)"
+    url: "https://ucahelps.alberta.ca/residential/electricity/payment-options/"
+    checked: 2026-11-25
+  - title: "Consumer insights on managing spending (2017)"
+    publisher: "Consumer Financial Protection Bureau (US)"
+    url: "https://files.consumerfinance.gov/f/documents/201702_cfpb_Consumer-Insights-on-Managing-Spending.pdf"
+    checked: 2026-11-25
+  - title: "Building financial wellbeing (2016)"
+    publisher: "Money and Mental Health Policy Institute (UK)"
+    url: "https://www.moneyandmentalhealth.org/wp-content/uploads/2016/11/Building-Financial-Wellbeing-1.pdf"
+    checked: 2026-11-25
+---
+
+import Fact from "../../components/Fact.astro";
+import Official from "../../components/Official.astro";
+import QuickAnswer from "../../components/QuickAnswer.astro";
+import HonestTake from "../../components/HonestTake.astro";
+import Warning from "../../components/Warning.astro";
+import Receipt from "../../components/Receipt.astro";
+
+<QuickAnswer>
+- **Track before you plan.** Canada's Financial Consumer Agency (FCAC) suggests tracking everything you spend for one to two months first, so your budget is built on real numbers.
+- **Plan for the costs that don't come every month**, like vehicle registration, insurance, property tax and Christmas. Divide each by 12 and set that aside monthly.
+- **Make saving automatic** on payday, into a separate account. That does more than willpower. See <a href="/guides/set-up-bank-accounts-bills-spending-savings/">how to set up your accounts</a>.
+- **Progress, not perfection.** FCAC's own research found people who budget even on and off tend to do better than people who struggle to budget at all (it doesn't prove the budget is the reason).
+- Try our free <a href="/budget/">budget planner</a>. It stays on your device.
+</QuickAnswer>
+
+## Why bother? What the research says
+
+In FCAC's two-year study of Canadians, people who budgeted consistently had more savings, less credit card debt and less stress about credit payments. FCAC is careful to say this doesn't prove the budget caused it. About a third of people budgeted on and off. They still did better than non-budgeters who found budgeting hard, though not as well as consistent budgeters. Its advice: choose a method that fits your life, and **emphasize progress over perfection**.
+
+## Step 1: Track what you really spend (one to two months)
+
+Use your bank and credit card statements, or note every purchase in your phone. Don't change anything yet: you're just finding out where the money goes. Most people find a few surprises, like subscriptions they forgot or how much goes on takeout.
+
+## Step 2: Write down your money map
+
+Sort everything into four groups:
+
+| Group | Examples | How to budget it |
+|---|---|---|
+| **Income** | Pay after deductions, benefits, side income | Use what actually lands in your account |
+| **Fixed costs** | Rent or mortgage, loan payments, phone, internet, insurance paid monthly | The same every month |
+| **Variable costs** | Groceries, gas, power and heating, kids' activities | Use your tracked average |
+| **Irregular costs** | Vehicle registration, annual insurance, property tax, car repairs, Christmas, birthdays, back to school | Total per year ÷ 12 = set aside monthly |
+
+The irregular costs are what break most budgets: they're real, but they don't show up every month, so they feel like emergencies when they arrive.
+
+### Alberta costs people forget
+
+- **Vehicle registration:** a one-year renewal online starts at <Fact id="ab-vehicle-registration-1yr" />, per vehicle.
+- **Property tax:** due in one lump in many Alberta towns. In Calgary, the <Official href="https://www.calgary.ca/property-owners/taxes/tipp-instalment-payments.html" by="City of Calgary">TIPP plan</Official> lets you pay monthly instead. Edmonton and many other towns offer monthly plans too: check your municipality's website.
+- **Winter heating:** gas bills (and often power bills) are much higher in the coldest months. Many retailers offer **budget billing**, which spreads your costs over 12 months with a settle-up bill at the end. The Utilities Consumer Advocate warns that missing a payment can end the plan and make the whole balance due.
+- **Car and home insurance:** if you pay annually, divide by 12. If you pay monthly, ask what that costs extra.
+
+<Receipt
+  title="Example: turning irregular costs into a monthly amount"
+  rows={[
+    { label: "Vehicle registration (1 car)", amount: "$102" },
+    { label: "Home insurance (paid yearly)", amount: "$1,500", note: "example figure" },
+    { label: "Christmas and birthdays", amount: "$1,200", note: "example figure" },
+    { label: "Car maintenance and repairs", amount: "$1,000", note: "example figure" },
+  ]}
+  total={{ label: "Set aside each month", amount: "$317" }}
+  plain="$3,802 a year ÷ 12 months = about $317 a month into a separate account, so these never land on a credit card."
+  method="Add up every cost that doesn't come monthly, divide by 12, and round up. Use your own amounts: only the registration figure is an official price."
+/>
+
+## Step 3: Make the numbers add up
+
+Income minus fixed, variable and irregular costs gives you what's left for savings and debt. If it's negative, you're not failing: you've found the problem, and that's the point.
+
+If it doesn't balance, work in this order:
+
+1. **Claim what you're owed.** Many people are missing benefits. Try <a href="/check/">Check what you're owed</a>.
+2. **Cut the big bills first**, because one call can save more than months of skipped coffees: <a href="/guides/alberta-car-home-insurance/">insurance</a>, <a href="/guides/cut-phone-internet-bills-alberta/">phone and internet</a>, <a href="/guides/alberta-electricity-rate-2027/">power</a> and <a href="/guides/alberta-natural-gas-fixed-or-default/">gas</a>.
+3. **Cancel subscriptions** you don't use.
+4. **Then trim variable spending**, a little at a time.
+5. **If debt payments are the problem**, call a free non-profit credit counsellor early: see <a href="/get-help/">Get help</a>.
+
+## Step 4: Give every dollar a job, automatically
+
+The research on saving is clearest on one thing: **automatic beats willpower**. When saving is set up to happen by default, far more people do it and keep doing it, mostly because nobody gets round to stopping it. (Most of this research is on workplace pension plans in the US.) Some studies have also found that money split into separate, labelled pots is more likely to be left alone.
+
+So set up automatic transfers **on payday**: one to your emergency savings, one for irregular costs, and the rest for everyday spending. FCAC recommends keeping your emergency fund in a separate savings account and setting up an automatic transfer on the days you get paid. Our guide to <a href="/guides/set-up-bank-accounts-bills-spending-savings/">setting up your accounts</a> shows how.
+
+## If your pay goes up and down
+
+Seasonal, commission, gig, oil and gas, and construction work all make budgeting harder. What helps:
+
+- **Budget on your lowest likely month**, not your average.
+- **Put all pay into one holding account**, then pay yourself a steady "salary" from it each month. In good months the extra stays there as a buffer.
+- **Build a bigger cushion**: aim for the top of FCAC's 3-to-6-months range.
+- **Self-employed?** Set aside tax as you go. The CRA requires quarterly tax instalments if your net tax owing is more than <Fact id="cra-instalment-threshold" /> this year and was also more than that in either of the two previous years. Paying late or not at all can mean interest charges.
+
+## Which budgeting method?
+
+There's no good evidence that one method beats the others. Pick the one you'll actually keep:
+
+| Method | How it works | Good for |
+|---|---|---|
+| **50/30/20** | About 50% on needs, 30% on wants, 20% on savings and debt (popularised by Elizabeth Warren and Amelia Warren Tyagi) | A quick starting point. Hard to hit in high-rent cities or on low incomes, so treat it as a guide, not a rule. |
+| **Zero-based** | Every dollar of income is given a job until nothing is left unassigned | People who like detail and control |
+| **Envelopes (or separate accounts)** | Money for each purpose goes into its own envelope or account; when it's empty, you stop | People who overspend by card, or who want fewer decisions |
+| **Pay yourself first** | Savings come out automatically on payday; you spend the rest freely | People who hate tracking |
+
+## Keeping it going
+
+- **Look at it weekly, briefly.** Ten minutes a week beats a perfect spreadsheet you never open.
+- **Expect to miss.** Willpower is unreliable, which is why automatic transfers and separate accounts work better than trying harder.
+- **Adjust, don't abandon.** If a category is always over, the budget is wrong, not you. Change the number.
+- **Celebrate the finish lines**: a paid-off card, a full emergency fund, your first $1,000 saved.
+
+<Warning label="If you can't cover the basics">
+If your income doesn't cover rent, food and utilities even after cutting back, a budget alone won't fix it. Check what you're owed, call 211 Alberta, and talk to a free non-profit credit counsellor. See <a href="/get-help/">Get help</a>.
+</Warning>
+
+<HonestTake>
+The best budget is the one you'll still be using in March. Track for a month, plan for the costs that only come once a year, and let automatic transfers do the hard part. If it doesn't balance, that's useful information, not a failure: start with the biggest bills and the benefits you might be missing.
+</HonestTake>
+
+This is general information, not personal financial advice. Next: <a href="/guides/set-up-bank-accounts-bills-spending-savings/">set up your accounts</a>, or try the <a href="/budget/">budget planner</a>.

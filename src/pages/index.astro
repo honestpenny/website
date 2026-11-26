@@ -17,7 +17,7 @@ const upcoming = (await allDeadlines()).filter((d) => !isPast(d.date));
 const md = (d: Date) => d.toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" }).replace(".", "");
 type IconName = "bolt" | "home" | "receipt" | "jar" | "calc" | "car" | "check";
 const topicMeta: Record<string, { icon: IconName; tint: string }> = {
-  bills: { icon: "bolt", tint: "tint-butter" }, housing: { icon: "home", tint: "tint-sky" }, tax: { icon: "receipt", tint: "tint-peach" },
+  budget: { icon: "calc", tint: "tint-sky" }, bills: { icon: "bolt", tint: "tint-butter" }, housing: { icon: "home", tint: "tint-sky" }, tax: { icon: "receipt", tint: "tint-peach" },
   savings: { icon: "jar", tint: "tint-mint" }, benefits: { icon: "check", tint: "tint-mint" }, debt: { icon: "calc", tint: "tint-peach" },
   investing: { icon: "jar", tint: "tint-sky" }, travel: { icon: "car", tint: "tint-butter" },
 };
@@ -85,6 +85,12 @@ const topics = TOPICS.map((t) => ({ ...t, items: guides.filter((g) => g.data.top
         <h3><a class="card-link" href="/dates/">Key money dates</a></h3>
         <p class="muted">Every Alberta and Canadian deadline from our guides. Add any of them to your own calendar.</p>
         <div class="mini dates">{upcoming.slice(0, 3).map((d) => <span class="drow"><time datetime={isoDate(d.date)}>{md(d.date)}</time>{calTitle(d)}</span>)}</div>
+      </li>
+      <li class="card tool lift">
+        <span class="icon"><Icon name="calc" /></span>
+        <h3><a class="card-link" href="/budget/">Budget planner</a></h3>
+        <p class="muted">Enter amounts weekly, every two weeks, monthly or yearly. See what goes to your bills, spending and savings accounts.</p>
+        <div class="mini"><span class="pill ok">Bills</span><span class="pill ok">Spending</span><span class="pill ok">Savings</span></div>
       </li>
       <li class="card tool lift">
         <span class="icon"><Icon name="steps" /></span>

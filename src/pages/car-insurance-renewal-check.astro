@@ -1,0 +1,105 @@
+---
+// Care-First renewal checker. Plain rules from the Automobile Insurance Rate Board (Care-First Q&A and
+// Bulletin 07-2026). It never says an increase "breaks the law": it explains what applies and what to ask.
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+---
+<Base title="Check your car insurance renewal (Alberta, Care-First)" description="Is your Alberta car insurance renewal fair? A quick check of what changed, how Care-First and the rate caps apply, and what to ask your insurer or broker.">
+  <header class="head">
+    <span class="hero-icon" aria-hidden="true"><Icon name="car" size={36} /></span>
+    <p class="kicker">Care-First renewal check</p>
+    <h1>Is your car insurance renewal fair?</h1>
+    <p class="lede">Answer five questions about your renewal. We'll tell you which rules apply, what to ask your insurer or broker, and where to go if you're not happy. Nothing you enter leaves your device.</p>
+  </header>
+
+  <form class="card check" data-rc novalidate>
+    <div class="field"><label for="rc-old">Last year's premium <span class="hint">The total for the year, from your current policy</span></label><input id="rc-old" type="number" inputmode="decimal" min="0" step="any" /></div>
+    <div class="field"><label for="rc-new">Your renewal premium <span class="hint">The total for the year on your renewal notice</span></label><input id="rc-new" type="number" inputmode="decimal" min="0" step="any" /></div>
+    <fieldset class="field"><legend>When does the renewed policy start?</legend>
+      <label class="opt"><input type="radio" name="rc-start" value="before" /> Before September 1, 2026</label>
+      <label class="opt"><input type="radio" name="rc-start" value="late2026" /> Between September 1 and December 31, 2026</label>
+      <label class="opt"><input type="radio" name="rc-start" value="2027" /> In 2027 (on or after January 1)</label>
+    </fieldset>
+    <fieldset class="field"><legend>Did anything change for you in the last year? <span class="hint">Tick all that apply</span></legend>
+      {["A new at-fault accident", "A ticket or conviction", "Added a driver", "Changed vehicle", "Changed coverage or deductible", "Moved"].map((c, i) => <label class="opt"><input type="checkbox" value={c} data-change /> {c}</label>)}
+    </fieldset>
+    <fieldset class="field"><legend>Do you ride a motorcycle?</legend>
+      <label class="opt"><input type="radio" name="rc-moto" value="no" checked /> No</label>
+      <label class="opt"><input type="radio" name="rc-moto" value="yes" /> Yes, this renewal is for a motorcycle</label>
+    </fieldset>
+  </form>
+
+  <section class="card result" aria-live="polite" aria-labelledby="rc-h">
+    <h2 id="rc-h">What this means</h2>
+    <div data-rc-out><p class="muted">Fill in your premiums and when the policy starts.</p></div>
+  </section>
+
+  <section aria-labelledby="ask-h">
+    <h2 id="ask-h">Questions to ask your insurer or broker</h2>
+    <ol class="ask">
+      <li>Why did my premium change, line by line?</li>
+      <li>Which discounts am I getting, and which am I missing (bundling, winter tires, anti-theft, groups)?</li>
+      <li>What would a higher deductible save, and what does paying monthly cost compared with paying once?</li>
+      <li>Is my liability coverage still at least $1 million or $2 million?</li>
+      <li>Can you quote me with another insurer? (Brokers can.)</li>
+    </ol>
+    <p>Then get at least two other quotes. Read our full <a href="/guides/alberta-car-home-insurance/">car and home insurance guide</a>.</p>
+  </section>
+
+  <section aria-labelledby="cmp-h">
+    <h2 id="cmp-h">If you're not happy</h2>
+    <ol>
+      <li>Talk to your broker or agent, then your insurer's complaint officer. Ask for a <strong>final position letter</strong>.</li>
+      <li>Then the <a href="https://giocanada.org/how-the-process-works/" rel="noopener">General Insurance OmbudService</a> (free). It doesn't handle disputes about the price itself.</li>
+      <li>For how an insurer treated you, Alberta's <a href="https://www.alberta.ca/insurance-consumer-complaints" rel="noopener">Superintendent of Insurance</a>; for an agent or broker, the Alberta Insurance Council.</li>
+    </ol>
+    <p class="muted small">General information from the Automobile Insurance Rate Board, checked November 25, 2026, not advice. The rate board may update its guidance; check its <a href="https://www.airbfordrivers.ca/care-first-your-premium-questions-answered/" rel="noopener">Care-First questions page</a>.</p>
+  </section>
+</Base>
+<script is:inline>
+  (() => {
+    const form = document.querySelector("[data-rc]"), out = document.querySelector("[data-rc-out]");
+    const fmt = (n) => n.toLocaleString("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+    const run = () => {
+      const o = Number(form.querySelector("#rc-old").value), n = Number(form.querySelector("#rc-new").value);
+      const start = form.querySelector("input[name=rc-start]:checked")?.value;
+      const moto = form.querySelector("input[name=rc-moto]:checked")?.value === "yes";
+      const changes = [...form.querySelectorAll("[data-change]:checked")].map((c) => c.value);
+      if (!(o > 0) || !(n > 0) || !start) { out.innerHTML = '<p class="muted">Fill in your premiums and when the policy starts.</p>'; return; }
+      const pct = ((n - o) / o) * 100, dir = pct >= 0 ? "up" : "down";
+      const p = [];
+      p.push(`<p class="big">Your premium is <strong>${dir} ${fmt(Math.abs(n - o))} (${Math.abs(pct).toFixed(1)}%)</strong>.</p>`);
+      if (start === "before") {
+        p.push("<p><strong>This policy started before September 1, 2026, so the rate board's prorated rewrite doesn't apply to it.</strong> Cancelling early usually means a short-rate penalty. Ask your insurer what cancelling would cost before you change anything. Care-First pricing applies when it next renews. Injury coverage still switches to Care-First on January 1, 2027.</p>");
+        if (!moto && pct > 7.5 && changes.length === 0) p.push("<p>In 2026, \"good drivers\" of private passenger vehicles (no at-fault accidents in 6 years and no recent serious or minor convictions) have increases capped at 7.5%. If you think that's you, ask your insurer why your increase is higher.</p>");
+      } else if (start === "late2026") {
+        p.push("<p><strong>This renewal starts in 2026, so it's priced under today's system.</strong> Injury coverage still switches to Care-First on January 1, 2027.</p>");
+        if (moto) p.push("<p class=\"tip\"><strong>Don't ask for a Care-First rewrite on a motorcycle policy:</strong> the rate board expects motorcycle premiums to rise about 100% on average under Care-First. Your current 2026 price runs to the end of its term.</p>");
+        else p.push("<p class=\"tip\"><strong>Ask about a Care-First rewrite.</strong> The rate board expects insurers to offer a prorated cancel-and-rewrite under Care-First to people who bought or renewed between September 1 and December 31, 2026, if they ask the <strong>same insurer</strong> between <strong>January 1 and March 31, 2027</strong>. If you cancel to move to a different insurer, or ask after March 31, the usual short-rate penalty can apply. Ask for the Care-First price and any costs first, and only rewrite if it's lower. It's an expectation, not a legal right, so get the offer in writing.</p>");
+        if (!moto && pct > 7.5 && changes.length === 0) p.push("<p>In 2026, \"good drivers\" of private passenger vehicles (no at-fault accidents in 6 years and no recent serious or minor convictions) have increases capped at 7.5%. If you think that's you, ask your insurer why your increase is higher. You can lose the cap by switching insurers, moving, replacing a vehicle or adding a higher-risk driver.</p>");
+      } else {
+        p.push("<p><strong>This renewal is priced under Care-First.</strong> The new 10% renewal cap does <strong>not</strong> limit the change from your 2026 to your 2027 premium: the rate board says 2027 renewals reflect Care-First pricing without a rate cap.</p>");
+        if (pct > 0 && !moto) p.push("<p>The rate board's figures show the average private car premium going <strong>down</strong> about 13.7% under Care-First. Yours went up, so ask why, line by line, and get other quotes.</p>");
+        if (pct < 0) p.push("<p>That's in line with the rate board's estimate that most drivers pay less under Care-First (about 13.7% less on average). It's still worth checking other quotes.</p>");
+      }
+      if (moto) p.push("<p><strong>Motorcycles cost more under Care-First:</strong> the rate board expects the average motorcycle premium to rise about 100%, and its example profiles rise at least 37%. Shop around carefully.</p>");
+      if (changes.length) p.push(`<p><strong>Your own changes affect the price</strong> (${changes.join(", ").toLowerCase()}). Rate caps never cover these, so part of the change may come from them. Ask the insurer to show how much.</p>`);
+      p.push("<p>Alberta's \"grid\" price ceiling for basic coverage ends January 1, 2027. If you're a newer or younger driver, compare quotes carefully.</p>");
+      out.innerHTML = p.join("");
+    };
+    form.addEventListener("input", run); form.addEventListener("change", run); run();
+  })();
+</script>
+<style>
+  .head { padding: clamp(1.5rem, 4vw, 3rem) 0 1rem; max-width: 50rem; }
+  .check, .result { max-width: 46rem; }
+  .check fieldset { border: 0; padding: 0; margin: 0 0 1.25rem; }
+  .check legend { font-weight: 700; margin-bottom: 0.4rem; padding: 0; }
+  .opt { display: flex; align-items: center; gap: 0.6rem; font-weight: 400; min-height: 44px; margin: 0; }
+  .opt input { width: 24px; height: 24px; flex: none; margin: 0; accent-color: var(--forest); }
+  .result { margin: 1.5rem 0; }
+  .result h2 { margin-top: 0; }
+  :global(.big) { font-size: 1.25rem; }
+  :global(.tip) { background: var(--mint); border-radius: var(--r-sm); padding: 0.8rem 1rem; }
+  .ask li { margin-bottom: 0.5rem; }
+</style>

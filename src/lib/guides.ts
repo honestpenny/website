@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 
 export const TOPICS = [
+  { id: "budget", label: "Budgeting", blurb: "Build a budget that fits real life, and set up accounts that save for you." },
   { id: "bills", label: "Bills", blurb: "Power, gas, phone, internet and insurance." },
   { id: "housing", label: "Property tax", blurb: "Check your assessment and challenge it." },
   { id: "benefits", label: "Benefits and credits", blurb: "Money you're owed for filing a return." },

@@ -127,6 +127,13 @@ test.describe("Search and AI visibility", () => {
     for (const q of ld.mainEntity) expect(visible, q.name).toContain(q.name);
   });
 
+  test("llms.txt lists every guide and tool page in the sitemap", async ({ request }) => {
+    const llms = await (await request.get("/llms.txt")).text();
+    const skip = ["/", "/guides/", "/about/", "/privacy/", "/terms/", "/editorial-code/", "/how-we-make-money/", "/how-we-check-facts/", "/corrections/"];
+    const missing = (await sitemapPaths(request)).filter((p) => !skip.includes(p) && !llms.includes(`https://honestpenny.ca${p})`));
+    expect(missing, `missing from llms.txt: ${missing.join(", ")}`).toEqual([]);
+  });
+
   test("404 page returns 404 status", async ({ request }) => {
     const res = await request.get("/this-page-does-not-exist/");
     expect(res.status()).toBe(404);

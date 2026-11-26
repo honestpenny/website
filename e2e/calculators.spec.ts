@@ -43,3 +43,20 @@ test("RRSP withdrawal calculator: $10,000 on $70,000 → $2,000 withheld, ≈ $1
   await expect(out).toContainText("$1,050 more");
   await expect(out).toContainText("$6,950");
 });
+
+test("budget planner: mixed frequencies convert to monthly and split into three accounts; saved on reload", async ({ page }) => {
+  await page.goto("/budget/");
+  await page.fill("#income-0", "2000");
+  await page.getByLabel("How often: Take-home pay").selectOption("2weeks");
+  await page.fill("#fixed-0", "1500");
+  await page.fill("#variable-0", "150");
+  await page.getByLabel("How often: Groceries").selectOption("week");
+  await page.fill("#irregular-0", "102");
+  await expect(page.locator('[data-t="income"]')).toHaveText("$4,333");
+  await expect(page.locator('[data-t="left"]')).toHaveText("$2,175");
+  await expect(page.locator('[data-a="bills"]')).toHaveText("$1,509");
+  await expect(page.locator('[data-a="spending"]')).toHaveText("$650");
+  await page.reload();
+  await expect(page.locator("#income-0")).toHaveValue("2000");
+  await expect(page.locator('[data-t="left"]')).toHaveText("$2,175");
+});
