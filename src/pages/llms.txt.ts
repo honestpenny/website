@@ -15,6 +15,7 @@ export async function GET() {
     `- [Budget planner](${site.url}/budget/): build a monthly budget and split it across bills, spending and savings accounts; stays on your device`,
     `- [Car insurance renewal check](${site.url}/car-insurance-renewal-check/): how Care-First and the rate caps apply to your Alberta renewal, and what to ask`,
     `- [Phone or internet fee complaint letter](${site.url}/phone-fee-letter/): check a fee against the June 2026 CRTC rules and get a letter to send`,
+    `- [What's new](${site.url}/news/): dated, plain-language official money announcements for Albertans (RSS: ${site.url}/news/rss.xml)`,
     `- [Weekly email](${site.url}/email/): what the free weekly email covers`, "",
     "## About", `- [Editorial code](${site.url}/editorial-code/)`, `- [How we make money](${site.url}/how-we-make-money/)`, `- [How we check facts and use AI](${site.url}/how-we-check-facts/)`, `- [Corrections](${site.url}/corrections/)`, "",
   ];

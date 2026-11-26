@@ -134,6 +134,17 @@ test.describe("Search and AI visibility", () => {
     expect(missing, `missing from llms.txt: ${missing.join(", ")}`).toEqual([]);
   });
 
+  test("news: RSS feed is valid, lists every item, and each item links to an official source", async ({ request }) => {
+    const rss = await (await request.get("/news/rss.xml")).text();
+    expect(rss).toMatch(/^<\?xml/);
+    const items = [...rss.matchAll(/<item>/g)].length;
+    expect(items).toBeGreaterThan(3);
+    const html = await (await request.get("/news/")).text();
+    const srcs = [...html.matchAll(/Source: <a href="([^"]+)"/g)].map((m) => m[1]);
+    expect(srcs.length).toBe(items);
+    for (const u of srcs) expect(u, u).toMatch(/^https:\/\/([a-z0-9-]+\.)*(canada\.ca|gc\.ca|alberta\.ca|calgary\.ca|edmonton\.ca|airbfordrivers\.ca|ab\.ca|statcan\.gc\.ca|bankofcanada\.ca|parl\.ca)\//);
+  });
+
   test("404 page returns 404 status", async ({ request }) => {
     const res = await request.get("/this-page-does-not-exist/");
     expect(res.status()).toBe(404);

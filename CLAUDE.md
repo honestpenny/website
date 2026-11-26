@@ -61,6 +61,11 @@ new pages are covered automatically. After any form change, do one real labelled
 - `/get-help/`: phone numbers verified 2026-11-25; re-check with the quiz.
 - `/email/`: preview is built from real upcoming dates; never invent a past issue.
 
+## What's new (/news/)
+- Items live in `src/data/news.ts` (date = the official announcement date, status = proposed / passed-not-in-force /
+  in-force / announcement, a 'what to do' line, one official source). Feeds `/news/`, `/news/rss.xml`, the home strip and
+  llms.txt. Fact-check every item; say plainly when something isn't law yet. Scan reports: `docs/news/`.
+
 ## Adding a guide
 1. Copy an existing `.mdx`; keep `draft: true` until a person has checked every claim.
 2. Front matter: `applies`, `sources` (≥2, official), `lastChecked`, `nextReview`, `deadlines` (mark `approximate`).
